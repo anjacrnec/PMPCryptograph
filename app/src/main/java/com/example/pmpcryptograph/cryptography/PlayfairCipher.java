@@ -13,25 +13,9 @@ public class PlayfairCipher extends SubstitiutionCipher {
 
 
 
-       /* public static String removeRepetableChars(String key)
-        {
-            char [] keyChar=key.toLowerCase().toCharArray();
-            String transformedKey="";
-            for(int i=0;i<key.length();i++)
-            {
-                if(keyChar[i]!=' ') {
-                    for (int j = i + 1; j < key.length(); j++) {
-                        if (keyChar[i] == keyChar[j])
-                            keyChar[j] = ' ';
-                    }
-                    transformedKey = transformedKey + keyChar[i];
-                }
-
-            }
-            return transformedKey;
-        }*/
-
-    public static String removeRepetableChars(String key)
+    //method that removes duplicate characters in the key
+    // ex. anja is transformed to ani
+    protected static String removeRepetableChars(String key)
     {
         key=key.toLowerCase();
         key=key.replaceAll("j","i");
@@ -50,7 +34,8 @@ public class PlayfairCipher extends SubstitiutionCipher {
         return transformedKey;
     }
 
-    public static String removeRepetableCharsAlphabet(String key)
+    //method that removes characters in the alphabet that aslo appear in the key
+    protected static String removeRepetableCharsAlphabet(String key)
     {
        String alphabet=new String(ALPHABET);
        alphabet=alphabet.replaceAll("j","");
@@ -63,7 +48,8 @@ public class PlayfairCipher extends SubstitiutionCipher {
        return alphabet;
     }
 
-    public static char [] [] generateMatrix(String key)
+    //method that generates the matrix used for encryption and decryption
+    protected static char [] [] generateMatrix(String key)
         {
 
          key=removeRepetableChars(key);
@@ -84,7 +70,9 @@ public class PlayfairCipher extends SubstitiutionCipher {
             return matrix;
         }
 
-        public static List<String> textToPairs(String text)
+        //method that transforms the plaintext in a list of pairs
+        //two same letters cannot be in the same pair (which is why they are divided by adding character x between them)
+        protected static List<String> textToPairs(String text)
         {
             text=text.replaceAll(" ","");
             text=text.replaceAll("j","i");
@@ -116,6 +104,7 @@ public class PlayfairCipher extends SubstitiutionCipher {
             return textPairs;
         }
 
+        //playfair encryption method
         public static String encrypt(String plainText, String key)
         {
             List <String> ptPairs=textToPairs(plainText);
@@ -201,7 +190,7 @@ public class PlayfairCipher extends SubstitiutionCipher {
         }
 
 
-
+     //playfair decryption method
     public static String decrypt(String cipherText, String key)
     {
         List <String> ptPairs=textToPairs(cipherText);
@@ -289,26 +278,8 @@ public class PlayfairCipher extends SubstitiutionCipher {
 
 
 
-
-
-
-
-    public static String matrixToString (char [][]charMatrix)
-        {
-            String m="";
-            for(int i=0;i<5;i++)
-            {
-                for(int j=0;j<5;j++)
-                {
-                    m=m+charMatrix[i][j];
-                }
-                m=m+"\n";
-            }
-
-            return m;
-        }
-
-
+        //class used to define a character in the matrix
+        //makes navigating matrix easier
         protected static class Char {
 
             protected char letter;

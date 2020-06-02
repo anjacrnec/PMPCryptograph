@@ -2,6 +2,8 @@ package com.example.pmpcryptograph.cryptography;
 
 public class VigenereCiphere extends SubstitiutionCipher {
 
+
+    //vignere cipher encryption method
     public static String encrypt (String plainText, String key)
     {
         char [] pt=plainText.toLowerCase().toCharArray();
@@ -30,6 +32,7 @@ public class VigenereCiphere extends SubstitiutionCipher {
         return cipherText;
     }
 
+    //vignere cipher decryption method
     public static String decrypt (String cipherText, String key)
     {
 
@@ -47,7 +50,7 @@ public class VigenereCiphere extends SubstitiutionCipher {
                 int ctIndex=charToIndex(ct[i]);
                 int keyIndex=charToIndex(keyChar[j]);
                 int ptIndex=(ctIndex-keyIndex)%TOTAL;
-                if(ptIndex<0)
+                while(ptIndex<0)
                    ptIndex=ptIndex+TOTAL;
                 char ptChar=indexToChar(ptIndex);
                 plainText=plainText+ptChar;

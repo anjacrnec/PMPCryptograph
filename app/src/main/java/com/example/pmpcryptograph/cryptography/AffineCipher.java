@@ -1,9 +1,11 @@
 package com.example.pmpcryptograph.cryptography;
 
+//TO DO - implement method that checks if inverse of key is possible
 public class AffineCipher extends SubstitiutionCipher {
 
 
-
+    //affine cipher encryption method
+    // e(x)=ax+b mod 26
     public static String encrypt(String plainText,int keyA,int keyB)
     {
         char [] pt=plainText.toLowerCase().toCharArray();
@@ -24,6 +26,8 @@ public class AffineCipher extends SubstitiutionCipher {
         return cipherText;
     }
 
+    //affine cipher decryption method
+    // d(y)=a^(-1)(y-b) mod 26
     public static String decrypt (String cipherText, int keyA, int keyB)
     {
         char [] ct=cipherText.toLowerCase().toCharArray();
@@ -36,7 +40,7 @@ public class AffineCipher extends SubstitiutionCipher {
                 int ctIndex=charToIndex(ct[i]);
                 int inv=inverse(keyA);
                 int ptIndex=(inv*(ctIndex-keyB))%TOTAL;
-                if(ptIndex<0)
+                while(ptIndex<0)
                     ptIndex=ptIndex+TOTAL;
                 char ptChar=indexToChar(ptIndex);
                 plainText=plainText+ptChar;
@@ -48,6 +52,7 @@ public class AffineCipher extends SubstitiutionCipher {
         return plainText;
     }
 
+    //find the inverse number of keyA
     public  static int inverse(int keyA)
     {
         int inv=-1,remainder;

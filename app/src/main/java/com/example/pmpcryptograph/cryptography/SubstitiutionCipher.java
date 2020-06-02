@@ -1,11 +1,13 @@
 package com.example.pmpcryptograph.cryptography;
 
-public abstract class SubstitiutionCipher {
+public abstract class SubstitiutionCipher extends Cipher{
 
-    public static final char[] ALPHABET = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
-    public  static final int TOTAL=26;
+    protected static final char[] ALPHABET = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
 
-    public static int charToIndex(char c)
+    protected   static final int TOTAL=26;
+
+    //finds the index of a character according to its position in the alphabet
+    protected static int charToIndex(char c)
     {
         Boolean findChar=false;
         int posTemp=0;
@@ -21,8 +23,8 @@ public abstract class SubstitiutionCipher {
         return index;
     }
 
-
-    public static char indexToChar(int index)
+    //finds the character of an index -number- according to the alphabet
+    protected static char indexToChar(int index)
     {
         return ALPHABET[index];
     }

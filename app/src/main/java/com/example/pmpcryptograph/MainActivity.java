@@ -9,11 +9,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.pmpcryptograph.cryptography.AffineCipher;
+import com.example.pmpcryptograph.cryptography.ReverseOrthogonalCipher;
 import com.example.pmpcryptograph.cryptography.CaeserCipher;
+import com.example.pmpcryptograph.cryptography.DiagonalCipher;
 import com.example.pmpcryptograph.cryptography.PlayfairCipher;
+import com.example.pmpcryptograph.cryptography.OrthogonalCipher;
 import com.example.pmpcryptograph.cryptography.VigenereCiphere;
 
-import java.util.List;
+import rita.RiTa;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -58,6 +62,19 @@ public class MainActivity extends AppCompatActivity {
         EditText etDkPlayfair=(EditText) findViewById(R.id.idDkPlayfair);
         Button btnDecryptPlayfair=(Button) findViewById(R.id.btnDecryptPlayfair);
 
+        Button btnProba=(Button) findViewById(R.id.btnProba);
+
+        EditText etPtOrtho=(EditText) findViewById(R.id.idPtOthogonal);
+        EditText etEkOrtho=(EditText) findViewById(R.id.idEkOrthogonal);
+        Button btnEncryptOrtho=(Button) findViewById(R.id.btnEncryptOrthogonal);
+
+        EditText etPtReverseOrtho=(EditText) findViewById(R.id.idPtReverseOrthogonal);
+        EditText etEkReverseOrtho=(EditText) findViewById(R.id.idEkReverseOrtho);
+        Button btnEncryptReverseOrtho=(Button) findViewById(R.id.btnEncryptReverseOrtho);
+
+        EditText etPtDiagonal=(EditText) findViewById(R.id.idPtDiagonal);
+        EditText etEkDiagonal=(EditText) findViewById(R.id.idEkDiagonal);
+        Button btnEncryptDiagonal=(Button) findViewById(R.id.btnEncryptDiagonal);
 
         btnEncryptCeaser.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,6 +168,56 @@ public class MainActivity extends AppCompatActivity {
                Toast.makeText(getApplicationContext(),pt,Toast.LENGTH_LONG).show();
            }
        });
+
+       btnProba.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+
+               String word=RiTa.randomWord();
+               Toast.makeText(getApplicationContext(),word,Toast.LENGTH_LONG).show();
+           }
+       });
+
+       btnEncryptOrtho.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+           String pt=etPtOrtho.getText().toString();
+           String key=etEkOrtho.getText().toString();
+
+
+           String s= OrthogonalCipher.encrypt(pt,key);
+           Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
+
+
+           }
+       });
+
+       btnEncryptReverseOrtho.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+
+               String pt=etPtReverseOrtho.getText().toString();
+               String key=etEkReverseOrtho.getText().toString();
+               String ct= ReverseOrthogonalCipher.encrypt(pt,key);
+               Toast.makeText(getApplicationContext(),ct,Toast.LENGTH_LONG).show();
+           }
+       });
+
+       btnEncryptDiagonal.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               String pr=etPtDiagonal.getText().toString();
+               String key=etEkDiagonal.getText().toString();
+
+             String ct=DiagonalCipher.encrypt(pr,key);
+
+               Toast.makeText(getApplicationContext(),ct,Toast.LENGTH_LONG).show();
+
+           }
+       });
     }
+
+
+
 }
 

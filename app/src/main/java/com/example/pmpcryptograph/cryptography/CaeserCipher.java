@@ -1,9 +1,30 @@
 package com.example.pmpcryptograph.cryptography;
 
+
 public  class CaeserCipher extends  SubstitiutionCipher{
 
 
+    int key;
 
+    public CaeserCipher(String plainText, int key)
+    {
+        this.plainText=plainText;
+        this.key=key;
+        this.cipherText=decrypt(this.plainText,this.key);
+    }
+
+    public String decrypt()
+    {
+        return  decrypt(this.cipherText,this.key);
+    }
+
+    public String encrypt()
+    {
+        return encrypt(this.plainText,this.key);
+    }
+
+
+    // ceaser cipher encription method
     public static String encrypt(String plainText, int key)
     {
         char [] pt=plainText.toLowerCase().toCharArray();
@@ -24,6 +45,7 @@ public  class CaeserCipher extends  SubstitiutionCipher{
         return cipherText;
     }
 
+    //caeser cipher decryption method
     public static String decrypt (String cipherText, int key)
     {
         char [] ct=cipherText.toLowerCase().toCharArray();
@@ -34,7 +56,7 @@ public  class CaeserCipher extends  SubstitiutionCipher{
             {
                 int ctIndex=charToIndex(ct[i]);
                 int ptIndex=(ctIndex-key)%TOTAL;
-                if(ptIndex<0)
+                while(ptIndex<0)
                     ptIndex=ptIndex+TOTAL;
                 char ptChar=indexToChar(ptIndex);
                 plainText=plainText+ptChar;
