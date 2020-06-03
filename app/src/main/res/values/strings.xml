@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">PMPCryptograph</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Cryptographer Fragment Strings -->
+    <string name="encrypt"> Encrypt </string>
+    <string name="decrypt"> Decrypt </string>
+    <string name="clear"> Clear </string>
+    <string name="plain_text"> Plain text </string>
+    <string name="cipher_text"> Cipher Text </string>
+    <string name="key"> Key </string>
+
+    <string name="caeser_encryption">CAESER CIPHER </string>
+    <string name="caeser_helper_key">The key must be between values 1 and 25</string>
+
+
 </resources>

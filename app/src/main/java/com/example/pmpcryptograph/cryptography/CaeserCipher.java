@@ -67,4 +67,13 @@ public  class CaeserCipher extends  SubstitiutionCipher{
         return plainText;
     }
 
+    //checks if key is valid
+    public static boolean isKeyValid(int key)
+    {
+        if (key>=1 && key<=25)
+            return  true;
+        else
+            return false;
+    }
+
 }

@@ -32,11 +32,18 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    //expandable layout
+    implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
+
+
     //rita word
     // implementation 'me.shib.java.lib:diction:0.1.1'
     //implementation 'com.github.shibme:diction:0.1.1'
     implementation files('src/main/java/libs/rita.jar')
+    implementation 'com.google.android.material:material:1.0.0'
 }
