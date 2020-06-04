@@ -96,4 +96,12 @@ public class DiagonalCipher extends TranspositionalCipher {
 
         return  matrix;
     }
+
+    public static boolean isKeyShorter(String text, String key)
+    {
+        if(text.length()>key.length())
+            return true;
+        else
+            return false;
+    }
 }

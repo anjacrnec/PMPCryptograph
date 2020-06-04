@@ -34,7 +34,9 @@ public class MainActivity extends AppCompatActivity {
         CryptographerFragment cryptographerFragment=new CryptographerFragment();
         changeBaseFragment(cryptographerFragment);
 
+
     }
+
 
 
 

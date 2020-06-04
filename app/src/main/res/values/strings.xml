@@ -21,4 +21,14 @@
     <string name="keyB"> Key B</string>
     <string name="affine_helper_key">The key must be invertible in relation to 26</string>
 
+    <string name="vignere_cipher">VIGENERE CIPHER</string>
+
+    <string name="playfair_cipher">PLAYFAIR CIPHER</string>
+
+    <string name="transpositional_cipher">TRANSPOSITIONAL CIPHER</string>
+    <string name="transpositional_orthogonal">Orthogonal</string>
+    <string name="transpositional_orthogonal_boustrophedon">Orthogonal Boustrophedon </string>
+    <string name="transpositional_diagonal">Diagonal</string>
+    <string name="transpositional_helper_key">Key must consist of atleast 2 numbers.\n If sorted the key should consist of a series of incrementing values.</string>
+    <string name="transpositional_diagonal_key">Key must be shorter than the input. </string>
 </resources>

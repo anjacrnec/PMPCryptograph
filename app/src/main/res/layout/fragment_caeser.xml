@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".CaeserFragment">
+
+    <TextView
+        android:id="@+id/btnCaeserExpand"
+        style="@style/CryptographerTitles"
+        android:text="@string/caeser_encryption" />
+
+    <net.cachapa.expandablelayout.ExpandableLayout
+        android:id="@+id/layoutCaeserExpandible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        app:el_duration="500"
+        app:el_expanded="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutCeaserPt"
+                style="@style/CryptographerEditText"
+                android:hint="@string/input"
+                app:boxBackgroundColor="#FFFFFF"
+                app:helperTextEnabled="false"
+                app:hintTextAppearance="@style/TextInputLayoutHelper">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCeaserPt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    android:singleLine="true" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutCaeserKey"
+                style="@style/CryptographerEditText"
+                android:layout_below="@id/layoutCeaserPt"
+                android:layout_marginBottom="10dp"
+                android:hint="@string/key"
+                app:helperText="@string/caeser_helper_key"
+                app:helperTextEnabled="true"
+                app:hintTextAppearance="@style/TextInputLayoutHelper">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCaeserKey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutButtoncCaeser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layoutCaeserKey"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnCaeserEncrypt"
+                    style="@style/CryptographerButtons"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/encrypt" />
+
+                <Button
+                    android:id="@+id/btnCaeserDecrypt"
+                    style="@style/CryptographerButtons"
+                    android:backgroundTint="#D5D5D5"
+                    android:text="@string/decrypt" />
+
+                <Button
+                    android:id="@+id/btnCaeserClear"
+                    style="@style/CryptographerButtons"
+                    android:layout_marginRight="10dp"
+                    android:text="@string/clear" />
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutCeaserResult"
+                style="@style/CryptographerOutput"
+                android:layout_below="@id/layoutButtoncCaeser"
+                android:hint="@string/cipher_text"
+                android:textColorHint="#FFFFFF"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtCaeserResult"
+                    style="@style/CryptographerOutputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textNoSuggestions" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </RelativeLayout>
+
+    </net.cachapa.expandablelayout.ExpandableLayout>
+
+</LinearLayout>
+

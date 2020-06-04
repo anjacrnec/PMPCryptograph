@@ -244,12 +244,12 @@ public class PlayfairCipher extends SubstitiutionCipher {
                 if(first.posY!=0)
                     ptFirst=matrix[first.posX][first.posY-1];
                 else
-                    ptFirst=matrix[first.posX][0];
+                    ptFirst=matrix[first.posX][4];
 
-                if(second.posY!=4)
+                if(second.posY!=0)
                     ptSecond=matrix[second.posX][second.posY-1];
                 else
-                    ptSecond=matrix[second.posX][0];
+                    ptSecond=matrix[second.posX][4];
             }
             else if (first.posY==second.posY)
             {
@@ -258,10 +258,10 @@ public class PlayfairCipher extends SubstitiutionCipher {
                 else
                     ptFirst=matrix[0][first.posY];
 
-                if(second.posX!=4)
+                if(second.posX!=0)
                     ptSecond=matrix[second.posX-1][second.posY];
                 else
-                    ptSecond=matrix[0][second.posY];
+                    ptSecond=matrix[4][second.posY];
             }
             else
             {

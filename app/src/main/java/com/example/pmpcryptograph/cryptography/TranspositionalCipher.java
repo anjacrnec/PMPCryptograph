@@ -36,16 +36,20 @@ public  abstract class TranspositionalCipher extends Cipher {
     //checks whether the key is valid
     /* a key needs to consist of values that if sorted
     will produce a series of incrementing values starting with 1*/
-    public static boolean isKeyValid(int [] key)
+    public static boolean isKeyValid(String key)
     {
-        Arrays.sort(key);
+        int []keyInt=keyToInt(key);
+        Arrays.sort(keyInt);
 
-        if(key[0]!=1)
+        if(keyInt.length==1)
+            return false;
+
+        if(keyInt[0]!=1)
             return  false;
         else
             {
-            for (int i = 0; i < key.length - 1; i++) {
-                if (key[i]+1!=key[i+1])
+            for (int i = 0; i < keyInt.length - 1; i++) {
+                if (keyInt[i]+1!=keyInt[i+1])
                     return false;
             }
 
