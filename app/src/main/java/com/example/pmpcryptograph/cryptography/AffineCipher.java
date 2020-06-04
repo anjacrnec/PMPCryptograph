@@ -67,9 +67,14 @@ public class AffineCipher extends SubstitiutionCipher {
         return  inv;
     }
 
-  /*  public static Boolean findGCD(int num1,int num2)
+  public static Boolean isKeyAValid(int keyA)
     {
-        int i;
+
+        if(inverse(keyA)==-1)
+            return false;
+        else
+            return true;
+       /* int i;
         int j;
         if(num1>26) {
             i = num1;
@@ -84,8 +89,8 @@ public class AffineCipher extends SubstitiutionCipher {
         {
             return i;
         }
-        return findGCD(j, i%j);
-    }*/
+        return findGCD(j, i%j);*/
+    }
 
 
 }

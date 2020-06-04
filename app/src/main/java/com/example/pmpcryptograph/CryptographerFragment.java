@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.pmpcryptograph.cryptography.AffineCipher;
 import com.example.pmpcryptograph.cryptography.CaeserCipher;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -21,11 +22,10 @@ import net.cachapa.expandablelayout.ExpandableLayout;
 
 public class CryptographerFragment extends Fragment {
 
-    private ExpandableLayout expandableLayout0;
-    private ExpandableLayout expandableLayout1;
-    String input;
-    int key;
-    String output;
+    private ExpandableLayout expandableCaeser;
+    private ExpandableLayout expandableAffine;
+    String input,output;
+    int key,keyA,keyB;
 
     public CryptographerFragment() {
 
@@ -43,8 +43,8 @@ public class CryptographerFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v= inflater.inflate(R.layout.fragment_cryptographer, container, false);
 
-        expandableLayout0 = v.findViewById(R.id.layoutCaeserExpandible);
-        expandableLayout1 = v.findViewById(R.id.expandable_layout_1);
+        expandableCaeser = v.findViewById(R.id.layoutCaeserExpandible);
+        expandableAffine = v.findViewById(R.id.layoutAffineExpandible);
 
         TextView btnCaeser=(TextView)v.findViewById(R.id.btnCaeserExpand);
         TextInputEditText etCaeserPt =(TextInputEditText) v.findViewById(R.id.etCeaserPt);
@@ -56,7 +56,7 @@ public class CryptographerFragment extends Fragment {
         btnCaeserDecrypt.setEnabled(false);
         btnCaeserEncrypt.setEnabled(false);
 
-        etCaeserKey.addTextChangedListener(new TextWatcher() {
+        etCaeserPt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -65,8 +65,8 @@ public class CryptographerFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 boolean enableButtons;
-                if(s.toString().isEmpty() || !CaeserCipher.isKeyValid(Integer.parseInt(s.toString())))
-                   enableButtons=false;
+                if(s.toString().isEmpty() || etCaeserKey.getText().toString().isEmpty())
+                    enableButtons=false;
                 else
                     enableButtons=true;
                 enableButtons(btnCaeserEncrypt,btnCaeserDecrypt,enableButtons);
@@ -78,7 +78,27 @@ public class CryptographerFragment extends Fragment {
             }
         });
 
+        etCaeserKey.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                boolean enableButtons;
+                if(s.toString().isEmpty() || !CaeserCipher.isKeyValid(Integer.parseInt(s.toString())) || etCaeserPt.getText().toString().isEmpty())
+                   enableButtons=false;
+                else
+                    enableButtons=true;
+                enableButtons(btnCaeserEncrypt,btnCaeserDecrypt,enableButtons);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         btnCaeserEncrypt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,14 +132,14 @@ public class CryptographerFragment extends Fragment {
 
 
 
-        expandableLayout0.setOnExpansionUpdateListener(new ExpandableLayout.OnExpansionUpdateListener() {
+        expandableCaeser.setOnExpansionUpdateListener(new ExpandableLayout.OnExpansionUpdateListener() {
             @Override
             public void onExpansionUpdate(float expansionFraction, int state) {
                 Log.d("ExpandableLayout0", "State: " + state);
             }
         });
 
-        expandableLayout1.setOnExpansionUpdateListener(new ExpandableLayout.OnExpansionUpdateListener() {
+        expandableAffine.setOnExpansionUpdateListener(new ExpandableLayout.OnExpansionUpdateListener() {
             @Override
             public void onExpansionUpdate(float expansionFraction, int state) {
                 Log.d("ExpandableLayout1", "State: " + state);
@@ -129,15 +149,117 @@ public class CryptographerFragment extends Fragment {
         btnCaeser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                expandableLayout0.toggle();
+                expandableCaeser.toggle();
             }
         });
 
-        TextView btn2=(TextView)v.findViewById(R.id.expand_button_1);
-        btn2.setOnClickListener(new View.OnClickListener() {
+        TextView btnAffine=(TextView)v.findViewById(R.id.btnAffineExpand);
+        TextInputEditText etAffineInput =(TextInputEditText) v.findViewById(R.id.etAffineInput);
+        TextInputEditText etAffineKeyA=(TextInputEditText) v.findViewById(R.id.etAffineKeyA);
+        TextInputEditText etAffineKeyB=(TextInputEditText) v.findViewById(R.id.etAffineKeyB);
+        TextInputEditText txtAffineOutput=(TextInputEditText) v.findViewById(R.id.txtAffineOutput);
+        Button btnAffineEncrypt=(Button) v.findViewById(R.id.btnAffineEncrypt);
+        Button btnAffineDecrypt=(Button) v.findViewById(R.id.btnAffineDecrypt);
+        Button btnAffineClear=(Button) v.findViewById(R.id.btnAffineClear);
+        btnAffineDecrypt.setEnabled(false);
+        btnAffineEncrypt.setEnabled(false);
+
+        btnAffine.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                expandableLayout1.toggle();
+                expandableAffine.toggle();
+            }
+        });
+
+        etAffineInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                boolean enableButtons;
+                if(s.toString().isEmpty())
+                    enableButtons=false;
+                else
+                    enableButtons=true;
+                enableButtons(btnAffineEncrypt,btnAffineDecrypt,enableButtons);
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        etAffineKeyB.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                boolean enableButtons;
+                if(s.toString().isEmpty())
+                    enableButtons=false;
+                else
+                    enableButtons=true;
+                enableButtons(btnAffineEncrypt,btnAffineDecrypt,enableButtons);
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        etAffineKeyA.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                boolean enableButtons=false;
+                if(s.toString().isEmpty() || !AffineCipher.isKeyAValid(Integer.parseInt(s.toString())))
+                    enableButtons=false;
+                else
+                    enableButtons=true;
+                enableButtons(btnAffineEncrypt,btnAffineDecrypt,enableButtons);
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        btnAffineEncrypt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                input=etAffineInput.getText().toString();
+                keyA=Integer.parseInt(etAffineKeyA.getText().toString());
+                keyB=Integer.parseInt(etAffineKeyB.getText().toString());
+                output= AffineCipher.encrypt(input,keyA,keyB);
+                txtAffineOutput.setText(output);
+            }
+        });
+
+        btnAffineDecrypt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                input=etAffineInput.getText().toString();
+                keyA=Integer.parseInt(etAffineKeyA.getText().toString());
+                keyB=Integer.parseInt(etAffineKeyB.getText().toString());
+                output= AffineCipher.decrypt(input,keyA,keyB);
+                txtAffineOutput.setText(output);
             }
         });
 
