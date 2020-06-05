@@ -52,8 +52,7 @@ public class PlayfairFragment extends Fragment {
         Button btnPlayfairClear=(Button) v.findViewById(R.id.btnPlayfairClear);
         btnPlayfairDecrypt.setEnabled(false);
         btnPlayfairEncrypt.setEnabled(false);
-        CryptographerFragment cryptographerFragment = ((CryptographerFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.baseFragmentContainer));
-
+        CryptographerFragment cryptographerFragment = ((CryptographerFragment) getActivity().getSupportFragmentManager().findFragmentByTag(MainActivity.TAG_CRYPTOGRAPHER_FRAGMENT));
 
         btnPlayfair.setOnClickListener(new View.OnClickListener() {
             @Override

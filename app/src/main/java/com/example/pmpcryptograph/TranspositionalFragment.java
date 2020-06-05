@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pmpcryptograph.cryptography.DiagonalCipher;
 import com.example.pmpcryptograph.cryptography.OrthogonalCipher;
@@ -23,6 +24,10 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
+
+import rita.RiLexicon;
+import rita.RiTa;
+import rita.RiWordNet;
 
 
 public class TranspositionalFragment extends Fragment {
@@ -57,8 +62,7 @@ public class TranspositionalFragment extends Fragment {
 
         btnTranspositionalEncrypt.setEnabled(false);
 
-        CryptographerFragment cryptographerFragment = ((CryptographerFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.baseFragmentContainer));
-
+        CryptographerFragment cryptographerFragment = ((CryptographerFragment) getActivity().getSupportFragmentManager().findFragmentByTag(MainActivity.TAG_CRYPTOGRAPHER_FRAGMENT));
         btnTranspositional.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,6 +180,8 @@ public class TranspositionalFragment extends Fragment {
         btnTranspositionalClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 cryptographerFragment.clearFields(etTranspositionalInput,etTranspositionalKey,txtTranspositionalOutput);
                 rbOrthogonal.setChecked(true);
             }

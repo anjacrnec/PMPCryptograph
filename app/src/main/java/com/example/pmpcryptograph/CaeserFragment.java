@@ -52,7 +52,7 @@ public class CaeserFragment extends Fragment {
         btnCaeserDecrypt.setEnabled(false);
         btnCaeserEncrypt.setEnabled(false);
         //FragmentManager fm=getChildFragmentManager();
-        CryptographerFragment cryptographerFragment = ((CryptographerFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.baseFragmentContainer));
+        CryptographerFragment cryptographerFragment = ((CryptographerFragment) getActivity().getSupportFragmentManager().findFragmentByTag(MainActivity.TAG_CRYPTOGRAPHER_FRAGMENT));
 
 
 

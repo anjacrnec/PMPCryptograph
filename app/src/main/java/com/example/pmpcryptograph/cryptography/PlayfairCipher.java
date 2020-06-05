@@ -12,7 +12,15 @@ public class PlayfairCipher extends SubstitiutionCipher {
 
 
 
+    String key;
 
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
     //method that removes duplicate characters in the key
     // ex. anja is transformed to ani
     protected static String removeRepetableChars(String key)

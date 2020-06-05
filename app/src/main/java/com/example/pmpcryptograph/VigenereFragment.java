@@ -51,8 +51,7 @@ public class VigenereFragment extends Fragment {
         btnVigenereDecrypt.setEnabled(false);
         btnVigenereEncrypt.setEnabled(false);
 
-        CryptographerFragment cryptographerFragment = ((CryptographerFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.baseFragmentContainer));
-
+        CryptographerFragment cryptographerFragment = ((CryptographerFragment) getActivity().getSupportFragmentManager().findFragmentByTag(MainActivity.TAG_CRYPTOGRAPHER_FRAGMENT));
 
         btnVigenere.setOnClickListener(new View.OnClickListener() {
             @Override

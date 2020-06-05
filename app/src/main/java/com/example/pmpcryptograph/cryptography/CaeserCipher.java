@@ -1,7 +1,10 @@
 package com.example.pmpcryptograph.cryptography;
 
 
+import rita.RiTa;
+
 public  class CaeserCipher extends  SubstitiutionCipher{
+
 
 
     int key;
@@ -10,7 +13,7 @@ public  class CaeserCipher extends  SubstitiutionCipher{
     {
         this.plainText=plainText;
         this.key=key;
-        this.cipherText=decrypt(this.plainText,this.key);
+        this.cipherText=encrypt(this.plainText,this.key);
     }
 
     public String decrypt()
@@ -23,6 +26,22 @@ public  class CaeserCipher extends  SubstitiutionCipher{
         return encrypt(this.plainText,this.key);
     }
 
+
+    public static CaeserCipher generateCipher()
+    {
+        String plainText= RiTa.randomWord();
+        int key=generateRandomNumber(1,25);
+        CaeserCipher caeserCipher=new CaeserCipher(plainText,key);
+        return  caeserCipher;
+    }
+
+    public int getKey() {
+        return key;
+    }
+
+    public void setKey(int key) {
+        this.key = key;
+    }
 
     // ceaser cipher encription method
     public static String encrypt(String plainText, int key)
@@ -75,5 +94,6 @@ public  class CaeserCipher extends  SubstitiutionCipher{
         else
             return false;
     }
+
 
 }

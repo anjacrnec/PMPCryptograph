@@ -1,7 +1,42 @@
 package com.example.pmpcryptograph.cryptography;
 
+import rita.RiTa;
+
 //TO DO - implement method that checks if inverse of key is possible
 public class AffineCipher extends SubstitiutionCipher {
+
+    int keyA;
+    int keyB;
+
+    public int getKeyA() {
+        return keyA;
+    }
+
+    public int getKeyB() {
+        return keyB;
+    }
+
+    public AffineCipher(String plainText, int keyA, int keyB)
+    {
+        this.plainText=plainText;
+        this.keyA=keyA;
+        this.keyB=keyB;
+        this.cipherText=encrypt(this.plainText,this.keyA,this.keyB);
+    }
+
+    public static Cipher generateCipher()
+    {
+        String plainText= RiTa.randomWord();
+        int keyA=4;
+        while(!isKeyAValid(keyA))
+        {
+            keyA=generateRandomNumber(1,100);
+        }
+        int keyB=generateRandomNumber(1,100);
+
+        return new AffineCipher(plainText,keyA,keyB);
+    }
+
 
 
     //affine cipher encryption method
@@ -74,22 +109,6 @@ public class AffineCipher extends SubstitiutionCipher {
             return false;
         else
             return true;
-       /* int i;
-        int j;
-        if(num1>26) {
-            i = num1;
-            j = 26;
-        }
-        else
-        {
-            i=16;
-            j=num2;
-        }
-        if(j == 0)
-        {
-            return i;
-        }
-        return findGCD(j, i%j);*/
     }
 
 

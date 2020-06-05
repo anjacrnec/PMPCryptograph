@@ -52,8 +52,7 @@ public class AffineFragment extends Fragment {
         Button btnAffineClear=(Button) v.findViewById(R.id.btnAffineClear);
         btnAffineDecrypt.setEnabled(false);
         btnAffineEncrypt.setEnabled(false);
-
-        CryptographerFragment cryptographerFragment = ((CryptographerFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.baseFragmentContainer));
+        CryptographerFragment cryptographerFragment = ((CryptographerFragment) getActivity().getSupportFragmentManager().findFragmentByTag(MainActivity.TAG_CRYPTOGRAPHER_FRAGMENT));
 
         expandableAffine.setOnExpansionUpdateListener(new ExpandableLayout.OnExpansionUpdateListener() {
             @Override
