@@ -11,8 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.pmpcryptograph.cryptography.AffineCipher;
-import com.example.pmpcryptograph.cryptography.CaeserCipher;
+import com.example.pmpcryptograph.exercise.Exercise;
 
 
 public class ExercisesFragment extends Fragment {
@@ -42,17 +41,10 @@ public class ExercisesFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //String s=Exercise.chooseCipher(true,true,true,true,false,false,false);
 
-               /*CaeserCipher cipher=(CaeserCipher)Exercise.generateCipher("Caeser","Encrypt");
-                String s=cipher.getCipherText();*/
-
-                AffineCipher ac=(AffineCipher) Exercise.generateCipher("Affine","Encrypt");
-
-
-               CaeserCipher cs=CaeserCipher.generateCipher();
-               String s=ac.getPlainText()+" "+ac.getKeyA()+" "+ac.getKeyB()+" "+ac.getCipherText();
-               tv.setText(s);
+                Exercise e=Exercise.generateRandomExercise(false,false,false,false,false,false,true);
+                String s=e.getBody()+" "+e.getAnswer();
+                tv.setText(s);
                 Toast.makeText(getActivity().getApplicationContext(),s,Toast.LENGTH_LONG).show();
             }
         });

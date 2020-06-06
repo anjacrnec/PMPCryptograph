@@ -13,6 +13,13 @@ public class DiagonalCipher extends TranspositionalCipher {
 
     }
 
+    public DiagonalCipher(String plaintext,String key)
+    {
+        this.plainText=plaintext;
+        this.key=key;
+        this.cipherText=encrypt(this.plainText,this.key);
+    }
+
     //diagonal transpositional encryption
     public static String encrypt(String plainText, String key)
     {

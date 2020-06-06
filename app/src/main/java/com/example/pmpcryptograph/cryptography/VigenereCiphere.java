@@ -3,6 +3,19 @@ package com.example.pmpcryptograph.cryptography;
 public class VigenereCiphere extends SubstitiutionCipher {
 
 
+
+    String key;
+
+    public VigenereCiphere(String plainText, String key)
+    {
+        this.plainText=plainText;
+        this.key=key;
+        this.cipherText=encrypt(this.plainText,this.key);
+    }
+
+    public String getKey() {
+        return key;
+    }
     //vignere cipher encryption method
     public static String encrypt (String plainText, String key)
     {

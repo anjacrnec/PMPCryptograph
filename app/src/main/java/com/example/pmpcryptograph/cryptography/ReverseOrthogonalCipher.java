@@ -5,8 +5,17 @@ import java.util.HashMap;
 public class ReverseOrthogonalCipher extends TranspositionalCipher {
 
 
+
     public ReverseOrthogonalCipher()
     {
+
+    }
+
+    public ReverseOrthogonalCipher(String plainText, String key)
+    {
+        this.plainText=plainText;
+        this.key=key;
+        this.cipherText=encrypt(plainText,key);
 
     }
 

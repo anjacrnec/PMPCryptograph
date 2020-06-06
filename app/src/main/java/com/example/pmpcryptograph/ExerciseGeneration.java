@@ -17,7 +17,8 @@ import java.util.Map;
 
 import rita.RiTa;
 
-public class Exercise {
+public class ExerciseGeneration {
+
     private static final String CAESER_CIPHER="Caeser";
     private static final String AFFINE_CIPHER="Affine";
     private static final String VIGNERE_CIPHER="Vigenere";
@@ -28,10 +29,6 @@ public class Exercise {
     private static final String ENCRYPT="Encrypt";
     private static final String DECRYPT="Decrypt";
     private static final String [] TYPE_CIPHER={ENCRYPT,DECRYPT};
-
-
-    private String body;
-
 
 
     public static String chooseCipher (boolean caeser, boolean affine, boolean vigenere, boolean playfair, boolean orthoganl, boolean reverseOrthogonal, boolean diagonal)
@@ -80,8 +77,7 @@ public class Exercise {
         {
             case CAESER_CIPHER:
                 return CaeserCipher.generateCipher();
-            case AFFINE_CIPHER:
-                return AffineCipher.generateCipher();
+
 
         }
 

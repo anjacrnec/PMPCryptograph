@@ -5,10 +5,20 @@ import java.util.HashMap;
 public class OrthogonalCipher extends  TranspositionalCipher{
 
 
+
+
+
     public OrthogonalCipher()
     {
 
     }
+    public OrthogonalCipher(String plainText,String key)
+    {
+        this.plainText=plainText;
+        this.key=key;
+        this.cipherText=encrypt(plainText,key);
+    }
+
 
     //orthogonal transpositional encryption
     public static String encrypt (String plainText, String key)

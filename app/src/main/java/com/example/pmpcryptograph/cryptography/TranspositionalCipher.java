@@ -7,6 +7,11 @@ import java.util.HashMap;
 public  abstract class TranspositionalCipher extends Cipher {
 
 
+    String key;
+
+    public String getKey() {
+        return key;
+    }
 
     //each value from the kay is paired with its position in a HashMap -> encryption easier
     protected static HashMap<Integer, Integer> keyToHashMap(String key)

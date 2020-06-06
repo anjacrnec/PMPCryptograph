@@ -24,19 +24,6 @@ public class AffineCipher extends SubstitiutionCipher {
         this.cipherText=encrypt(this.plainText,this.keyA,this.keyB);
     }
 
-    public static Cipher generateCipher()
-    {
-        String plainText= RiTa.randomWord();
-        int keyA=4;
-        while(!isKeyAValid(keyA))
-        {
-            keyA=generateRandomNumber(1,100);
-        }
-        int keyB=generateRandomNumber(1,100);
-
-        return new AffineCipher(plainText,keyA,keyB);
-    }
-
 
 
     //affine cipher encryption method
