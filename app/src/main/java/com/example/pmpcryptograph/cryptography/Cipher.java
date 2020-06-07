@@ -9,6 +9,7 @@ public abstract class Cipher {
     protected String plainText;
     protected String cipherText;
 
+
     public String getPlainText() {
         return plainText;
     }

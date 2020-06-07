@@ -13,6 +13,7 @@ public class DiagonalExercise extends Exercise {
     public void generateExercise() {
         this.title=DIAGONAL_CPIHER;
         this.diagonalCipher=generateCipher();
+        this.cipher=this.diagonalCipher;
         this.type=generateType();
         this.body=generateBody();
         this.answer=generateAnswer(this.diagonalCipher);
@@ -38,15 +39,8 @@ public class DiagonalExercise extends Exercise {
     public DiagonalCipher generateCipher() {
 
         boolean isValid=false;
-        int num=0;
-        String plainText="";
-        while(!isValid)
-        {
-            plainText = RiTa.randomWord();
-            num = Randoms.generateRandomNumber(2, 5);
-            if(plainText.length()>num)
-                isValid=true;
-        }
+        String plainText=RiTa.randomWord();
+        int num = Randoms.generateRandomNumber(2, plainText.length()-1);
         Integer [] array=Randoms.generateArray(num);
         String key=Randoms.shuffleArray(array);
         DiagonalCipher diagonalCipher=new DiagonalCipher(plainText,key);

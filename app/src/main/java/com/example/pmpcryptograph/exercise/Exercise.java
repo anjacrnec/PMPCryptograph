@@ -28,8 +28,13 @@ public abstract class Exercise {
     protected static final String DECRYPT="Decrypt";
     protected static final String [] TYPE_CIPHER={ENCRYPT,DECRYPT};
 
-    protected String title;
+
+    public Cipher getCipher() {
+        return cipher;
+    }
+
     protected Cipher cipher;
+    protected String title;
     protected String type;
     protected String body;
     protected String answer;
@@ -105,7 +110,7 @@ public abstract class Exercise {
 
     public String generateType()
     {
-        if(this.title==DIAGONAL_CPIHER)
+        if(this.title==DIAGONAL_CPIHER || this.title==ORTHOGONAL_CIPHER || this.title==REVERSE_ORTHOGONAL_CIPHER)
             return ENCRYPT;
         else
         {
