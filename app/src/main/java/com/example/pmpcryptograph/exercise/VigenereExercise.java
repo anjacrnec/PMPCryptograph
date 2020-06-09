@@ -1,7 +1,14 @@
 package com.example.pmpcryptograph.exercise;
 
+import android.content.Context;
+import android.content.res.Resources;
+
+import com.example.pmpcryptograph.R;
 import com.example.pmpcryptograph.cryptography.Cipher;
 import com.example.pmpcryptograph.cryptography.VigenereCiphere;
+import com.example.pmpcryptograph.roomdb.WordViewModel;
+
+import java.util.concurrent.ExecutionException;
 
 import rita.RiTa;
 
@@ -11,16 +18,25 @@ public class VigenereExercise extends Exercise {
 
 
     @Override
-    public void generateExercise() {
+    public void generateExercise(Context con,WordViewModel vm) throws ExecutionException, InterruptedException {
+        this.con=con;
+        Resources res=con.getResources();
         this.title=VIGNERE_CIPHER;
-       this.vigenereCiphere=generateCipher();
+       this.vigenereCiphere=generateCipher(vm);
+       this.cipher=this.vigenereCiphere;
        this.type=generateType();
-       this.body=generateBody();
        this.answer=generateAnswer(this.vigenereCiphere);
+       this.keyStr=generateKeyStr();
+        this.body=generateBody(this.con,
+                this.type,
+                res.getString(R.string.vignere_cipher),
+                this.vigenereCiphere.getPlainText(),
+                this.vigenereCiphere.getCipherText(),
+                this.keyStr);
     }
 
 
-    @Override
+    /*@Override
     public String generateBody() {
 
         String body;
@@ -35,12 +51,17 @@ public class VigenereExercise extends Exercise {
         }
 
         return body;
+    }*/
+
+    @Override
+    public String generateKeyStr() {
+        return vigenereCiphere.getKey();
     }
 
     @Override
-    public VigenereCiphere generateCipher() {
-        String plainText= RiTa.randomWord();
-        String key=RiTa.randomWord();
+    public VigenereCiphere generateCipher(WordViewModel vm) throws ExecutionException, InterruptedException {
+        String plainText= generateText(vm);
+        String key=generateText(vm);
         VigenereCiphere vigenereCiphere=new VigenereCiphere(plainText,key);
         return vigenereCiphere;
     }

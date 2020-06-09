@@ -1,34 +1,253 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E3E2E2"
     android:orientation="vertical"
     tools:context=".ExercisesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <TextView
-        android:id="@+id/txtRes"
+        android:id="@+id/btnExcercise"
+        style="@style/CryptographerTitles"
+        android:text="@string/exercise"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:textAllCaps="true"
+        />
+
+    <net.cachapa.expandablelayout.ExpandableLayout
+
+        android:id="@+id/layoutVigenereExpandible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment" />
+        android:background="#FFFFFF"
+        app:el_duration="500"
+        app:el_expanded="true">
+    </net.cachapa.expandablelayout.ExpandableLayout>
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
+
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_below="@+id/btnExcercise"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:layout_marginStart="10dp"
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button2" />
+        android:layout_marginEnd="10dp"
+        android:background="#FFFFFF"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button3" />
+        <com.codesgood.views.JustifiedTextView
+            android:id="@+id/txtBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
-</LinearLayout>
+            android:background="#FFFFFF"
+            android:padding="10sp"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            android:textSize="18sp" />
+        <View
+            android:id="@+id/divider5"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@android:color/darker_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtCipherLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/cipher_colon"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txtCipher"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@android:color/darker_gray" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtPlainTextLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/plain_text_colon"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txtPlainText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@android:color/darker_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtKeyLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/key_colon"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txtKey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider4"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@android:color/darker_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtCipherTextLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/cipher_text_colon"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txtCipherText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider6"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@android:color/darker_gray" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="Answer"
+            style="@style/CryptographerEditText"
+            app:helperTextEnabled="true"
+            app:hintTextAppearance="@style/TextInputLayoutHelper"
+            >
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+              />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatingActionButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:layout_gravity="center"
+                android:src="@drawable/placeholder" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Button" />
+
+                <Button
+                    android:id="@+id/btnNewExercise"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/new_exercise" />
+            </LinearLayout>
+        </FrameLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

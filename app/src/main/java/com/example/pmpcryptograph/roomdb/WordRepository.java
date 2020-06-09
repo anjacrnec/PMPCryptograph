@@ -20,6 +20,11 @@ public class WordRepository {
         allWords=wordDao.getAllWords();
     }
 
+    public LiveData<List<Word>> getLiveDataWords()
+    {
+        return allWords;
+    }
+
     public void insert(Word word)
     {
         new InsertWordAsyncTask(wordDao).execute(word);
@@ -35,13 +40,29 @@ public class WordRepository {
         new DeleteWordAsyncTask(wordDao).execute(word);
     }*/
 
-    public LiveData<List<Word>> getLiveDataWords()
-    {
-        return allWords;
+    public int size() throws ExecutionException, InterruptedException {
+        return new SizeASyncTask(wordDao).execute().get();
     }
 
     public List<Word> getListWords() throws ExecutionException, InterruptedException {
         return new GetListWordsASyncTask(wordDao).execute().get();
+    }
+
+    public Word getWord(int id) throws ExecutionException, InterruptedException {
+        return new GetWordASyncTask(wordDao,id).execute().get();
+    }
+
+    public static class SizeASyncTask extends AsyncTask<Void,Void,Integer>
+    {
+        private WordDao wordDao;
+        private SizeASyncTask(WordDao wordDao)
+        {
+            this.wordDao=wordDao;
+        }
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            return wordDao.size();
+        }
     }
 
     public static class GetListWordsASyncTask extends AsyncTask<Void,Void,List<Word>>
@@ -55,6 +76,21 @@ public class WordRepository {
         @Override
         protected List<Word> doInBackground(Void... voids) {
             return wordDao.getListWords();
+        }
+    }
+
+    public static class GetWordASyncTask extends AsyncTask<Void,Void,Word>
+    {
+        private WordDao wordDao;
+        private int id;
+        private GetWordASyncTask(WordDao wordDao,int id)
+        {
+            this.wordDao=wordDao;
+            this.id=id;
+        }
+        @Override
+        protected Word doInBackground(Void... voids) {
+            return wordDao.getWord(id);
         }
     }
 

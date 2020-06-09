@@ -40,6 +40,8 @@ dependencies {
     //expandable layout
     implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
 
+    //justified text
+    implementation 'com.codesgood:justifiedtextview:1.1.0'
     //room
     def room_version = "2.2.5"
     implementation "androidx.room:room-runtime:$room_version"
@@ -59,4 +61,6 @@ dependencies {
     //implementation 'com.github.shibme:diction:0.1.1'
     implementation files('src/main/java/libs/rita.jar')
     implementation 'com.google.android.material:material:1.0.0'
+
+
 }

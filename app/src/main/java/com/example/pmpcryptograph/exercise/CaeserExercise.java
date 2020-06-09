@@ -1,9 +1,16 @@
 package com.example.pmpcryptograph.exercise;
 
+import android.content.Context;
+import android.content.res.Resources;
+
+import com.example.pmpcryptograph.R;
 import com.example.pmpcryptograph.Randoms;
 import com.example.pmpcryptograph.cryptography.CaeserCipher;
 import com.example.pmpcryptograph.cryptography.Cipher;
 import com.example.pmpcryptograph.exercise.Exercise;
+import com.example.pmpcryptograph.roomdb.WordViewModel;
+
+import java.util.concurrent.ExecutionException;
 
 import rita.RiTa;
 
@@ -11,41 +18,41 @@ public class CaeserExercise extends Exercise {
 
     private CaeserCipher caeserCipher;
 
+
     public CaeserExercise()
     {
 
     }
 
     @Override
-    public void generateExercise()
-    {
+    public void generateExercise(Context con,WordViewModel vm) throws ExecutionException, InterruptedException {
+
+        this.con=con;
+        Resources res=con.getResources();
         this.title=CAESER_CIPHER;
-        this.caeserCipher=generateCipher();
+        this.caeserCipher=generateCipher(vm);
+        this.cipher=this.caeserCipher;
         this.type=generateType();
-        this.body=generateBody();
         this.answer=generateAnswer(this.caeserCipher);
-    }
-
-
-    @Override
-    public String generateBody() {
-        String body;
-        if(this.type=="Encrypt")
-        {
-            body="Use the Caeser mehtod to encrypt the word"+this.caeserCipher.getPlainText()+" with the key "+this.caeserCipher.getKey();
-        }
-        else
-        {
-            body="Use the Caeser mehtod to decrypt the word"+this.caeserCipher.getCipherText()+" with the key "+this.caeserCipher.getKey();
-        }
-
-        return body;
+        this.keyStr=generateKeyStr();
+        this.body=generateBody(this.con,
+                this.type,
+                res.getString(R.string.caeser_encryption),
+                this.caeserCipher.getPlainText(),
+                this.caeserCipher.getCipherText(),
+                this.keyStr);
     }
 
     @Override
-    public CaeserCipher generateCipher()
+    public String generateKeyStr()
     {
-        String plainText= RiTa.randomWord();
+        return String.valueOf(this.caeserCipher.getKey());
+    }
+
+
+    @Override
+    public CaeserCipher generateCipher(WordViewModel vm) throws ExecutionException, InterruptedException {
+        String plainText= generateText(vm);
         int key= Randoms.generateRandomNumber(1,25);
         CaeserCipher caeserCipher=new CaeserCipher(plainText,key);
         return  caeserCipher;

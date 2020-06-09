@@ -5,126 +5,102 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.pmpcryptograph.exercise.Exercise;
-import com.example.pmpcryptograph.roomdb.VolleyCallback;
-import com.example.pmpcryptograph.roomdb.Word;
-import com.example.pmpcryptograph.roomdb.WordRequest;
 import com.example.pmpcryptograph.roomdb.WordViewModel;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.List;
 import java.util.concurrent.ExecutionException;
-
-import rita.RiTa;
 
 
 public class ExercisesFragment extends Fragment {
 
 
     private static WordViewModel pcViewModel;
+
+
     public ExercisesFragment() {
     }
-
-
-
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v=inflater.inflate(R.layout.fragment_exercises, container, false);
+        View v = inflater.inflate(R.layout.fragment_exercises, container, false);
+        pcViewModel = ViewModelProviders.of(getActivity()).get(WordViewModel.class);
 
-        pcViewModel= ViewModelProviders.of(getActivity()).get(WordViewModel.class);
-        TextView tv=(TextView) v.findViewById(R.id.txtRes);
-        Button btn=(Button) v.findViewById(R.id.button);
+         TextView txtBody=v.findViewById(R.id.txtBody);
+         TextView txtCipher=v.findViewById(R.id.txtCipher);
+         TextView txtPlainText=v.findViewById(R.id.txtPlainText);
+         TextView txtCipherText=v.findViewById(R.id.txtCipherText);
+         TextView txtKey=v.findViewById(R.id.txtKey);
+         Button btnNextExercise=v.findViewById(R.id.btnNewExercise);
 
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        try {
+            int s = pcViewModel.size();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-                Exercise e=Exercise.generateRandomExercise(true,true,true,true,true,true,true);
-                String s=e.getBody()+" "+e.getAnswer();
-                tv.setText(s);
-                Toast.makeText(getActivity().getApplicationContext(),s,Toast.LENGTH_LONG).show();
-            }
-        });
+        Exercise ex;
+        try {
+            ex=Exercise.generateRandomExercise(getActivity().getApplicationContext(),pcViewModel,true,true,true,true,true,true,true);
+          exerciseToUI(ex,txtCipher,txtPlainText,txtKey,txtCipherText,txtBody);
 
-        Button btn2=(Button) v.findViewById(R.id.button2);
-        btn2.setOnClickListener(new View.OnClickListener() {
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        btnNextExercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    List<Word> words=pcViewModel.getListWords();
-                    String s="";
-                    for(int i=0;i<words.size();i++)
-                    {
-                        s=s+words.get(i).getWord()+" ";
-                    }
-                    Toast.makeText(getActivity().getApplicationContext(),s,Toast.LENGTH_LONG).show();
+                    Exercise ex = Exercise.generateRandomExercise(getActivity().getApplicationContext(),pcViewModel,true,true,true,true,true,true,true);
+                    exerciseToUI(ex,txtCipher,txtPlainText,txtKey,txtCipherText,txtBody);
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
 
-
             }
         });
 
-        Button btn3=(Button) v.findViewById(R.id.button3);
-        btn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String word=RiTa.randomWord();
-                //String url="https://owlbot.info/api/v4/dictionary/"+word;
-                String url="https://api.dictionaryapi.dev/api/v2/entries/en/"+word;
-                WordRequest w=new WordRequest(getActivity().getApplicationContext());
-                w.getWord(url, new VolleyCallback() {
-                    @Override
-                    public void getResponse(JSONArray response) {
-                        String d=getDef(response);
-                       tv.setText(word+"="+d);
-                    }
-                });
 
-            }
-        });
+
         return v;
     }
 
-    public String getDef(JSONArray response)  {
-        String def="";
-        try {
-
-            Log.d("eve","tuka sme");
-            // def= String.valueOf(response.getJSONArray("definitions").getJSONObject(0).get("definition"));
-            // response.getJSONArray("definition");
-
-          def = String.valueOf(response.getJSONObject(0).getJSONArray("meanings").getJSONObject(0).getJSONArray("definitions").getJSONObject(0).get("example"));
-
-        }
-        catch (JSONException e)
+    public void exerciseToUI(Exercise exercise,TextView txtCipher, TextView txtPlainText, TextView txtKey, TextView txtCipherText, TextView txtBody)
+    {
+        txtCipher.setText(exercise.getTitle());
+        if(exercise.getType()=="Encrypt")
         {
-            e.printStackTrace();
+            txtPlainText.setText(exercise.getCipher().getPlainText());
+            txtCipherText.setText("?");
         }
-        return def;
+        else
+        {
+            txtCipherText.setText(exercise.getCipher().getCipherText());
+            txtPlainText.setText("?");
+        }
+        txtKey.setText(exercise.getKeyStr());
+        txtBody.setText(exercise.getBody());
+
     }
 }

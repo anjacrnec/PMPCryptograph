@@ -1,9 +1,16 @@
 package com.example.pmpcryptograph.exercise;
 
+import android.content.Context;
+import android.content.res.Resources;
+
+import com.example.pmpcryptograph.R;
 import com.example.pmpcryptograph.Randoms;
 import com.example.pmpcryptograph.cryptography.Cipher;
 import com.example.pmpcryptograph.cryptography.OrthogonalCipher;
 import com.example.pmpcryptograph.cryptography.VigenereCiphere;
+import com.example.pmpcryptograph.roomdb.WordViewModel;
+
+import java.util.concurrent.ExecutionException;
 
 import rita.RiTa;
 
@@ -12,15 +19,24 @@ public class OrthogonalExercise extends Exercise {
     private OrthogonalCipher orthogonalCipher;
 
     @Override
-    public void generateExercise() {
+    public void generateExercise(Context con,WordViewModel vm) throws ExecutionException, InterruptedException {
+        this.con=con;
+        Resources res=con.getResources();
         this.title=ORTHOGONAL_CIPHER;
-        this.orthogonalCipher=generateCipher();
+        this.orthogonalCipher=generateCipher(vm);
+        this.cipher=this.orthogonalCipher;
         this.type=generateType();
-        this.body=generateBody();
         this.answer=generateAnswer(this.orthogonalCipher);
+        this.keyStr=generateKeyStr();
+        this.body=generateBody(this.con,
+                this.type,
+                res.getString(R.string.trans_ortho_cipher),
+                this.orthogonalCipher.getPlainText(),
+                this.orthogonalCipher.getCipherText(),
+                this.keyStr);
     }
 
-    @Override
+    /*@Override
     public String generateBody() {
         String body;
         OrthogonalCipher oc=this.orthogonalCipher;
@@ -34,12 +50,17 @@ public class OrthogonalExercise extends Exercise {
         }
 
         return body;
+    }*/
+
+    @Override
+    public String generateKeyStr() {
+        return orthogonalCipher.getKey();
     }
 
     @Override
-    public OrthogonalCipher generateCipher() {
+    public OrthogonalCipher generateCipher(WordViewModel vm) throws ExecutionException, InterruptedException {
 
-        String plainText= RiTa.randomWord();
+        String plainText= generateText(vm);
         int num=Randoms.generateRandomNumber(2,5);
         Integer [] array=Randoms.generateArray(num);
         String key=Randoms.shuffleArray(array);

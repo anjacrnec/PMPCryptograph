@@ -10,6 +10,8 @@ public abstract class Cipher {
     protected String cipherText;
 
 
+    protected  String title;
+
     public String getPlainText() {
         return plainText;
     }

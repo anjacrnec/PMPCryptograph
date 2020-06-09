@@ -18,23 +18,40 @@
     <string name="input">Input</string>
     <string name="output">Output</string>
 
-    <string name="caeser_encryption">CAESER CIPHER </string>
+    <string name="caeser_encryption">caeser cipher </string>
     <string name="caeser_helper_key">The key must be between values 1 and 25</string>
 
 
-    <string name="affine_cipher">AFFINE CIPHER</string>
+    <string name="affine_cipher">affine cipher</string>
     <string name="keyA"> Key A</string>
     <string name="keyB"> Key B</string>
     <string name="affine_helper_key">The key must be invertible in relation to 26</string>
 
-    <string name="vignere_cipher">VIGENERE CIPHER</string>
+    <string name="vignere_cipher">vigenere cipher</string>
+    <string name="playfair_cipher">playfair cipher</string>
 
-    <string name="playfair_cipher">PLAYFAIR CIPHER</string>
 
-    <string name="transpositional_cipher">TRANSPOSITIONAL CIPHER</string>
+
+    <string name="transpositional_cipher">transpositional</string>
     <string name="transpositional_orthogonal">Orthogonal</string>
     <string name="transpositional_orthogonal_boustrophedon">Orthogonal Boustrophedon </string>
     <string name="transpositional_diagonal">Diagonal</string>
     <string name="transpositional_helper_key">Key must consist of atleast 2 numbers.\n If sorted the key should consist of a series of incrementing values.</string>
     <string name="transpositional_diagonal_key">Key must be shorter than the input. </string>
+    <string name="trans_ortho_boustrophedon_cipher">transpositional orthogonal boustrophedon cipher</string>
+    <string name="trans_ortho_cipher">transpositional orthogonal cipher</string>
+    <string name="trans_diagonal_cipher">transpositional diagonal cipher</string>
+    <!--Exercises fragment-->
+    <string name="exercise">Exercise</string>
+    <string name="cipher_colon">Cipher : </string>
+    <string name="plain_text_colon"> Plain text : </string>
+    <string name="cipher_text_colon"> Cipher text :</string>
+    <string name="key_colon"> Key :</string>
+    <string name="new_exercise">Next </string>
+    <string name="pt">plain text</string>
+    <string name="ct">cipher text</string>
+    <string name="ek">encrypt</string>
+    <string name="dk">decrypt</string>
+    <string name="body_pt1">Use the %1$s to %2$s the %3$s %4$s with the key %5$s</string>
+    <string name="caesar_body_key_pt2">with the key</string>
 </resources>

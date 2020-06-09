@@ -1,8 +1,15 @@
 package com.example.pmpcryptograph.exercise;
 
+import android.content.Context;
+import android.content.res.Resources;
+
+import com.example.pmpcryptograph.R;
 import com.example.pmpcryptograph.Randoms;
 import com.example.pmpcryptograph.cryptography.AffineCipher;
 import com.example.pmpcryptograph.exercise.Exercise;
+import com.example.pmpcryptograph.roomdb.WordViewModel;
+
+import java.util.concurrent.ExecutionException;
 
 import rita.RiTa;
 
@@ -12,18 +19,27 @@ public class AffineExercise extends Exercise {
 
 
     @Override
-    public void generateExercise() {
+    public void generateExercise(Context con,WordViewModel vm) throws ExecutionException, InterruptedException {
+        this.con=con;
+        Resources res=con.getResources();
         this.title=AFFINE_CIPHER;
-        this.affineCipher=generateCipher();
+        this.affineCipher=generateCipher(vm);
+        this.cipher=this.affineCipher;
         this.type=generateType();
-        this.body=generateBody();
         this.answer=generateAnswer(this.affineCipher);
+        this.keyStr=generateKeyStr();
+        this.body=generateBody(this.con,
+                this.type,
+                res.getString(R.string.affine_cipher),
+                this.affineCipher.getPlainText(),
+                this.affineCipher.getCipherText(),
+                this.keyStr);
     }
 
 
 
 
-    @Override
+   /* @Override
     public String generateBody()
     {
         String body;
@@ -38,12 +54,17 @@ public class AffineExercise extends Exercise {
         }
 
         return body;
+    }*/
+
+    @Override
+    public String generateKeyStr() {
+        String key="A = "+this.affineCipher.getKeyA()+" B = "+this.affineCipher.getKeyB();
+        return key;
     }
 
     @Override
-    public AffineCipher generateCipher()
-    {
-        String plainText= RiTa.randomWord();
+    public AffineCipher generateCipher(WordViewModel vm) throws ExecutionException, InterruptedException {
+        String plainText= generateText(vm);
         int keyA=4;
         while(!AffineCipher.isKeyAValid(keyA))
         {

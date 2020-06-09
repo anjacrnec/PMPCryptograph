@@ -21,11 +21,17 @@ public interface WordDao {
     @Delete
     void delete(Word word);
 
+    @Query ("SELECT COUNT(*) from table_word")
+    int size();
+
     @Query("SELECT * FROM table_word")
     List<Word> getListWords();
 
     @Query("SELECT * FROM table_word")
     LiveData<List<Word>> getAllWords();
+
+    @Query("SELECT * FROM table_word WHERE id=:id")
+    Word getWord(int id);
 
 
 }

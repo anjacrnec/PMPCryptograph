@@ -1,7 +1,14 @@
 package com.example.pmpcryptograph.exercise;
 
+import android.content.Context;
+import android.content.res.Resources;
+
+import com.example.pmpcryptograph.R;
 import com.example.pmpcryptograph.Randoms;
 import com.example.pmpcryptograph.cryptography.ReverseOrthogonalCipher;
+import com.example.pmpcryptograph.roomdb.WordViewModel;
+
+import java.util.concurrent.ExecutionException;
 
 import rita.RiTa;
 
@@ -10,15 +17,25 @@ public class ReverseOrthogonalExcercise extends Exercise {
     private ReverseOrthogonalCipher reverseOrthogonalCipher;
 
     @Override
-    public void generateExercise() {
+    public void generateExercise(Context con,WordViewModel vm) throws ExecutionException, InterruptedException {
+        this.con=con;
+        Resources res=con.getResources();
         this.title=REVERSE_ORTHOGONAL_CIPHER;
-        this.reverseOrthogonalCipher=generateCipher();
+        this.reverseOrthogonalCipher=generateCipher(vm);
+        this.cipher=this.reverseOrthogonalCipher;
         this.type=generateType();
-        this.body=generateBody();
         this.answer=generateAnswer(this.reverseOrthogonalCipher);
+        this.keyStr=generateKeyStr();
+        this.body=generateBody(this.con,
+                this.type,
+                res.getString(R.string.trans_ortho_boustrophedon_cipher),
+                this.reverseOrthogonalCipher.getPlainText(),
+                this.reverseOrthogonalCipher.getCipherText(),
+                this.keyStr);
+
     }
 
-    @Override
+  /*  @Override
     public String generateBody() {
         String body;
         ReverseOrthogonalCipher rc=this.reverseOrthogonalCipher;
@@ -32,12 +49,17 @@ public class ReverseOrthogonalExcercise extends Exercise {
         }
 
         return body;
+    }*/
+
+    @Override
+    public String generateKeyStr() {
+        return reverseOrthogonalCipher.getKey();
     }
 
     @Override
-    public ReverseOrthogonalCipher generateCipher() {
+    public ReverseOrthogonalCipher generateCipher(WordViewModel vm) throws ExecutionException, InterruptedException {
 
-        String plainText= RiTa.randomWord();
+        String plainText= generateText(vm);
         int num= Randoms.generateRandomNumber(2,5);
         Integer [] array=Randoms.generateArray(num);
         String key=Randoms.shuffleArray(array);

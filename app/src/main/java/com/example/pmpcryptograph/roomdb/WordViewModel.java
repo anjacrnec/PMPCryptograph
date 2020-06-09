@@ -26,7 +26,15 @@ public class WordViewModel extends AndroidViewModel {
         repository.insert(word);
     }
 
+    public int size () throws ExecutionException, InterruptedException {
+        return  repository.size();
+    }
+
     public List<Word> getListWords() throws ExecutionException, InterruptedException {
         return  repository.getListWords();
+    }
+
+    public Word getWord(int id) throws ExecutionException, InterruptedException {
+        return repository.getWord(id);
     }
 }
