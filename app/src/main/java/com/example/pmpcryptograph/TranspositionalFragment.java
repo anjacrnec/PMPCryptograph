@@ -155,6 +155,7 @@ public class TranspositionalFragment extends Fragment {
         btnTranspositionalEncrypt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Keyboard.hideKeyboardFrom(getActivity().getApplicationContext(),getActivity().getCurrentFocus());
                 input=etTranspositionalInput.getText().toString();
                 key=etTranspositionalKey.getText().toString();
 

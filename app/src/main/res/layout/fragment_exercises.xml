@@ -9,38 +9,55 @@
     tools:context=".ExercisesFragment">
 
 
-    <TextView
-        android:id="@+id/btnExcercise"
-        style="@style/CryptographerTitles"
-        android:text="@string/exercise"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:textAllCaps="true"
-        />
-
-    <net.cachapa.expandablelayout.ExpandableLayout
-
-        android:id="@+id/layoutVigenereExpandible"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        app:el_duration="500"
-        app:el_expanded="true">
-    </net.cachapa.expandablelayout.ExpandableLayout>
-
-
+        android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/ll"
-        android:layout_below="@+id/btnExcercise"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:background="#FFFFFF"
         android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/btnExercise"
+        style="@style/CryptographerTitles"
+        android:text="@string/exercise"
+
+        android:textAllCaps="true"
+        />
+
+        <net.cachapa.expandablelayout.ExpandableLayout
+            android:id="@+id/layoutConfigureExpandible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:clickable="true"
+            app:el_duration="500"
+            app:el_expanded="true">
+
+
+            <Button
+                android:id="@+id/btnConfigureExercise"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/orange"
+                android:clickable="true"
+                android:drawableLeft="@drawable/exercise_seetings"
+                android:drawablePadding="10dp"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="10dp"
+                android:text="@string/configure_exercise" />
+        </net.cachapa.expandablelayout.ExpandableLayout>
+
+
+
+
+
 
         <com.codesgood.views.JustifiedTextView
             android:id="@+id/txtBody"
@@ -199,20 +216,24 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutAnswer"
+            style="@style/CryptographerEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:hint="Answer"
-            style="@style/CryptographerEditText"
+            app:errorTextAppearance="@style/TextInputLayoutError"
             app:helperTextEnabled="true"
-            app:hintTextAppearance="@style/TextInputLayoutHelper"
-            >
+            app:hintTextAppearance="@style/TextInputLayoutHelper">
 
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etAnswer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-              />
+                android:drawableEnd="@drawable/error_orange"
+                android:inputType="textNoSuggestions"/>
+
         </com.google.android.material.textfield.TextInputLayout>
 
         <FrameLayout
@@ -220,7 +241,7 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/floatingActionButton2"
+                android:id="@+id/btnSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="true"
@@ -230,14 +251,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                >
 
                 <Button
-                    android:id="@+id/button3"
+                    android:id="@+id/btnGenerateAnswer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Button" />
+                    android:text="@string/generate_answer" />
 
                 <Button
                     android:id="@+id/btnNewExercise"
@@ -249,5 +273,6 @@
         </FrameLayout>
 
     </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

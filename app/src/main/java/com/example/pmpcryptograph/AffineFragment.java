@@ -143,6 +143,7 @@ public class AffineFragment extends Fragment {
         btnAffineEncrypt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Keyboard.hideKeyboardFrom(getActivity().getApplicationContext(),getActivity().getCurrentFocus());
                 input=etAffineInput.getText().toString();
                 keyA=Integer.parseInt(etAffineKeyA.getText().toString());
                 keyB=Integer.parseInt(etAffineKeyB.getText().toString());
@@ -155,6 +156,7 @@ public class AffineFragment extends Fragment {
         btnAffineDecrypt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Keyboard.hideKeyboardFrom(getActivity().getApplicationContext(),getActivity().getCurrentFocus());
                 input=etAffineInput.getText().toString();
                 keyA=Integer.parseInt(etAffineKeyA.getText().toString());
                 keyB=Integer.parseInt(etAffineKeyB.getText().toString());

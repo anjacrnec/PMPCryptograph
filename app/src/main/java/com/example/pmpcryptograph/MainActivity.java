@@ -22,11 +22,18 @@ import com.example.pmpcryptograph.cryptography.PlayfairCipher;
 import com.example.pmpcryptograph.cryptography.OrthogonalCipher;
 import com.example.pmpcryptograph.cryptography.VigenereCiphere;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.rw.keyboardlistener.KeyboardUtils;
 
 import rita.RiTa;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    public Boolean getKeyboardState() {
+        return keyboardState;
+    }
+
+    Boolean keyboardState=false;
 
     public static final String TAG_CRYPTOGRAPHER_FRAGMENT="cryptographer";
     public static final String TAG_EXERCISES_FRAGMENT="exercises";
@@ -99,6 +106,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        KeyboardUtils.addKeyboardToggleListener(this, new KeyboardUtils.SoftKeyboardToggleListener()
+        {
+            @Override
+            public void onToggleSoftKeyboard(boolean isVisible)
+            {
+                if(isVisible)
+                    keyboardState=true;
+                else
+                    keyboardState=false;
+            }
+        });
 
     }
 

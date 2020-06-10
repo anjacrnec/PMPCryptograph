@@ -108,6 +108,7 @@ public class PlayfairFragment extends Fragment {
         btnPlayfairEncrypt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Keyboard.hideKeyboardFrom(getActivity().getApplicationContext(),getActivity().getCurrentFocus());
                 input=etPlayfairInput.getText().toString();
                 key=etPlayfairKey.getText().toString();
                 output = PlayfairCipher.encrypt(input,key);
@@ -119,6 +120,7 @@ public class PlayfairFragment extends Fragment {
         btnPlayfairDecrypt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Keyboard.hideKeyboardFrom(getActivity().getApplicationContext(),getActivity().getCurrentFocus());
                 input=etPlayfairInput.getText().toString();
                 key=etPlayfairKey.getText().toString();
                 output = PlayfairCipher.decrypt(input,key);

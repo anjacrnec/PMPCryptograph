@@ -107,6 +107,7 @@ public class VigenereFragment extends Fragment {
         btnVigenereEncrypt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Keyboard.hideKeyboardFrom(getActivity().getApplicationContext(),getActivity().getCurrentFocus());
                 input=etVigenereInput.getText().toString();
                 key=etVigenereKey.getText().toString();
                 output = VigenereCiphere.encrypt(input,key);
@@ -125,6 +126,7 @@ public class VigenereFragment extends Fragment {
         btnVigenereDecrypt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Keyboard.hideKeyboardFrom(getActivity().getApplicationContext(),getActivity().getCurrentFocus());
                 input=etVigenereInput.getText().toString();
                 key=etVigenereKey.getText().toString();
                 output = VigenereCiphere.decrypt(input,key);

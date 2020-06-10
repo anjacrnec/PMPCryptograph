@@ -103,6 +103,7 @@ public class CaeserFragment extends Fragment {
         btnCaeserEncrypt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Keyboard.hideKeyboardFrom(getActivity().getApplicationContext(),getActivity().getCurrentFocus());
                 input=etCaeserPt.getText().toString();
                 key=Integer.parseInt(etCaeserKey.getText().toString());
                 output = CaeserCipher.encrypt(input,key);
