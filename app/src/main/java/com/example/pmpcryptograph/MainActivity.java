@@ -2,6 +2,8 @@ package com.example.pmpcryptograph;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -12,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.example.pmpcryptograph.cryptography.AffineCipher;
@@ -22,6 +25,7 @@ import com.example.pmpcryptograph.cryptography.PlayfairCipher;
 import com.example.pmpcryptograph.cryptography.OrthogonalCipher;
 import com.example.pmpcryptograph.cryptography.VigenereCiphere;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.rw.keyboardlistener.KeyboardUtils;
 
 import rita.RiTa;
@@ -32,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     public Boolean getKeyboardState() {
         return keyboardState;
     }
-
+    DrawerLayout drawerConfigure;
     Boolean keyboardState=false;
 
     public static final String TAG_CRYPTOGRAPHER_FRAGMENT="cryptographer";
@@ -48,7 +52,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+         drawerConfigure=findViewById(R.id.drawerConfigure);
+         drawerConfigure.setElevation(0);
+
         BottomNavigationView navigationView=(BottomNavigationView) findViewById(R.id.navigationView);
+
+drawerConfigure.closeDrawers();
         fm=getSupportFragmentManager();
         /*Fragment fragment=fm.findFragmentByTag(TAG_CRYPTOGRAPHER_FRAGMENT);
 
@@ -133,6 +142,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public DrawerLayout getDrawerLayout()
+    {
+        return drawerConfigure;
+    }
 
 
 }

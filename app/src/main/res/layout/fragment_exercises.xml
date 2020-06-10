@@ -41,17 +41,104 @@
             app:el_expanded="true">
 
 
-            <Button
-                android:id="@+id/btnConfigureExercise"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/orange"
-                android:clickable="true"
-                android:drawableLeft="@drawable/exercise_seetings"
-                android:drawablePadding="10dp"
-                android:gravity="left|center_vertical"
-                android:paddingLeft="10dp"
-                android:text="@string/configure_exercise" />
+                android:background="#FFFFFF"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btnConfigureExercise"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/orange"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/exercise_seetings"
+                    android:drawablePadding="10dp"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="@string/configure_exercise" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipCaeser"
+                        style="@style/ChipStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:text="caesar"
+                        app:checkedIcon="@drawable/check"
+                        app:closeIconVisible="false" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipAffine"
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:text="affine" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipVigenere"
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:text="vigenere" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipOrtho"
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:text="@string/transpositional_orthogonal" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipOrthoReverse"
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:text="reverse orthogonal" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipDiagonal"
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:text="diagonal " />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/divider8"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:color/darker_gray" />
+
+
+            </LinearLayout>
+
         </net.cachapa.expandablelayout.ExpandableLayout>
 
 

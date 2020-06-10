@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/txtConfigTitle"
+        android:checked="false"
+        android:title="Customize exercises:"
+        app:actionViewClass="android.widget.TextView" />
+
+
+    <item
+        android:id="@+id/checkCaeser"
+        android:checkable="true"
+        android:title="@string/caeser_encryption"
+        app:actionViewClass="android.widget.CheckBox" />
+
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/a2" >
+    <item
+        android:id="@+id/checkAffine"
+        android:title="@string/affine_cipher"
+        app:actionViewClass="android.widget.CheckBox"
+        />
+    </group>
+
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/a3">
+    <item
+        android:id="@+id/checkVigenere"
+        android:title="@string/vignere_cipher"
+        app:actionViewClass="android.widget.CheckBox"
+        />
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/a4">
+    <item
+        android:id="@+id/checkPlayfair"
+        android:title="@string/playfair_cipher"
+        app:actionViewClass="android.widget.CheckBox"
+        />
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/a5">
+    <item
+        android:id="@+id/checkTrans1"
+        android:title="@string/trans_ortho_cipher"
+        app:actionViewClass="android.widget.CheckBox"
+        />
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/a6">
+    <item
+        android:id="@+id/checkTrans2"
+        android:title="@string/trans_ortho_boustrophedon_cipher"
+        app:actionViewClass="android.widget.CheckBox"
+        />
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/a7">
+    <item
+        android:id="@+id/checkTrans3"
+        android:title="@string/trans_diagonal_cipher"
+        app:actionViewClass="android.widget.CheckBox"
+        />
+    </group>
+
+
+
+
+</menu>
