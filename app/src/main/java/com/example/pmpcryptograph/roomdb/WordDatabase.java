@@ -51,17 +51,24 @@ public abstract class WordDatabase extends RoomDatabase {
             final int[] j = {150};
             WordRequest w=new WordRequest(con);
             for(int i = 0; i< 150; i++) {
+
                 String word=RiTa.randomWord();
+                Log.e("Word",word);
                 String url = "https://api.dictionaryapi.dev/api/v2/entries/en/" + word;
                 w.getWord(url, new VolleyCallback() {
                     @Override
                     public void getResponse(JSONArray response) throws JSONException {
+                        Log.e("ovde","volley");
                         String example="";
                         example = String.valueOf(response.getJSONObject(0).getJSONArray("meanings").getJSONObject(0).getJSONArray("definitions").getJSONObject(0).get("example"));
+                        Log.e("example",example);
                         Word w=new Word(word,example);
-                        new initializeWordDBASyncTask(instance).execute(w);
+                       new initializeWordDBASyncTask(instance).execute(w);
+                        //new initializeWordDBASyncTask(instance).execute(new Word(RiTa.randomWord(),"obj"));//
                     }
                 });
+                new initializeWordDBASyncTask(instance).execute(new Word(RiTa.randomWord(),"obj"));
+
             }
 
         }

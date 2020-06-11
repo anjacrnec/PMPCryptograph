@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "361995239778",
+    "firebase_url": "https://pmpcryptograph.firebaseio.com",
+    "project_id": "pmpcryptograph",
+    "storage_bucket": "pmpcryptograph.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:361995239778:android:173b84c5ecac0caa656c3b",
+        "android_client_info": {
+          "package_name": "com.example.pmpcryptograph"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "361995239778-eam3481aop0lgpe621f4b2evnnvl4vdv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pmpcryptograph",
+            "certificate_hash": "8c810ccd21d29dddc1063e9d75dc6d2278916ce6"
+          }
+        },
+        {
+          "client_id": "361995239778-ldcqe4kuir3i0tmsvlake85hftqsft9c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCt5zQwTxap8AohKiswHoLIIrYCOVpajXw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "361995239778-ldcqe4kuir3i0tmsvlake85hftqsft9c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

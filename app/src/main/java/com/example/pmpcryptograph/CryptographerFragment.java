@@ -12,9 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class CryptographerFragment extends Fragment {
+
 
 
     public CryptographerFragment() {
@@ -25,6 +27,7 @@ public class CryptographerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
     }
 

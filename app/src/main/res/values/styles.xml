@@ -103,7 +103,7 @@
         <item name="android:checkable">true</item>
         <item name="android:focusable">true</item>
         <item name="android:clickable">true</item>
-        <item name="chipBackgroundColor">@drawable/chip_bg_selector</item>
-        <item name="android:textColor">@drawable/chip_txt_selector</item>
-    </style>
-</resources>
+        <!--   <item name="chipBackgroundColor">@drawable/chip_bg_selector</item>
+           <item name="android:textColor">@drawable/chip_txt_selector</item>-->
+       </style>
+   </resources>

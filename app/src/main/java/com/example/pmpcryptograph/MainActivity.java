@@ -2,37 +2,23 @@ package com.example.pmpcryptograph;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.res.Configuration;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.Toast;
 
-import com.example.pmpcryptograph.cryptography.AffineCipher;
-import com.example.pmpcryptograph.cryptography.ReverseOrthogonalCipher;
-import com.example.pmpcryptograph.cryptography.CaeserCipher;
-import com.example.pmpcryptograph.cryptography.DiagonalCipher;
-import com.example.pmpcryptograph.cryptography.PlayfairCipher;
-import com.example.pmpcryptograph.cryptography.OrthogonalCipher;
-import com.example.pmpcryptograph.cryptography.VigenereCiphere;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.rw.keyboardlistener.KeyboardUtils;
-
-import rita.RiTa;
 
 
 public class MainActivity extends AppCompatActivity {
 
+    private FirebaseAuth fbAuth;
     public Boolean getKeyboardState() {
         return keyboardState;
     }
@@ -52,12 +38,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        fbAuth = FirebaseAuth.getInstance();
          drawerConfigure=findViewById(R.id.drawerConfigure);
          drawerConfigure.setElevation(0);
 
         BottomNavigationView navigationView=(BottomNavigationView) findViewById(R.id.navigationView);
 
-drawerConfigure.closeDrawers();
+        drawerConfigure.closeDrawers();
         fm=getSupportFragmentManager();
         /*Fragment fragment=fm.findFragmentByTag(TAG_CRYPTOGRAPHER_FRAGMENT);
 
@@ -108,12 +95,16 @@ drawerConfigure.closeDrawers();
                 else if(item==R.id.naviSaved)
                 {
 
+                   fbAuth.getInstance().signOut();
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                    finish();
                     return true;
                 }
 
                 return false;
             }
         });
+
 
 
         KeyboardUtils.addKeyboardToggleListener(this, new KeyboardUtils.SoftKeyboardToggleListener()
@@ -145,6 +136,11 @@ drawerConfigure.closeDrawers();
     public DrawerLayout getDrawerLayout()
     {
         return drawerConfigure;
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 
 

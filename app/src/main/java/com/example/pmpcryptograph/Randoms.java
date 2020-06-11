@@ -56,8 +56,8 @@ public class Randoms {
     }
 
     public static Word generateRandomWord(WordViewModel vm) throws ExecutionException, InterruptedException {
-        int size=vm.size();
-        int id= Randoms.generateRandomNumber(1,size);
+       int size=vm.size();
+      int id= Randoms.generateRandomNumber(1,size);
         Word word= vm.getWord(id);
         return word;
     }
