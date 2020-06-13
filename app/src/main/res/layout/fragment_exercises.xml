@@ -136,14 +136,14 @@
                         android:checked="true"
                         android:text="reverse orthogonal" />
 
-                </com.google.android.material.chip.ChipGroup>
+                    <View
+                        android:id="@+id/divider8"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@android:color/darker_gray" />
 
-                <View
-                    android:id="@+id/divider8"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@android:color/darker_gray" />
+                </com.google.android.material.chip.ChipGroup>
 
 
             </LinearLayout>
@@ -340,9 +340,10 @@
                 android:id="@+id/btnSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:clickable="true"
                 android:layout_gravity="center"
-                android:src="@drawable/placeholder" />
+                android:clickable="true"
+                android:src="@drawable/placeholder"
+                app:backgroundTint="@color/orange" />
 
             <LinearLayout
                 android:layout_width="match_parent"

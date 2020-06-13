@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.facebook.login.LoginManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.rw.keyboardlistener.KeyboardUtils;
@@ -96,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 {
 
                    fbAuth.getInstance().signOut();
+                   LoginManager.getInstance().logOut();
                     startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                     finish();
                     return true;

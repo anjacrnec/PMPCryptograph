@@ -3,13 +3,24 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
+    <!--fb-->
+    <string name="facebook_app_id">1578307229017952</string>
+    <string name="fb_login_protocol_scheme">fb1578307229017952</string>
+
+
     <!--Login-->
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="signIn">Sign in</string>
     <string name="gmailSignIn">Sign in with gmail</string>
     <string name="anonSignIn">Sign in anonymously</string>
+    <string name="facebookSignIn">Sign in with facebook</string>
     <string name="register">Register</string>
+    <string name="register_success">Successfully registered! </string>
+    <string name="signin_question">Do you want to sign in?</string>
+    <string name="invalid_email_format">Invalid email format</string>
+    <string name="wait_loading">Please wait to finish loading...</string>
+    <string name="altLogins">Or you could log in with...</string>
 
     <!-- Bottom Navigationa -->
     <string name="nav_cryptography">Cryptography</string>

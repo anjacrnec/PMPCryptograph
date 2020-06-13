@@ -43,6 +43,17 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
+
+   /* @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            //System.out.println("@#@");
+            fragment.onActivityResult(requestCode, resultCode, data);
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
+
+    }*/
 }
 
 

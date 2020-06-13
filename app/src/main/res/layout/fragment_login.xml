@@ -1,62 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/grayDark"
     tools:context=".LoginFragment">
+
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
-
-        <TextView
-            android:id="@+id/txtTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="@string/nav_cryptography"
-            android:textAllCaps="true"
-            android:textColor="#FF9800"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+        android:layout_centerInParent="true"
+        android:background="#00494747"
+        android:padding="10dp">
 
         <LinearLayout
             android:id="@+id/ll"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/txtTitle"
+            android:background="#00FFFFFF"
             android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#00FFFFFF"
+                android:fontFamily="@font/aldrich"
+                android:text="@string/nav_cryptography"
+                android:textAllCaps="true"
+                android:textColor="@color/orange"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/divider7"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/orange" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutEmail"
+                style="@style/CryptographerEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Email">
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                android:hint="@string/email"
+                android:textColorHint="#FFFFFF"
+                app:boxBackgroundMode="outline"
+                app:errorTextAppearance="@style/TextInputLayoutError"
+                app:helperTextTextAppearance="@style/TextInputLayoutHelper">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etEmail"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                     />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutPassword"
+                style="@style/CryptographerEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Password">
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                android:hint="Password"
+                android:textColorHint="#FFFFFF"
+                app:boxBackgroundColor="#00FFFFFF"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/orange"
+                app:errorTextAppearance="@style/TextInputLayoutError"
+                app:helperTextTextAppearance="@style/TextInputLayoutHelper"
+                app:passwordToggleDrawable="@drawable/visiblity_orange"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/orange">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:textColor="#D6D6D6" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
                 <Button
@@ -64,6 +97,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:backgroundTint="@color/orange"
                     android:text="@string/signIn" />
 
                 <Button
@@ -71,33 +105,69 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:backgroundTint="@color/orange"
                     android:text="@string/register" />
             </LinearLayout>
 
+
             <TextView
-                android:id="@+id/txtOr"
+                android:id="@+id/txtAlts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="or"
+                android:layout_marginTop="10dp"
+                android:background="#00FFFFFF"
+                android:fontFamily="@font/aldrich"
+                android:gravity="end"
+                android:text="@string/altLogins"
                 android:textAllCaps="true"
-                android:textSize="18sp" />
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/btnGmailSingIn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/gmailSignIn" />
 
-            <Button
-                android:id="@+id/btnAnonSignIn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/anonSignIn" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:orientation="horizontal">
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="20dp" />
+                <ImageButton
+                    android:id="@+id/btnFacebookSign"
+                    style="@style/Widget.AppCompat.ImageButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/orange"
+                    android:foregroundTint="#00FF9800"
+                    android:foregroundTintMode="add"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/fb_icon"
+                    android:tint="@color/grayDark" />
+
+                <ImageButton
+                    android:id="@+id/btnGmailSingIn"
+                    style="@style/Widget.AppCompat.ImageButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/orange"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/gmail_icon" />
+
+                <ImageButton
+                    android:id="@+id/btnAnonSignIn"
+                    style="@style/Widget.AppCompat.ImageButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:backgroundTint="@color/orange"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/anon_icon" />
+            </LinearLayout>
+
+
+
+
+
 
         </LinearLayout>
     </RelativeLayout>
