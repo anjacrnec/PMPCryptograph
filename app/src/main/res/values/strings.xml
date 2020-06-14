@@ -59,6 +59,7 @@
     <string name="trans_ortho_boustrophedon_cipher">transpositional orthogonal boustrophedon cipher</string>
     <string name="trans_ortho_cipher">transpositional orthogonal cipher</string>
     <string name="trans_diagonal_cipher">transpositional diagonal cipher</string>
+
     <!--Exercises fragment-->
     <string name="exercise">Exercise</string>
     <string name="cipher_colon">Cipher : </string>
@@ -70,10 +71,12 @@
     <string name="ct">cipher text</string>
     <string name="ek">encrypt</string>
     <string name="dk">decrypt</string>
+    <string name="answer">Answer:</string>
     <string name="body_pt1">Use the %1$s to %2$s the %3$s %4$s with the key %5$s</string>
     <string name="caesar_body_key_pt2">with the key</string>
     <string name="generate_answer">See answer</string>
     <string name="saved_exercise">Exercise is saved</string>
+    <string name="unsave_exercise">Exercise is deleted</string>
     <string name="undo">UNDO</string>
     <string name="configure_exercise">Configure exercise generation settings</string>
     <string name="ciphers_disabled">Atleast one cipher needs to be enabled to generate an exercise</string>

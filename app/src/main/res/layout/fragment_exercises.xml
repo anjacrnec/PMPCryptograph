@@ -342,8 +342,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:clickable="true"
-                android:src="@drawable/placeholder"
-                app:backgroundTint="@color/orange" />
+                android:src="@drawable/placeholder" />
 
             <LinearLayout
                 android:layout_width="match_parent"

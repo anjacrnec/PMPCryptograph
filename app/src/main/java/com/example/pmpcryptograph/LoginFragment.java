@@ -45,8 +45,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.facebook.FacebookSdk;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 import me.piruin.quickaction.ActionItem;
 import me.piruin.quickaction.QuickAction;
@@ -54,14 +57,17 @@ import me.piruin.quickaction.QuickAction;
 
 public class LoginFragment extends Fragment {
 
+    private FirebaseFirestore db;
     private FirebaseAuth fbAuth;
     private FirebaseAuth.AuthStateListener fbAuthListner;
     private GoogleSignInClient googleSignInClient;
     private AccessTokenTracker tokenTracker;
     CallbackManager callbackManager;
 
+
     int RC_IN = 322;
     int RC_FB = 333;
+
     public LoginFragment() {
 
     }
@@ -106,6 +112,7 @@ public class LoginFragment extends Fragment {
         TextInputEditText etEmail=v.findViewById(R.id.etEmail);
         TextInputEditText etPass=v.findViewById(R.id.etPassword);
 
+        db=FirebaseFirestore.getInstance();
         fbAuth = FirebaseAuth.getInstance();
         if (fbAuth.getCurrentUser() != null) {
             startActivity(new Intent(getActivity().getApplicationContext(), MainActivity.class));
@@ -203,6 +210,7 @@ public class LoginFragment extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             signIn();
+                            createUser();
                         }
                         else{
                                 Toast.makeText(getActivity().getApplicationContext(),"No",Toast.LENGTH_SHORT).show();
@@ -224,6 +232,7 @@ public class LoginFragment extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                            signIn();
+                           createUser();
                         }
                         else{
 
@@ -253,44 +262,6 @@ public class LoginFragment extends Fragment {
 
 
 
-       /* LoginManager.getInstance().registerCallback(callbackManager,
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        signIn();
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        // App code
-                    }
-
-                    @Override
-                    public void onError(FacebookException exception) {
-                        // App code
-                    }
-        });*/
-
-       /* LoginButton btnFacebookSignIn=(LoginButton) v.findViewById(R.id.btnFacebookSignIn);
-        btnFacebookSignIn.setReadPermissions("email","public_profile");
-       btnFacebookSignIn.setFragment(this);
-       btnFacebookSignIn.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-           @Override
-           public void onSuccess(LoginResult loginResult) {
-               firebaseFacebookAuth(loginResult.getAccessToken());
-           }
-
-           @Override
-           public void onCancel() {
-               Toast.makeText(getActivity().getApplicationContext(),"Cancel",Toast.LENGTH_SHORT).show();
-           }
-
-           @Override
-           public void onError(FacebookException error) {
-               Toast.makeText(getActivity().getApplicationContext(),"Error",Toast.LENGTH_SHORT).show();
-           }
-       });*/
-
         fbAuthListner = new FirebaseAuth.AuthStateListener(){
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -312,26 +283,10 @@ public class LoginFragment extends Fragment {
 
 
         QuickAction quickFacebook=new QuickAction(getActivity().getApplicationContext());
-        quickFacebook.setColorRes(R.color.orange);
+        quickFacebook.setColorRes(R.color.white);
         ActionItem aiFacebook=new ActionItem(1,getResources().getString(R.string.facebookSignIn),0);
         quickFacebook.addActionItem(aiFacebook);
         aiFacebook.setSticky(true);
-
-        quickFacebook.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
-            @Override
-            public void onItemClick(ActionItem item) {
-
-
-            }
-        });
-
-        quickFacebook.setOnDismissListener(new QuickAction.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-
-            }
-        });
-
 
         btnfb.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -341,6 +296,33 @@ public class LoginFragment extends Fragment {
             }
 
 
+        });
+
+        QuickAction quickGmail=new QuickAction(getActivity().getApplicationContext());
+        quickGmail.setColorRes(R.color.white);
+        ActionItem aiGmail=new ActionItem(1,getResources().getString(R.string.gmailSignIn),0);
+        quickGmail.addActionItem(aiGmail);
+        aiGmail.setSticky(true);
+        btnGmailSignIn.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                quickGmail.show(v);
+                return false;
+            }
+        });
+
+
+        QuickAction quickAnon=new QuickAction(getActivity().getApplicationContext());
+        quickAnon.setColorRes(R.color.white);
+        ActionItem aiAnon=new ActionItem(1,getResources().getString(R.string.anonSignIn),0);
+        quickAnon.addActionItem(aiAnon);
+        aiAnon.setSticky(true);
+        btnAnonSignIn.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                quickAnon.show(v);
+                return false;
+            }
         });
 
 
@@ -381,6 +363,7 @@ public class LoginFragment extends Fragment {
                 else
                 {
                     signIn();
+                    createUser();
                 }
 
             }
@@ -395,7 +378,10 @@ public class LoginFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
+
+                    createUser();
                     signIn();
+
                 }
                 else
                 {
@@ -426,6 +412,34 @@ public class LoginFragment extends Fragment {
         getActivity().finish();
     }
 
+    public void createUser()
+    {
+        String id=fbAuth.getCurrentUser().getUid();
+
+        db.collection("users").document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful())
+                {
+                    if (!task.getResult().exists())
+                    {
+                        HashMap<String,String> user=new HashMap<String,String>();
+                        user.put("uid",id);
+                        db.collection("users").document(id).set(user);
+                    }
+                }
+                else
+                {
+
+                }
+            }
+        });
+
+
+
+
+    }
+
 
     @Override
     public void onStart() {
@@ -440,5 +454,7 @@ public class LoginFragment extends Fragment {
             fbAuth.removeAuthStateListener(fbAuthListner);
     }
 }
+
+
 
 

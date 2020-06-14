@@ -49,6 +49,12 @@ dependencies {
     //facebook sdk
     implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
 
+    //firestore
+    implementation 'com.google.firebase:firebase-firestore:21.4.3'
+
+    //firestore ui
+    implementation 'com.firebaseui:firebase-ui-firestore:6.2.1'
+
     //noinspection GradleCompatible
     implementation "com.android.support:support-v4:22.0.0"
     //noinspection GradleCompatible
@@ -58,7 +64,7 @@ dependencies {
     implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
 
     //quick action
-    compile 'me.piruin:quickaction:2.4.3'
+    implementation 'me.piruin:quickaction:2.4.3'
 
     //justified text
     implementation 'com.codesgood:justifiedtextview:1.1.0'

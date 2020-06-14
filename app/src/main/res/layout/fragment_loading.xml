@@ -3,40 +3,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FF9800"
-    tools:context=".LoadingFragment" >
-
+    android:background="@color/orange"
+    tools:context=".LoadingFragment">
 
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        >
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_centerHorizontal="true"
-        android:indeterminate="true"
-        android:indeterminateBehavior="cycle"
-        android:indeterminateTint="#393939" />
+        android:layout_centerInParent="true">
 
-    <TextView
-        android:id="@+id/txtWait"
-        style="@style/CryptographerTitles"
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/progressBar"
-        android:text="@string/wait_loading"
-        android:background="#0000"
-        android:textColor="@color/black"
-        android:textAllCaps="false"
-        android:textStyle="bold"
-        android:layout_centerHorizontal="true"
-        android:textSize="20sp" />
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
+            android:indeterminate="true"
+            android:indeterminateBehavior="cycle"
+            android:indeterminateTint="#393939" />
+
+        <TextView
+            android:id="@+id/txtWait"
+            style="@style/CryptographerTitles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/progressBar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="#0000"
+            android:text="@string/wait_loading"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
     </RelativeLayout>
 
 </RelativeLayout>

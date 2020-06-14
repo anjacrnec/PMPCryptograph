@@ -50,11 +50,13 @@
                 android:hint="@string/email"
                 android:textColorHint="#FFFFFF"
                 app:boxBackgroundMode="outline"
+                app:hintTextAppearance="@style/Hint"
                 app:errorTextAppearance="@style/TextInputLayoutError"
                 app:helperTextTextAppearance="@style/TextInputLayoutHelper">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etEmail"
+                    android:textColorHint="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                      />
@@ -68,21 +70,22 @@
                 android:layout_marginStart="0dp"
                 android:layout_marginEnd="0dp"
                 android:hint="Password"
-                android:textColorHint="#FFFFFF"
                 app:boxBackgroundColor="#00FFFFFF"
-                app:boxBackgroundMode="outline"
-                app:boxStrokeColor="@color/orange"
                 app:errorTextAppearance="@style/TextInputLayoutError"
                 app:helperTextTextAppearance="@style/TextInputLayoutHelper"
                 app:passwordToggleDrawable="@drawable/visiblity_orange"
                 app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@color/orange">
+                app:passwordToggleTint="@color/orange"
+                android:textColorHint="@color/white"
+               app:hintTextAppearance="@style/Hint"
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
+                    android:textColorHint="@color/white"
                     android:textColor="#D6D6D6" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -152,7 +155,8 @@
                     android:layout_weight="1"
                     android:backgroundTint="@color/orange"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/gmail_icon" />
+                    android:src="@drawable/gmail_icon"
+                    android:tint="@color/grayDark" />
 
                 <ImageButton
                     android:id="@+id/btnAnonSignIn"
@@ -161,12 +165,9 @@
                     android:layout_height="60dp"
                     android:backgroundTint="@color/orange"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/anon_icon" />
+                    android:src="@drawable/anon_icon"
+                    android:tint="@color/grayDark" />
             </LinearLayout>
-
-
-
-
 
 
         </LinearLayout>

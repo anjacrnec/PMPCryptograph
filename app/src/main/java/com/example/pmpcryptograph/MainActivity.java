@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     public Boolean getKeyboardState() {
         return keyboardState;
     }
-    DrawerLayout drawerConfigure;
     Boolean keyboardState=false;
 
     public static final String TAG_CRYPTOGRAPHER_FRAGMENT="cryptographer";
@@ -34,18 +33,16 @@ public class MainActivity extends AppCompatActivity {
 
     private Fragment fragment1 = new CryptographerFragment();
     private Fragment fragment2 = new ExercisesFragment();
+    private Fragment fragment3=new SavedFragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         fbAuth = FirebaseAuth.getInstance();
-         drawerConfigure=findViewById(R.id.drawerConfigure);
-         drawerConfigure.setElevation(0);
 
         BottomNavigationView navigationView=(BottomNavigationView) findViewById(R.id.navigationView);
 
-        drawerConfigure.closeDrawers();
         fm=getSupportFragmentManager();
         /*Fragment fragment=fm.findFragmentByTag(TAG_CRYPTOGRAPHER_FRAGMENT);
 
@@ -55,11 +52,13 @@ public class MainActivity extends AppCompatActivity {
         if(savedInstanceState==null) {
             fm.beginTransaction().add(R.id.baseFragmentContainer, fragment1, TAG_CRYPTOGRAPHER_FRAGMENT).commit();
             fm.beginTransaction().add(R.id.baseFragmentContainer, fragment2, TAG_EXERCISES_FRAGMENT).hide(fragment2).commit();
+            fm.beginTransaction().add(R.id.baseFragmentContainer, fragment3, TAG_SAVED_FRAGMENT).hide(fragment3).commit();
         }
         else
         {
             fragment1=getSupportFragmentManager().findFragmentByTag(TAG_CRYPTOGRAPHER_FRAGMENT);
             fragment2=getSupportFragmentManager().findFragmentByTag(TAG_EXERCISES_FRAGMENT);
+            fragment3=getSupportFragmentManager().findFragmentByTag(TAG_SAVED_FRAGMENT);
         }
 
 
@@ -78,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                     else
                         changeBaseFragment(fragment,TAG_CRYPTOGRAPHER_FRAGMENT);*/
 
-                    fm.beginTransaction().hide(fragment2).show(fragment1).commit();
+                    fm.beginTransaction().hide(fragment2).hide(fragment3).show(fragment1).commit();
 
                     return true;
                 }
@@ -89,17 +88,19 @@ public class MainActivity extends AppCompatActivity {
                         changeBaseFragment(new ExercisesFragment(),TAG_EXERCISES_FRAGMENT);
                     else
                         changeBaseFragment(fragment,TAG_EXERCISES_FRAGMENT);*/
-                    fm.beginTransaction().hide(fragment1).show(fragment2).commit();
+                    fm.beginTransaction().hide(fragment1).hide(fragment3).show(fragment2).commit();
 
                     return true;
                 }
                 else if(item==R.id.naviSaved)
                 {
 
-                   fbAuth.getInstance().signOut();
-                   LoginManager.getInstance().logOut();
-                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                    finish();
+                    fm.beginTransaction().hide(fragment1).hide(fragment2).show(fragment3).commit();
+
+                   //fbAuth.getInstance().signOut();
+                  // LoginManager.getInstance().logOut();
+                    //startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                   // finish();
                     return true;
                 }
 
@@ -135,10 +136,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public DrawerLayout getDrawerLayout()
-    {
-        return drawerConfigure;
-    }
+
 
     @Override
     public void onBackPressed() {

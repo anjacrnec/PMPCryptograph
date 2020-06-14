@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -24,13 +25,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pmpcryptograph.exercise.Exercise;
+import com.example.pmpcryptograph.exercise.SavedExercise;
 import com.example.pmpcryptograph.roomdb.WordViewModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
@@ -41,8 +52,10 @@ public class ExercisesFragment extends Fragment {
 
 
     private static WordViewModel pcViewModel;
+    private FirebaseAuth fbAuth;
+    private FirebaseFirestore db;
     private Exercise currentExercise;
-    private boolean saved;
+    private  SavedExercise currentSavedExercise;
 
     private boolean caesarEnabled=true;
     private boolean affineEnabled=true;
@@ -51,6 +64,7 @@ public class ExercisesFragment extends Fragment {
     private boolean orthoEnabled=true;
     private boolean reverseOrthoeEnabled=true;
     private boolean diagonalEnabled=true;
+    FloatingActionButton btnSave;
 
     SharedPreferences prefs;
    SharedPreferences.Editor editor;
@@ -64,7 +78,7 @@ public class ExercisesFragment extends Fragment {
     Chip chipCaeser;
     Button btnNextExercise;
     ChipGroup cgCipher;
-
+    String id;
     public ExercisesFragment() {
     }
 
@@ -80,8 +94,11 @@ public class ExercisesFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_exercises, container, false);
-        pcViewModel = ViewModelProviders.of(getActivity()).get(WordViewModel.class);
 
+        fbAuth=FirebaseAuth.getInstance();
+        db=FirebaseFirestore.getInstance();
+        pcViewModel = ViewModelProviders.of(getActivity()).get(WordViewModel.class);
+        id=fbAuth.getCurrentUser().getUid();
          ExpandableLayout expandibleConfigure=v.findViewById(R.id.layoutConfigureExpandible);
          TextView txtBody=v.findViewById(R.id.txtBody);
          TextView txtCipher=v.findViewById(R.id.txtCipher);
@@ -94,7 +111,7 @@ public class ExercisesFragment extends Fragment {
          btnNextExercise=v.findViewById(R.id.btnNewExercise);
          Button btnGenerateAnswer=v.findViewById(R.id.btnGenerateAnswer);
          Button btnConfigure=v.findViewById(R.id.btnConfigureExercise);
-         FloatingActionButton btnSave=v.findViewById(R.id.btnSave);
+         btnSave=v.findViewById(R.id.btnSave);
          cgCipher=v.findViewById(R.id.chipgroupCiphers);
          chipCaeser=v.findViewById(R.id.chipCaeser);
          Chip chipAffine=v.findViewById(R.id.chipAffine);
@@ -108,7 +125,7 @@ public class ExercisesFragment extends Fragment {
 
         caesarEnabled=true;
         affineEnabled=true;
-     vigenereEnabled=true;
+        vigenereEnabled=true;
        playfairEnabled=true;
        orthoEnabled=true;
         reverseOrthoeEnabled=true;
@@ -183,7 +200,7 @@ public class ExercisesFragment extends Fragment {
         btnConfigure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).getDrawerLayout().openDrawer(GravityCompat.END);
+
             }
         });
 
@@ -244,7 +261,8 @@ public class ExercisesFragment extends Fragment {
                     layoutAnswer.setError(null);
                     layoutAnswer.setErrorEnabled(false);
                     etAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-                    btnSave.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.orange)));
+                    btnSave.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.grayLight)));
+                    currentSavedExercise=null;
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
@@ -262,17 +280,20 @@ public class ExercisesFragment extends Fragment {
             }
         });
 
+        if(currentSavedExercise==null)
+            btnSave.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.grayLight)));
+        else
+            btnSave.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.orange)));
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnSave.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorAccent)));
-                Snackbar.make(btnSave,R.string.saved_exercise,Snackbar.LENGTH_SHORT)
-                        .setAction(R.string.undo, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                btnSave.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.orange)));
-                            }
-                        }).show();
+                if(currentSavedExercise==null) {
+                    saveExercise();
+                }
+                else
+                {
+                    unsaveExercise();
+                }
 
 
             }
@@ -380,6 +401,70 @@ public class ExercisesFragment extends Fragment {
         txtBody.setText(exercise.getBody());
 
     }
+
+    public void saveExercise()
+    {
+
+        currentSavedExercise=new SavedExercise(currentExercise.getTitle(),currentExercise.getBody(),currentExercise.getAnswer(),false);
+        db.collection("users").document(id).collection("savedExercises").document().set(currentSavedExercise).
+                addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful())
+                        {
+                            btnSave.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.orange)));
+                            Snackbar.make(btnSave, R.string.saved_exercise, Snackbar.LENGTH_SHORT)
+                                    .setAction(R.string.undo, new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            unsaveExercise();
+                                        }
+                                    }).show();
+                        }
+                        else
+                        {
+                            Toast.makeText(getActivity().getApplicationContext(),"must have internet turner on",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    public void unsaveExercise()
+    { String id=fbAuth.getCurrentUser().getUid();
+        Query query =  db.collection("users").document(id).collection("savedExercises")
+                .whereEqualTo("title", currentSavedExercise.getTitle())
+                .whereEqualTo("body", currentSavedExercise.getBody())
+                .whereEqualTo("answer",currentSavedExercise.getAnswer());
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (DocumentSnapshot document : task.getResult()) {
+                        db.collection("users").document(id).collection("savedExercises").document(document.getId()).delete()
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        currentSavedExercise=null;
+                                        btnSave.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.grayLight)));
+                                        Snackbar.make(btnSave, R.string.unsave_exercise, Snackbar.LENGTH_SHORT)
+                                                .setAction(R.string.undo, new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        saveExercise();
+
+                                                    }
+                                                }).show();
+                                    }
+                                });
+
+                    }
+                } else {
+
+                }
+            }
+        });
+    }
+
 
     public void allCiphersDisabled(Chip chip)
     {
