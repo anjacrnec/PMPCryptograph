@@ -1,30 +1,56 @@
 package com.example.pmpcryptograph;
 
 import androidx.annotation.NonNull;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.androidstudy.networkmanager.Monitor;
+import com.androidstudy.networkmanager.Tovuti;
 import com.facebook.login.LoginManager;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.rw.keyboardlistener.KeyboardUtils;
 
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity implements ConnectionLossDialog.ConnectionLossDialogListener{
+
 
     private FirebaseAuth fbAuth;
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
+    Boolean showDialog;
     public Boolean getKeyboardState() {
         return keyboardState;
     }
     Boolean keyboardState=false;
 
+    public static final String TAG_CONNECTION_LOSS="show connection dialog";
     public static final String TAG_CRYPTOGRAPHER_FRAGMENT="cryptographer";
     public static final String TAG_EXERCISES_FRAGMENT="exercises";
     public static final String TAG_SAVED_FRAGMENT="saved";
@@ -39,16 +65,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        prefs = this.getPreferences(this.MODE_PRIVATE);
+
+        getSupportActionBar().show();
+
+        Tovuti.from(this).monitor(new Monitor.ConnectivityListener(){
+            @Override
+            public void onConnectivityChanged(int connectionType, boolean isConnected, boolean isFast){
+                if(isConnected)
+                    Log.d("statusot","da");
+                else
+                {
+                    showDialog=prefs.getBoolean(TAG_CONNECTION_LOSS,true);
+                    if(showDialog) {
+                        showConnectionDialog();
+                    }
+                    Log.d("statusot","ne");
+                }
+
+            }
+        });
         fbAuth = FirebaseAuth.getInstance();
 
         BottomNavigationView navigationView=(BottomNavigationView) findViewById(R.id.navigationView);
 
         fm=getSupportFragmentManager();
-        /*Fragment fragment=fm.findFragmentByTag(TAG_CRYPTOGRAPHER_FRAGMENT);
-
-        if(fragment==null)
-            fragment=new CryptographerFragment();
-        changeBaseFragment(fragment,TAG_CRYPTOGRAPHER_FRAGMENT);*/
         if(savedInstanceState==null) {
             fm.beginTransaction().add(R.id.baseFragmentContainer, fragment1, TAG_CRYPTOGRAPHER_FRAGMENT).commit();
             fm.beginTransaction().add(R.id.baseFragmentContainer, fragment2, TAG_EXERCISES_FRAGMENT).hide(fragment2).commit();
@@ -60,6 +101,8 @@ public class MainActivity extends AppCompatActivity {
             fragment2=getSupportFragmentManager().findFragmentByTag(TAG_EXERCISES_FRAGMENT);
             fragment3=getSupportFragmentManager().findFragmentByTag(TAG_SAVED_FRAGMENT);
         }
+
+
 
 
 
@@ -122,27 +165,54 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
+
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 
-    public void changeBaseFragment(Fragment fragment,String tag)
-    {
-        if(!fragment.equals(currentFragment))
+        getMenuInflater().inflate(R.menu.settings_button, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id)
         {
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.baseFragmentContainer, fragment, tag);
-            ft.commit();
-            currentFragment=fragment;
+            case R.id.languageStn:
+                break;
+            case R.id.logOutStn:
+                fbAuth.getInstance().signOut();
+                LoginManager.getInstance().logOut();
+                startActivity(new Intent(this, LoginActivity.class));
+                this.finish();
         }
+
+        return super.onOptionsItemSelected(item);
     }
 
+
+    public void showConnectionDialog() {
+
+        ConnectionLossDialog dialog = new ConnectionLossDialog();
+        dialog.show(fm, "dialog");
+    }
+    
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+    }
 
 
     @Override
-    public void onBackPressed() {
-
+    public void getCheckboxStatus(boolean status) {
+        editor=prefs.edit();
+        editor.putBoolean(TAG_CONNECTION_LOSS,!status);
+        editor.apply();
     }
-
-
 }
 

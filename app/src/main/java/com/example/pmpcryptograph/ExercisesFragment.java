@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.example.pmpcryptograph.exercise.Exercise;
 import com.example.pmpcryptograph.exercise.SavedExercise;
 import com.example.pmpcryptograph.roomdb.WordViewModel;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -46,6 +47,7 @@ import com.google.firebase.firestore.SetOptions;
 import net.cachapa.expandablelayout.ExpandableLayout;
 
 import java.util.concurrent.ExecutionException;
+
 
 
 public class ExercisesFragment extends Fragment {

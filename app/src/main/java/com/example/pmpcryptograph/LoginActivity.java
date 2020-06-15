@@ -37,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
+        getSupportActionBar().hide();
         fm=getSupportFragmentManager();
         Fragment fragmentLogin = new LoginFragment();
         fm.beginTransaction().add(R.id.loginFragmentContainer,fragmentLogin).commit();

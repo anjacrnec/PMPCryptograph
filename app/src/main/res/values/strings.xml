@@ -77,9 +77,16 @@
     <string name="generate_answer">See answer</string>
     <string name="saved_exercise">Exercise is saved</string>
     <string name="unsave_exercise">Exercise is deleted</string>
+    <string name="restore_exercise">Exercise is restored</string>
     <string name="undo">UNDO</string>
     <string name="configure_exercise">Configure exercise generation settings</string>
     <string name="ciphers_disabled">Atleast one cipher needs to be enabled to generate an exercise</string>
 
 
+    <string name="no_internet">No internet connection</string>
+    <string name="no_internet_body">Internet connection has ben lost. The application will run in offline mode. Data can be temporarily saved even in offline mode. However if you do not reconnect to the internet in the next two to four weeks its possible that the data saved and/or edited during this will be lost.</string>
+    <string name="no_message_again">Don\'t show me this message again</string>
+
+    <string name="lang">Language</string>
+    <string name="logout">Log out</string>
 </resources>

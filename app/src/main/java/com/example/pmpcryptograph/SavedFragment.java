@@ -1,19 +1,26 @@
 package com.example.pmpcryptograph;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.pmpcryptograph.exercise.SavedExercise;
@@ -21,8 +28,10 @@ import com.facebook.login.LoginManager;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -36,6 +45,7 @@ public class SavedFragment extends Fragment {
     String id;
     private CollectionReference savedRef;
     private SavedExerciseAdapter adapter;
+    private SavedExercise currentDeletedexercise;
     public SavedFragment() {
     }
 
@@ -52,6 +62,7 @@ public class SavedFragment extends Fragment {
         public View onCreateView (LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState){
             View v=inflater.inflate(R.layout.fragment_saved, container, false);
+            currentDeletedexercise=null;
             fbAuth = FirebaseAuth.getInstance();
             db=FirebaseFirestore.getInstance();
              id=fbAuth.getCurrentUser().getUid();
@@ -66,55 +77,76 @@ public class SavedFragment extends Fragment {
             recycler.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
             recycler.setAdapter(adapter);
 
-         /*   ItemTouchHelper.SimpleCallback itemTouchHelperCallback= new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT){
+
+            adapter.setOnItemClickListener(new SavedExerciseAdapter.onItemClickListener() {
                 @Override
-                public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
-                    return 0;
+                public void onItemClick(DocumentSnapshot documentSnapshot, int position,boolean isExpanded) {
+                    if(isExpanded)
+                        documentSnapshot.getReference().update("expanded",false);
+                    else
+                        documentSnapshot.getReference().update("expanded",true);
                 }
 
                 @Override
-                public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                    return false;
+                public void onViewClick(DocumentSnapshot documentSnapshot, int position) {
+
+                    deleteExercise(documentSnapshot);
+
                 }
 
-                @Override
-                public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
-                    if(direction==ItemTouchHelper.LEFT || direction== ItemTouchHelper.RIGHT) {
-                        adapter.deleteItem(viewHolder.getAdapterPosition());
-                        Toast.makeText(getActivity().getApplicationContext(), "swip", Toast.LENGTH_LONG).show();
-                    }
-                }
-            };
-            new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recycler);*/
-
-
-
-
-
-
-            Button btnLoguot=v.findViewById(R.id.btnLogout);
-            btnLoguot.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    fbAuth.getInstance().signOut();
-                    LoginManager.getInstance().logOut();
-                    startActivity(new Intent(getActivity().getApplicationContext(), LoginActivity.class));
-                    getActivity().finish();;
-                }
             });
 
-            Button btnProba=v.findViewById(R.id.btnProba);
-            btnProba.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String s=fbAuth.getCurrentUser().getDisplayName();
-                    Toast.makeText(getActivity().getApplicationContext(),s,Toast.LENGTH_SHORT).show();
-                }
-            });
+
+
+
 
             return v;
         }
+
+    public void deleteExercise(DocumentSnapshot doc)
+    {
+
+        SavedExercise deletedExercise=doc.toObject(SavedExercise.class);
+        currentDeletedexercise=deletedExercise;
+        doc.getReference().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Snackbar.make(getView(), R.string.unsave_exercise, Snackbar.LENGTH_LONG)
+                        .setAction(R.string.undo, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                restorExercise(doc);
+                            }
+                        }).show();
+
+            }
+        });
+
+
+    }
+
+    public void restorExercise(DocumentSnapshot doc)
+    {
+        db.collection("users").document(id).collection("savedExercises").document().set(currentDeletedexercise).
+                addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful())
+                        {
+                            Snackbar.make(getView(), R.string.restore_exercise, Snackbar.LENGTH_LONG)
+                                    .setAction(R.string.undo, new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            currentDeletedexercise=null;
+                                            deleteExercise(doc);
+                                        }
+                                    }).show();
+                        }
+
+                    }
+                });
+    }
 
     @Override
     public void onStart() {
