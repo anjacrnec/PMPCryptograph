@@ -8,13 +8,11 @@ import com.google.type.Date;
 public class SavedExercise {
 
     private String title;
-
     private String body;
     private String answer;
-
-
-
     private boolean expanded;
+
+    private boolean visible;
 
 
 
@@ -27,12 +25,13 @@ public class SavedExercise {
 
     }
 
-    public SavedExercise(String title, String body, String answer,boolean expanded)
+    public SavedExercise(String title, String body, String answer,boolean expanded,boolean visible)
     {
         this.title=title;
         this.body=body;
         this.answer= answer;
         this.expanded=expanded;
+        this.visible=visible;
     }
 
     public String getTitle() {
@@ -74,5 +73,12 @@ public class SavedExercise {
         this.expanded = expanded;
     }
 
+    public boolean getVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
 
 }

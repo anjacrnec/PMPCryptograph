@@ -25,13 +25,13 @@ import rita.RiTa;
 
 public abstract class Exercise {
 
-    protected static final String CAESER_CIPHER="Caeser";
-    protected static final String AFFINE_CIPHER="Affine";
-    protected static final String VIGNERE_CIPHER="Vigenere";
-    protected static final String PLAYFAIR_CIPHER="Playfair";
-    protected static final String ORTHOGONAL_CIPHER="Orthogonal";
-    protected static final String REVERSE_ORTHOGONAL_CIPHER="ReverseOrthogonal";
-    protected static final String DIAGONAL_CPIHER="Diagonal";
+    public static final String CAESER_CIPHER="Caeser";
+    public static final String AFFINE_CIPHER="Affine";
+    public static final String VIGNERE_CIPHER="Vigenere";
+    public static final String PLAYFAIR_CIPHER="Playfair";
+    public static final String ORTHOGONAL_CIPHER="Orthogonal";
+    public static final String REVERSE_ORTHOGONAL_CIPHER="ReverseOrthogonal";
+    public static final String DIAGONAL_CPIHER="Diagonal";
     protected static final String ENCRYPT="Encrypt";
     protected static final String DECRYPT="Decrypt";
     protected static final String [] TYPE_CIPHER={ENCRYPT,DECRYPT};

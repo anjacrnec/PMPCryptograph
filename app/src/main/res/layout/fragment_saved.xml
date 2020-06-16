@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,10 +8,49 @@
     android:orientation="vertical"
     tools:context=".SavedFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rviewExercises"
+    <Button
+        android:id="@+id/btnFilter"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@color/orange"
+        android:clickable="true"
+        android:drawableLeft="@drawable/exercise_seetings"
+        android:drawablePadding="10dp"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/filter" />
+
+
+    <net.cachapa.expandablelayout.ExpandableLayout
+        android:id="@+id/layoutFilterExpandible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:clickable="true"
+        android:layout_marginTop="-10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        app:el_duration="500"
+        app:el_expanded="true">
+
+
+        <Spinner
+            android:id="@+id/spinnerFilter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/spinner_filter"
+            android:spinnerMode="dropdown" />
+    </net.cachapa.expandablelayout.ExpandableLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rviewExercises"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
 
 </LinearLayout>

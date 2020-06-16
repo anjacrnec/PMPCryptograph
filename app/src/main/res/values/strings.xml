@@ -89,4 +89,17 @@
 
     <string name="lang">Language</string>
     <string name="logout">Log out</string>
+
+    <string-array name="spinner_filter">
+        <item>All exercises</item>
+        <item>Caeser exercises</item>
+        <item>Affine exercises</item>
+        <item>Playfair exercises</item>
+        <item>Vigenere exercises</item>
+        <item>Orthogonal exercises</item>
+        <item>Reverse Orthogonal exercises</item>
+        <item>Diagonal exercises</item>
+    </string-array>
+
+    <string name="filter">Filter exercises</string>
 </resources>

@@ -67,7 +67,7 @@ public abstract class WordDatabase extends RoomDatabase {
                         //new initializeWordDBASyncTask(instance).execute(new Word(RiTa.randomWord(),"obj"));//
                     }
                 });
-                new initializeWordDBASyncTask(instance).execute(new Word(RiTa.randomWord(),"obj"));
+               new initializeWordDBASyncTask(instance).execute(new Word(RiTa.randomWord(),"obj"));
 
             }
 

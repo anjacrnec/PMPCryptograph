@@ -38,6 +38,26 @@ public class SavedExerciseAdapter extends FirestoreRecyclerAdapter<SavedExercise
         else
             holder.expandableAnswer.collapse();
 
+        if(model.getVisible())
+        {
+            holder.itemView.setVisibility(View.VISIBLE);
+            holder.expandableExercise.expand();
+            ViewGroup.MarginLayoutParams layoutParams =
+                    (ViewGroup.MarginLayoutParams) holder.itemView.getLayoutParams();
+            layoutParams.setMargins(10, 20, 10, 0);
+            holder.itemView.requestLayout();
+
+        }
+        else {
+            holder.itemView.setVisibility(View.INVISIBLE);
+            holder.expandableExercise.collapse();
+            ViewGroup.MarginLayoutParams layoutParams =
+                    (ViewGroup.MarginLayoutParams) holder.itemView.getLayoutParams();
+            layoutParams.setMargins(10, 0, 10, 0);
+            holder.itemView.requestLayout();
+
+        }
+
 
     }
 
@@ -59,6 +79,7 @@ public class SavedExerciseAdapter extends FirestoreRecyclerAdapter<SavedExercise
         TextView txtBody;
         TextView txtAnswer;
         ExpandableLayout expandableAnswer;
+        ExpandableLayout expandableExercise;
 
         public SavedExerciseHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,6 +87,7 @@ public class SavedExerciseAdapter extends FirestoreRecyclerAdapter<SavedExercise
             txtBody=itemView.findViewById(R.id.txtSavedExerciseBody);
             txtAnswer=itemView.findViewById(R.id.txtSaveExerciseAnswer);
             expandableAnswer=itemView.findViewById(R.id.layoutAnswerExpandible);
+            expandableExercise=itemView.findViewById(R.id.layoutAnswerExpandible2);
 
 
          /* txtBody.setOnClickListener(new View.OnClickListener() {
@@ -91,9 +113,10 @@ public class SavedExerciseAdapter extends FirestoreRecyclerAdapter<SavedExercise
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    int position =getAdapterPosition();
-                    if(position!=RecyclerView.NO_POSITION && listener!=null)
-                        listener.onViewClick(getSnapshots().getSnapshot(position),position);
+
+                 int position =getAdapterPosition();
+                   if(position!=RecyclerView.NO_POSITION && listener!=null)
+                       listener.onViewClick(getSnapshots().getSnapshot(position),position,itemView);
                     return false;
                 }
             });
@@ -123,7 +146,7 @@ public class SavedExerciseAdapter extends FirestoreRecyclerAdapter<SavedExercise
     public interface onItemClickListener
     {
         void onItemClick(DocumentSnapshot documentSnapshot, int position, boolean isExpanded);
-        void onViewClick(DocumentSnapshot documentSnapshot,int position);
+        void onViewClick(DocumentSnapshot documentSnapshot,int position,View view);
 
     }
 

@@ -27,9 +27,20 @@
         android:id="@+id/btnExercise"
         style="@style/CryptographerTitles"
         android:text="@string/exercise"
-
         android:textAllCaps="true"
         />
+        <Button
+            android:id="@+id/btnConfigureExercise"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/orange"
+            android:clickable="true"
+            android:drawableLeft="@drawable/exercise_seetings"
+            android:drawablePadding="10dp"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="10dp"
+            android:text="@string/configure_exercise" />
+
 
         <net.cachapa.expandablelayout.ExpandableLayout
             android:id="@+id/layoutConfigureExpandible"
@@ -47,17 +58,6 @@
                 android:background="#FFFFFF"
                 android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/btnConfigureExercise"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/orange"
-                    android:clickable="true"
-                    android:drawableLeft="@drawable/exercise_seetings"
-                    android:drawablePadding="10dp"
-                    android:gravity="left|center_vertical"
-                    android:paddingLeft="10dp"
-                    android:text="@string/configure_exercise" />
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/chipgroupCiphers"

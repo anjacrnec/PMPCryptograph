@@ -97,6 +97,8 @@ public class ExercisesFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_exercises, container, false);
 
+        prefs=getActivity().getPreferences(getActivity().MODE_PRIVATE);
+        editor=prefs.edit();
         fbAuth=FirebaseAuth.getInstance();
         db=FirebaseFirestore.getInstance();
         pcViewModel = ViewModelProviders.of(getActivity()).get(WordViewModel.class);
@@ -380,6 +382,13 @@ public class ExercisesFragment extends Fragment {
             }
         });
 
+        btnConfigure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                expandibleConfigure.toggle();
+            }
+        });
+
 
 
         return v;
@@ -407,7 +416,14 @@ public class ExercisesFragment extends Fragment {
     public void saveExercise()
     {
 
-        currentSavedExercise=new SavedExercise(currentExercise.getTitle(),currentExercise.getBody(),currentExercise.getAnswer(),false);
+        boolean visible;
+        String title=currentExercise.getTitle();
+        String filter=prefs.getString("FILTER","all");
+        if(title.equals(filter) || filter.equals("all"))
+            visible=true;
+        else
+            visible=false;
+        currentSavedExercise=new SavedExercise(currentExercise.getTitle(),currentExercise.getBody(),currentExercise.getAnswer(),false,visible);
         db.collection("users").document(id).collection("savedExercises").document().set(currentSavedExercise).
                 addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

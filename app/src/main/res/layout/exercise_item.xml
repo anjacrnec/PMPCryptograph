@@ -8,6 +8,13 @@
     android:layout_marginEnd="10dp"
     >
 
+    <net.cachapa.expandablelayout.ExpandableLayout
+        android:id="@+id/layoutAnswerExpandible2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        app:el_duration="500"
+        app:el_expanded="false">>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -72,5 +79,5 @@
 
 
     </LinearLayout>
-
+    </net.cachapa.expandablelayout.ExpandableLayout>
 </androidx.cardview.widget.CardView>

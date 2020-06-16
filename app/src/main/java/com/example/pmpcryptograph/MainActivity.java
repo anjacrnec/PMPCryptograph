@@ -50,6 +50,16 @@ public class MainActivity extends AppCompatActivity implements ConnectionLossDia
     }
     Boolean keyboardState=false;
 
+
+    public SavedExerciseAdapter adapter;
+    public static final String  CAESER_FILER="caeser filter";
+    public static final String  PLAYFAIR_FILTER="playfair filter";
+    public static final String AFFINE_FILTER="affine filter";
+    public static final String VIGENERE_FILTER="vigenere filter";
+    public static final String ORTHOGONAL_FILTER="orthogonal filter";
+    public static final String REVERSE_ORTHOGONAL_FILTER="reverse orthogonal filter";
+    public static final String DIAGONAL_FILTER="diagonal filter";
+
     public static final String TAG_CONNECTION_LOSS="show connection dialog";
     public static final String TAG_CRYPTOGRAPHER_FRAGMENT="cryptographer";
     public static final String TAG_EXERCISES_FRAGMENT="exercises";
@@ -59,16 +69,17 @@ public class MainActivity extends AppCompatActivity implements ConnectionLossDia
 
     private Fragment fragment1 = new CryptographerFragment();
     private Fragment fragment2 = new ExercisesFragment();
-    private Fragment fragment3=new SavedFragment();
+    private Fragment fragment3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         prefs = this.getPreferences(this.MODE_PRIVATE);
-
-        getSupportActionBar().show();
-
+        editor=prefs.edit();
+        editor.putString("FILTER","all");
+        editor.apply();
+        fragment3=new SavedFragment();
         Tovuti.from(this).monitor(new Monitor.ConnectivityListener(){
             @Override
             public void onConnectivityChanged(int connectionType, boolean isConnected, boolean isFast){
@@ -102,8 +113,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionLossDia
             fragment3=getSupportFragmentManager().findFragmentByTag(TAG_SAVED_FRAGMENT);
         }
 
-
-
+        getSupportActionBar().show();
 
 
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -200,7 +210,7 @@ public class MainActivity extends AppCompatActivity implements ConnectionLossDia
         ConnectionLossDialog dialog = new ConnectionLossDialog();
         dialog.show(fm, "dialog");
     }
-    
+
 
     @Override
     protected void onStop(){
@@ -210,7 +220,6 @@ public class MainActivity extends AppCompatActivity implements ConnectionLossDia
 
     @Override
     public void getCheckboxStatus(boolean status) {
-        editor=prefs.edit();
         editor.putBoolean(TAG_CONNECTION_LOSS,!status);
         editor.apply();
     }

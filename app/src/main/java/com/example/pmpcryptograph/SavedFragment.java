@@ -2,6 +2,7 @@ package com.example.pmpcryptograph;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,17 +13,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.pmpcryptograph.cryptography.AffineCipher;
+import com.example.pmpcryptograph.exercise.Exercise;
 import com.example.pmpcryptograph.exercise.SavedExercise;
 import com.facebook.login.LoginManager;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -37,6 +43,11 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import net.cachapa.expandablelayout.ExpandableLayout;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class SavedFragment extends Fragment {
 
@@ -46,6 +57,12 @@ public class SavedFragment extends Fragment {
     private CollectionReference savedRef;
     private SavedExerciseAdapter adapter;
     private SavedExercise currentDeletedexercise;
+    FirestoreRecyclerOptions<SavedExercise>options;
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
+    List <String> listFilters;
+
+
     public SavedFragment() {
     }
 
@@ -66,9 +83,15 @@ public class SavedFragment extends Fragment {
             fbAuth = FirebaseAuth.getInstance();
             db=FirebaseFirestore.getInstance();
              id=fbAuth.getCurrentUser().getUid();
+
+            prefs = getActivity().getPreferences(getActivity().MODE_PRIVATE);
+            editor=prefs.edit();
+
+
+            Spinner spinFilter=v.findViewById(R.id.spinnerFilter);
             savedRef=db.collection("users").document(id).collection("savedExercises");
             Query query=savedRef.orderBy("time", Query.Direction.DESCENDING);
-            FirestoreRecyclerOptions<SavedExercise>options=new FirestoreRecyclerOptions.Builder<SavedExercise>()
+           options=new FirestoreRecyclerOptions.Builder<SavedExercise>()
                     .setQuery(query,SavedExercise.class)
                     .build();
             adapter=new SavedExerciseAdapter(options);
@@ -88,20 +111,95 @@ public class SavedFragment extends Fragment {
                 }
 
                 @Override
-                public void onViewClick(DocumentSnapshot documentSnapshot, int position) {
+                public void onViewClick(DocumentSnapshot documentSnapshot, int position,View view) {
 
                     deleteExercise(documentSnapshot);
+
 
                 }
 
 
             });
 
+            ExpandableLayout expandableFilter=v.findViewById(R.id.layoutFilterExpandible);
+        Button btnFilter=v.findViewById(R.id.btnFilter);
+        btnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                expandableFilter.toggle();
+            }
+        });
 
+        spinFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                switch (position)
+                {
+                    case 0:filterAll();
+                    break;
+                    case 1:
+                        filterSpecific(Exercise.CAESER_CIPHER);
+                        editor.putString("FILTER",Exercise.CAESER_CIPHER);
+                        editor.apply();
+                    break;
+                    case 2:
+
+                        filterSpecific(Exercise.AFFINE_CIPHER);
+                        editor.putString("FILTER",Exercise.AFFINE_CIPHER);
+                        editor.apply();
+                    break;
+                    case 3:
+
+                        filterSpecific(Exercise.PLAYFAIR_CIPHER);
+                        editor.putString("FILTER",Exercise.PLAYFAIR_CIPHER);
+                        editor.apply();
+                    break;
+                    case 4:
+                        filterSpecific(Exercise.VIGNERE_CIPHER);
+                        editor.putString("FILTER",Exercise.VIGNERE_CIPHER);
+                        editor.apply();
+                    break;
+                    case 5:
+                        filterSpecific(Exercise.ORTHOGONAL_CIPHER);
+                        editor.putString("FILTER",Exercise.ORTHOGONAL_CIPHER);
+                        editor.apply();
+                    break;
+                    case 6:
+                        filterSpecific(Exercise.REVERSE_ORTHOGONAL_CIPHER);
+                        editor.putString("FILTER",Exercise.REVERSE_ORTHOGONAL_CIPHER);
+                        editor.apply();
+                    break;
+                    case 7:
+
+                        filterSpecific(Exercise.DIAGONAL_CPIHER);
+                        editor.putString("FILTER",Exercise.DIAGONAL_CPIHER);
+                        editor.apply();
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
 
             return v;
+        }
+
+        public void initializaFilters()
+        {
+            listFilters=new ArrayList<String>();
+            listFilters.add(Exercise.CAESER_CIPHER);
+            listFilters.add(Exercise.AFFINE_CIPHER);
+            listFilters.add(Exercise.PLAYFAIR_CIPHER);
+            listFilters.add(Exercise.VIGNERE_CIPHER);
+            listFilters.add(Exercise.ORTHOGONAL_CIPHER);
+            listFilters.add(Exercise.REVERSE_ORTHOGONAL_CIPHER);
+            listFilters.add(Exercise.DIAGONAL_CPIHER);
         }
 
     public void deleteExercise(DocumentSnapshot doc)
@@ -124,6 +222,56 @@ public class SavedFragment extends Fragment {
         });
 
 
+    }
+
+    public void filterAll()
+    {
+        db.collection("users").document(id).collection("savedExercises").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        for (DocumentSnapshot document : task.getResult()) {
+                            db.collection("users").document(id).collection("savedExercises")
+                                    .document(document.getId()).update("visible", true);
+                        }
+                    }
+                });
+    }
+
+    public void filterOneSpecific(String cipher)
+    {
+        db.collection("users").document(id).collection("savedExercises").whereEqualTo("title",cipher).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        for (DocumentSnapshot document : task.getResult()) {
+                            db.collection("users").document(id).collection("savedExercises")
+                                    .document(document.getId()).update("visible", true);
+
+                        }
+                    }
+                });
+    }
+
+    public void filterSpecific(String cipher)
+    {
+        Log.d("cipher pr", cipher);
+        db.collection("users").document(id).collection("savedExercises").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        for (DocumentSnapshot document : task.getResult()) {
+                            String title=document.getString("title");
+                            Log.d("title pr", title);
+                            if(title.equals(cipher))
+                               document.getReference().update("visible",true);
+                            else
+                                document.getReference().update("visible",false);
+
+
+                        }
+                    }
+                });
     }
 
     public void restorExercise(DocumentSnapshot doc)
