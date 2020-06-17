@@ -2,6 +2,7 @@ package com.example.pmpcryptograph;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
@@ -21,9 +22,15 @@ import net.cachapa.expandablelayout.ExpandableLayout;
 
 public class CaeserFragment extends Fragment {
 
+    ExpandableLayout expandableCaeser;
+    TextInputEditText etCaeserPt;
+    TextInputEditText etCaeserKey;
+    TextInputEditText txtCaeserResult;
     String input,output;
     int key;
 
+    String pt,ct,k;
+    Boolean b;
     public CaeserFragment() {
     }
 
@@ -33,25 +40,74 @@ public class CaeserFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+       /* if(savedInstanceState!=null) {
+            pt=savedInstanceState.getString("pt");
+            ct=savedInstanceState.getString("ct");
+            k=savedInstanceState.getString("k");
+            b=savedInstanceState.getBoolean("expanded");
+            Log.d("vrednosti",pt);
+        }
+        else
+        {
+            pt="";
+            ct="";
+            k="";
+            b=true;
+        }*/
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if(savedInstanceState!=null) {
+            pt = savedInstanceState.getString("pt");
+            ct = savedInstanceState.getString("ct");
+            k = savedInstanceState.getString("k");
+            b = savedInstanceState.getBoolean("expanded");
+            Log.d("vrednosti", pt);
+        }
+        else
+        {  pt="";
+            ct="";
+            k="";
+            b=true;
+
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View v= inflater.inflate(R.layout.fragment_caeser, container, false);
 
-        ExpandableLayout expandableCaeser = v.findViewById(R.id.layoutCaeserExpandible);
+
+        expandableCaeser = v.findViewById(R.id.layoutCaeserExpandible);
+        etCaeserPt =(TextInputEditText) v.findViewById(R.id.etCeaserPt);
+        etCaeserKey=(TextInputEditText) v.findViewById(R.id.etCaeserKey);
+        txtCaeserResult=(TextInputEditText) v.findViewById(R.id.txtCaeserResult);
+
+
+
+
+            etCaeserPt.setText(pt);
+            etCaeserKey.setText(k);
+            txtCaeserResult.setText(ct);
+            //expandableCaeser.setExpanded(b);
+
+
+
+       // etCaeserPt.setText(savedInstanceState.getString("pt"));
+      //  etCaeserKey.setText(savedInstanceState.getString("key"));
+      //  txtCaeserResult.setText(savedInstanceState.getString("ct"));
+       // expandableCaeser.setExpanded(savedInstanceState.getBoolean("expanded"));
+
         TextView btnCaeser=(TextView)v.findViewById(R.id.btnCaeserExpand);
-        TextInputEditText etCaeserPt =(TextInputEditText) v.findViewById(R.id.etCeaserPt);
-        TextInputEditText etCaeserKey=(TextInputEditText) v.findViewById(R.id.etCaeserKey);
-        TextInputEditText txtCaeserResult=(TextInputEditText) v.findViewById(R.id.txtCaeserResult);
         Button btnCaeserEncrypt=(Button) v.findViewById(R.id.btnCaeserEncrypt);
         Button btnCaeserDecrypt=(Button) v.findViewById(R.id.btnCaeserDecrypt);
         Button btnCaeserClear=(Button) v.findViewById(R.id.btnCaeserClear);
         btnCaeserDecrypt.setEnabled(false);
         btnCaeserEncrypt.setEnabled(false);
-        //FragmentManager fm=getChildFragmentManager();
         CryptographerFragment cryptographerFragment = ((CryptographerFragment) getActivity().getSupportFragmentManager().findFragmentByTag(MainActivity.TAG_CRYPTOGRAPHER_FRAGMENT));
 
 
@@ -147,5 +203,19 @@ public class CaeserFragment extends Fragment {
         });
 
         return v;
+    }
+
+
+
+    @Override
+    public void onSaveInstanceState (Bundle outState)
+    {
+        Log.d("orientacija","da");
+        super.onSaveInstanceState(outState);
+        outState.putString("pt", etCaeserPt.getText().toString());
+        outState.putString("key",  etCaeserKey.getText().toString());
+        outState.putString("ct",  etCaeserKey.getText().toString());
+        outState.putBoolean("expanded",expandableCaeser.isExpanded());
+
     }
 }

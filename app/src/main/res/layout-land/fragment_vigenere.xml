@@ -3,128 +3,125 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".AffineFragment">
+    tools:context=".VigenereFragment">
 
     <TextView
-        android:id="@+id/btnAffineExpand"
+        android:id="@+id/btnVigenereExpand"
         style="@style/CryptographerTitles"
-        android:text="@string/affine_cipher" />
+        android:text="@string/vignere_cipher" />
 
     <net.cachapa.expandablelayout.ExpandableLayout
-        android:id="@+id/layoutAffineExpandible"
+        android:id="@+id/layoutVigenereExpandible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#FFFFFF"
         app:el_duration="500"
         app:el_expanded="true">
 
-        <RelativeLayout
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutAffineInput"
-                style="@style/CryptographerEditText"
-                android:hint="@string/input"
-                app:hintTextAppearance="@style/TextInputLayoutHelper">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etAffineInput"
-                    style="@style/TextInputLayoutHelper"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:imeOptions="flagNoExtractUi"
-                    android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                    android:singleLine="true" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+            android:paddingBottom="10dp"
+            >
 
             <LinearLayout
-                android:id="@+id/layoutAffineKeys"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/layoutAffineInput"
-                android:orientation="horizontal">
+                android:layout_weight="2"
+                android:layout_gravity="center_vertical"
+
+                android:orientation="vertical">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/layoutAffineKeyA"
+                    android:id="@+id/layoutVigenereInput"
                     style="@style/CryptographerEditText"
+                    android:hint="@string/input"
+                    app:boxBackgroundColor="#FFFFFF"
+                    app:helperTextEnabled="false"
+                    app:hintTextAppearance="@style/TextInputLayoutHelper">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etVigenereInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                        android:imeOptions="flagNoExtractUi"
+                        android:singleLine="true" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutVigenereKey"
+                    style="@style/CryptographerEditText"
+                    android:layout_below="@id/layoutVigenereInput"
                     android:layout_marginBottom="10dp"
-                    android:layout_weight="1"
-                    app:helperText="@string/affine_helper_key"
+                    android:hint="@string/key"
                     app:helperTextEnabled="true"
                     app:hintTextAppearance="@style/TextInputLayoutHelper">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etAffineKeyA"
+                        android:id="@+id/etVigenereKey"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/keyA"
-                        android:inputType="number"
+                        android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                         android:imeOptions="flagNoExtractUi"
-                        app:hintTextAppearance="@style/TextInputLayoutHelper" />
+                        android:inputType="textPhonetic"
+                        android:singleLine="true" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/layoutAffineKeyB"
-                    style="@style/CryptographerEditText"
-                    android:layout_marginBottom="10dp"
-                    android:layout_weight="1"
-                    app:hintTextAppearance="@style/TextInputLayoutHelper">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etAffineKeyB"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/keyB"
-                        android:imeOptions="flagNoExtractUi"
-                        android:inputType="number" />
-                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/layoutButtonsAffine"
+                android:id="@+id/layoutButtonsVigenere"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/layoutAffineKeys"
-                android:orientation="horizontal">
+                android:layout_below="@id/layoutVigenereKey"
+                android:layout_marginTop="10dp"
+                android:layout_weight="2.5"
+                android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/btnAffineEncrypt"
+                    android:id="@+id/btnVigenereEncrypt"
                     style="@style/CryptographerButtons"
-                    android:layout_marginStart="10dp"
                     android:text="@string/encrypt" />
 
                 <Button
-                    android:id="@+id/btnAffineDecrypt"
+                    android:id="@+id/btnVigenereDecrypt"
                     style="@style/CryptographerButtons"
+                    android:backgroundTint="#D5D5D5"
                     android:text="@string/decrypt" />
 
                 <Button
-                    android:id="@+id/btnAffineClear"
+                    android:id="@+id/btnVigenereClear"
                     style="@style/CryptographerButtons"
-                    android:layout_marginEnd="10dp"
                     android:text="@string/clear" />
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutAffineOutput"
+                android:id="@+id/layoutCeaserResult"
                 style="@style/CryptographerOutput"
-                android:layout_below="@id/layoutButtonsAffine"
+                android:layout_below="@id/layoutButtonsVigenere"
+               android:layout_height="match_parent"
+                android:layout_weight="2"
                 android:hint="@string/cipher_text"
+                android:layout_marginTop="15dp"
                 android:textColorHint="#FFFFFF"
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtAffineOutput"
+                    android:id="@+id/txtVigenereOutput"
                     style="@style/CryptographerOutputEditText"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textAlignment="center"
                     android:inputType="textNoSuggestions" />
             </com.google.android.material.textfield.TextInputLayout>
 
-        </RelativeLayout>
+        </LinearLayout>
+
     </net.cachapa.expandablelayout.ExpandableLayout>
+
 </LinearLayout>

@@ -8,9 +8,7 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
     <FrameLayout
         android:id="@+id/baseFragmentContainer"
         android:layout_width="match_parent"
@@ -27,8 +25,9 @@
             app:itemBackground="@color/black"
             app:itemIconTint="@drawable/bottom_navigation_selector"
             app:itemTextColor="@drawable/bottom_navigation_selector"
-            app:menu="@menu/bottom_navigation" />
-    </RelativeLayout>
+            app:menu="@menu/bottom_navigation"
+            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
+            />
 
 
 </RelativeLayout>

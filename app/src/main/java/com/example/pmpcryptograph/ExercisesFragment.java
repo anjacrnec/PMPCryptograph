@@ -291,16 +291,18 @@ public class ExercisesFragment extends Fragment {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(currentSavedExercise==null) {
-                    saveExercise();
-                }
-                else
-                {
-                    unsaveExercise();
+
+                    if (currentSavedExercise == null)
+                    {
+                        saveExercise();
+                    }
+                    else
+                        {
+                            unsaveExercise();
+                    }
                 }
 
 
-            }
         });
 
         chipCaeser.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -413,6 +415,8 @@ public class ExercisesFragment extends Fragment {
 
     }
 
+
+
     public void saveExercise()
     {
 
@@ -428,27 +432,32 @@ public class ExercisesFragment extends Fragment {
                 addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful())
-                        {
-                            btnSave.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.orange)));
-                            Snackbar.make(btnSave, R.string.saved_exercise, Snackbar.LENGTH_SHORT)
-                                    .setAction(R.string.undo, new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            unsaveExercise();
-                                        }
-                                    }).show();
-                        }
-                        else
-                        {
-                            Toast.makeText(getActivity().getApplicationContext(),"must have internet turner on",Toast.LENGTH_SHORT).show();
-                        }
+
+
                     }
                 });
+
+
+        String message;
+        if(prefs.getBoolean(MainActivity.TAG_CURRENT_CONNECTION,true))
+            message=getResources().getString(R.string.saved_exercise);
+        else
+            message=getResources().getString(R.string.saved_exercise)+" "+getResources().getString(R.string.offline_mode);
+
+        btnSave.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.orange)));
+        Snackbar.make(btnSave, message, Snackbar.LENGTH_SHORT)
+                .setAction(R.string.undo, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        unsaveExercise();
+                    }
+                }).show();
+
     }
 
     public void unsaveExercise()
-    { String id=fbAuth.getCurrentUser().getUid();
+    {
+        String id=fbAuth.getCurrentUser().getUid();
         Query query =  db.collection("users").document(id).collection("savedExercises")
                 .whereEqualTo("title", currentSavedExercise.getTitle())
                 .whereEqualTo("body", currentSavedExercise.getBody())
@@ -456,31 +465,32 @@ public class ExercisesFragment extends Fragment {
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
                     for (DocumentSnapshot document : task.getResult()) {
-                        db.collection("users").document(id).collection("savedExercises").document(document.getId()).delete()
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        currentSavedExercise=null;
-                                        btnSave.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.grayLight)));
-                                        Snackbar.make(btnSave, R.string.unsave_exercise, Snackbar.LENGTH_SHORT)
-                                                .setAction(R.string.undo, new View.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(View v) {
-                                                        saveExercise();
+                        db.collection("users").document(id).collection("savedExercises")
+                                .document(document.getId()).delete();
 
-                                                    }
-                                                }).show();
-                                    }
-                                });
 
                     }
-                } else {
-
                 }
-            }
+
         });
+
+        String message;
+        if(prefs.getBoolean(MainActivity.TAG_CURRENT_CONNECTION,true))
+            message=getResources().getString(R.string.unsave_exercise);
+        else
+            message=getResources().getString(R.string.unsave_exercise)+" "+getResources().getString(R.string.offline_mode);
+
+        currentSavedExercise=null;
+        btnSave.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.grayLight)));
+        Snackbar.make(btnSave, message, Snackbar.LENGTH_SHORT)
+                .setAction(R.string.undo, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        saveExercise();
+
+                    }
+                }).show();
     }
 
 

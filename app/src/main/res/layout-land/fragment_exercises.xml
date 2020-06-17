@@ -164,6 +164,16 @@
             android:padding="10sp"
             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
             android:textSize="18sp" />
+
+        <net.cachapa.expandablelayout.ExpandableLayout
+            android:id="@+id/layoutConfigureExpandible2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:clickable="true"
+            app:el_duration="500"
+            app:el_expanded="false">
+
         <View
             android:id="@+id/divider5"
             android:layout_width="match_parent"
@@ -309,7 +319,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:background="@android:color/darker_gray" />
-
+        </net.cachapa.expandablelayout.ExpandableLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutAnswer"

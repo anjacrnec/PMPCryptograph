@@ -4,17 +4,17 @@
 
     <item
         android:id="@+id/navCryptography"
-        android:icon="@drawable/placeholder"
+        android:icon="@drawable/cryptographer_icon_2"
         android:title="@string/nav_cryptography" />
 
     <item
         android:id="@+id/navExercises"
-        android:icon="@drawable/placeholder"
-        android:title="@string/nav_exercises"/>
+        android:icon="@drawable/exercise_icon_2"
+        android:title="@string/nav_exercises" />
 
     <item
         android:id="@+id/naviSaved"
-        android:icon="@drawable/placeholder"
-        android:title="@string/nav_saved"/>
+        android:icon="@drawable/saved_icon_3"
+        android:title="@string/nav_saved" />
 
 </menu>

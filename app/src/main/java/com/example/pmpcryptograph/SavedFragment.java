@@ -3,11 +3,13 @@ package com.example.pmpcryptograph;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -96,24 +98,37 @@ public class SavedFragment extends Fragment {
                     .build();
             adapter=new SavedExerciseAdapter(options);
             RecyclerView recycler=v.findViewById(R.id.rviewExercises);
-            //recycler.setHasFixedSize(true);
-            recycler.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+          // recycler.setHasFixedSize(true);
+
+
+            int orientation = getResources().getConfiguration().orientation;
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                recycler.setLayoutManager(new GridLayoutManager((getActivity().getApplicationContext()),2));
+            } else {
+                recycler.setLayoutManager(new LinearLayoutManager((getActivity().getApplicationContext())));
+            }
+
             recycler.setAdapter(adapter);
 
 
             adapter.setOnItemClickListener(new SavedExerciseAdapter.onItemClickListener() {
                 @Override
                 public void onItemClick(DocumentSnapshot documentSnapshot, int position,boolean isExpanded) {
-                    if(isExpanded)
-                        documentSnapshot.getReference().update("expanded",false);
-                    else
-                        documentSnapshot.getReference().update("expanded",true);
+                    if(isExpanded) {
+                        documentSnapshot.getReference().update("expanded", false);
+
+                    }
+                    else {
+                        documentSnapshot.getReference().update("expanded", true);
+
+                    }
                 }
 
                 @Override
                 public void onViewClick(DocumentSnapshot documentSnapshot, int position,View view) {
 
                     deleteExercise(documentSnapshot);
+
 
 
                 }
@@ -136,7 +151,10 @@ public class SavedFragment extends Fragment {
 
                 switch (position)
                 {
-                    case 0:filterAll();
+                    case 0:
+                        filterAll();
+                        editor.putString("FILTER","all");
+                        editor.apply();
                     break;
                     case 1:
                         filterSpecific(Exercise.CAESER_CIPHER);
@@ -190,39 +208,7 @@ public class SavedFragment extends Fragment {
             return v;
         }
 
-        public void initializaFilters()
-        {
-            listFilters=new ArrayList<String>();
-            listFilters.add(Exercise.CAESER_CIPHER);
-            listFilters.add(Exercise.AFFINE_CIPHER);
-            listFilters.add(Exercise.PLAYFAIR_CIPHER);
-            listFilters.add(Exercise.VIGNERE_CIPHER);
-            listFilters.add(Exercise.ORTHOGONAL_CIPHER);
-            listFilters.add(Exercise.REVERSE_ORTHOGONAL_CIPHER);
-            listFilters.add(Exercise.DIAGONAL_CPIHER);
-        }
 
-    public void deleteExercise(DocumentSnapshot doc)
-    {
-
-        SavedExercise deletedExercise=doc.toObject(SavedExercise.class);
-        currentDeletedexercise=deletedExercise;
-        doc.getReference().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                Snackbar.make(getView(), R.string.unsave_exercise, Snackbar.LENGTH_LONG)
-                        .setAction(R.string.undo, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                restorExercise(doc);
-                            }
-                        }).show();
-
-            }
-        });
-
-
-    }
 
     public void filterAll()
     {
@@ -238,20 +224,7 @@ public class SavedFragment extends Fragment {
                 });
     }
 
-    public void filterOneSpecific(String cipher)
-    {
-        db.collection("users").document(id).collection("savedExercises").whereEqualTo("title",cipher).get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        for (DocumentSnapshot document : task.getResult()) {
-                            db.collection("users").document(id).collection("savedExercises")
-                                    .document(document.getId()).update("visible", true);
 
-                        }
-                    }
-                });
-    }
 
     public void filterSpecific(String cipher)
     {
@@ -274,26 +247,57 @@ public class SavedFragment extends Fragment {
                 });
     }
 
+    public void deleteExercise(DocumentSnapshot doc)
+    {
+
+        SavedExercise deletedExercise=doc.toObject(SavedExercise.class);
+        currentDeletedexercise=deletedExercise;
+        doc.getReference().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+
+            }
+        });
+
+        String message;
+        if(prefs.getBoolean(MainActivity.TAG_CURRENT_CONNECTION,true))
+            message=getResources().getString(R.string.unsave_exercise);
+        else
+            message=getResources().getString(R.string.unsave_exercise)+" "+getResources().getString(R.string.offline_mode);
+        Snackbar.make(getView(), message, Snackbar.LENGTH_LONG)
+                .setAction(R.string.undo, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        restorExercise(doc);
+                    }
+                }).show();
+
+    }
+
     public void restorExercise(DocumentSnapshot doc)
     {
         db.collection("users").document(id).collection("savedExercises").document().set(currentDeletedexercise).
                 addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful())
-                        {
-                            Snackbar.make(getView(), R.string.restore_exercise, Snackbar.LENGTH_LONG)
-                                    .setAction(R.string.undo, new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            currentDeletedexercise=null;
-                                            deleteExercise(doc);
-                                        }
-                                    }).show();
-                        }
 
                     }
                 });
+        String message;
+        if(prefs.getBoolean(MainActivity.TAG_CURRENT_CONNECTION,true))
+            message=getResources().getString(R.string.restore_exercise);
+        else
+            message=getResources().getString(R.string.restore_exercise)+" "+getResources().getString(R.string.offline_mode);
+
+        Snackbar.make(getView(), message, Snackbar.LENGTH_LONG)
+                .setAction(R.string.undo, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        currentDeletedexercise=null;
+                        deleteExercise(doc);
+                    }
+                }).show();
     }
 
     @Override

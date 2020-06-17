@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -60,31 +61,37 @@ public class MainActivity extends AppCompatActivity implements ConnectionLossDia
     public static final String REVERSE_ORTHOGONAL_FILTER="reverse orthogonal filter";
     public static final String DIAGONAL_FILTER="diagonal filter";
 
+    public static final String TAG_CURRENT_CONNECTION="curent con";
     public static final String TAG_CONNECTION_LOSS="show connection dialog";
     public static final String TAG_CRYPTOGRAPHER_FRAGMENT="cryptographer";
     public static final String TAG_EXERCISES_FRAGMENT="exercises";
     public static final String TAG_SAVED_FRAGMENT="saved";
+
     private FragmentManager fm;
     private Fragment currentFragment;
+Fragment fragment1;
+Fragment fragment2;
+Fragment fragment3;
 
-    private Fragment fragment1 = new CryptographerFragment();
-    private Fragment fragment2 = new ExercisesFragment();
-    private Fragment fragment3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         prefs = this.getPreferences(this.MODE_PRIVATE);
         editor=prefs.edit();
         editor.putString("FILTER","all");
         editor.apply();
-        fragment3=new SavedFragment();
+       // fragment3=new SavedFragment();
+
         Tovuti.from(this).monitor(new Monitor.ConnectivityListener(){
             @Override
             public void onConnectivityChanged(int connectionType, boolean isConnected, boolean isFast){
                 if(isConnected)
-                    Log.d("statusot","da");
+                {
+                    Log.d("statusot", "da");
+                }
                 else
                 {
                     showDialog=prefs.getBoolean(TAG_CONNECTION_LOSS,true);
@@ -94,6 +101,9 @@ public class MainActivity extends AppCompatActivity implements ConnectionLossDia
                     Log.d("statusot","ne");
                 }
 
+                editor.putBoolean(TAG_CURRENT_CONNECTION,isConnected);
+                editor.apply();
+
             }
         });
         fbAuth = FirebaseAuth.getInstance();
@@ -102,6 +112,9 @@ public class MainActivity extends AppCompatActivity implements ConnectionLossDia
 
         fm=getSupportFragmentManager();
         if(savedInstanceState==null) {
+          fragment1 = new CryptographerFragment();
+           fragment2 = new ExercisesFragment();
+         fragment3=new SavedFragment();
             fm.beginTransaction().add(R.id.baseFragmentContainer, fragment1, TAG_CRYPTOGRAPHER_FRAGMENT).commit();
             fm.beginTransaction().add(R.id.baseFragmentContainer, fragment2, TAG_EXERCISES_FRAGMENT).hide(fragment2).commit();
             fm.beginTransaction().add(R.id.baseFragmentContainer, fragment3, TAG_SAVED_FRAGMENT).hide(fragment3).commit();
@@ -178,7 +191,10 @@ public class MainActivity extends AppCompatActivity implements ConnectionLossDia
 
 
 
+
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -211,6 +227,17 @@ public class MainActivity extends AppCompatActivity implements ConnectionLossDia
         dialog.show(fm, "dialog");
     }
 
+
+   /* @Override
+    public void onRestoreInstanceState(Bundle inState){
+        fragment1 = getSupportFragmentManager().getFragment(inState,TAG_CRYPTOGRAPHER_FRAGMENT);
+    }*/
+
+  /*  @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        getSupportFragmentManager().putFragment(outState, TAG_CRYPTOGRAPHER_FRAGMENT, fragment1);
+    }*/
 
     @Override
     protected void onStop(){

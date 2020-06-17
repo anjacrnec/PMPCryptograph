@@ -36,6 +36,7 @@
                     android:id="@+id/etPlayfairInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:imeOptions="flagNoExtractUi"
                     android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                     android:singleLine="true" />
 
@@ -56,6 +57,7 @@
                     android:layout_height="wrap_content"
                     android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                     android:inputType="textPhonetic"
+                    android:imeOptions="flagNoExtractUi"
                     android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 

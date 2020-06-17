@@ -61,6 +61,16 @@ public class SavedExerciseAdapter extends FirestoreRecyclerAdapter<SavedExercise
 
     }
 
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
     @NonNull
     @Override
     public SavedExerciseHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

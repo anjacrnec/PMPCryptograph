@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".TranspositionalFragment">
+
+    <TextView
+        android:id="@+id/btnTranspositionalExpand"
+        style="@style/CryptographerTitles"
+        android:text="@string/transpositional_cipher" />
+
+    <net.cachapa.expandablelayout.ExpandableLayout
+        android:id="@+id/layoutTranspositionalExpandible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        app:el_duration="500"
+        app:el_expanded="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutTranspositionalInput"
+                        style="@style/CryptographerEditText"
+                        android:hint="@string/input"
+                        app:boxBackgroundColor="#FFFFFF"
+                        app:helperTextEnabled="false"
+                        app:hintTextAppearance="@style/TextInputLayoutHelper">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etTranspositionalInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                            android:imeOptions="flagNoExtractUi"
+                            android:singleLine="true" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutTranspositionalKey"
+                        style="@style/CryptographerEditText"
+                        android:layout_below="@id/layoutTranspositionalInput"
+                        android:layout_marginBottom="10dp"
+                        android:hint="@string/key"
+                        app:helperText="@string/transpositional_helper_key"
+                        app:helperTextEnabled="true"
+                        app:hintTextAppearance="@style/TextInputLayoutHelper">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etTranspositionalKey"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="flagNoExtractUi"
+                            android:inputType="number"
+                            android:singleLine="true" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/layoutButtonsTranspositional"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/radioGroupMethods"
+                            android:layout_marginTop="15dp"
+                            android:layout_weight="3"
+                            android:orientation="vertical">
+
+                            <Button
+                                android:id="@+id/btnTranspositionalEncrypt"
+                                style="@style/CryptographerButtons"
+                                android:text="@string/encrypt" />
+
+                            <Button
+                                android:id="@+id/btnTranspositionalClear"
+                                style="@style/CryptographerButtons"
+                                android:text="@string/clear" />
+                        </LinearLayout>
+
+                        <RadioGroup
+                            android:id="@+id/radioGroupMethods"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/txtTranspositionMethod"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="0dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="2"
+                            android:checkedButton="@id/rbOrthogonal"
+                            android:orientation="vertical">
+
+                            <RadioButton
+                                android:id="@+id/rbOrthogonal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/transpositional_orthogonal" />
+
+                            <RadioButton
+                                android:id="@+id/rbOrthogonalReverse"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/transpositional_orthogonal_boustrophedon2" />
+
+                            <RadioButton
+                                android:id="@+id/rbDiagonal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/transpositional_diagonal" />
+                        </RadioGroup>
+
+                    </LinearLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutTranspositionalOutput"
+                        style="@style/CryptographerOutput"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/layoutButtonsTranspositional"
+                        android:layout_marginBottom="60dp"
+                        android:layout_marginStart="0dp"
+                        android:layout_weight="2"
+                        android:hint="@string/cipher_text"
+                        android:textColorHint="#FFFFFF"
+                        app:hintEnabled="false">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txtTranspositionalOutput"
+                            style="@style/CryptographerOutputEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="0dp"
+                            android:inputType="textNoSuggestions" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </net.cachapa.expandablelayout.ExpandableLayout>
+
+</LinearLayout>

@@ -53,8 +53,10 @@
     <string name="transpositional_cipher">transpositional</string>
     <string name="transpositional_orthogonal">Orthogonal</string>
     <string name="transpositional_orthogonal_boustrophedon">Orthogonal Boustrophedon </string>
+    <string name="transpositional_orthogonal_boustrophedon2">Orthogonal \n Boustrophedon </string>
     <string name="transpositional_diagonal">Diagonal</string>
     <string name="transpositional_helper_key">Key must consist of atleast 2 numbers.\n If sorted the key should consist of a series of incrementing values.</string>
+    <string name="transpositional_helper_key2">Key must consist of atleast 2 numbers.\n If sorted the key should consist of a series of incrementing values.</string>
     <string name="transpositional_diagonal_key">Key must be shorter than the input. </string>
     <string name="trans_ortho_boustrophedon_cipher">transpositional orthogonal boustrophedon cipher</string>
     <string name="trans_ortho_cipher">transpositional orthogonal cipher</string>
@@ -81,6 +83,7 @@
     <string name="undo">UNDO</string>
     <string name="configure_exercise">Configure exercise generation settings</string>
     <string name="ciphers_disabled">Atleast one cipher needs to be enabled to generate an exercise</string>
+    <string name="offline_mode"> [Offline mode] </string>
 
 
     <string name="no_internet">No internet connection</string>

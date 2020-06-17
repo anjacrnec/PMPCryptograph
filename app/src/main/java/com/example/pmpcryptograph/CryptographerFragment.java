@@ -2,6 +2,7 @@ package com.example.pmpcryptograph;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -18,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class CryptographerFragment extends Fragment {
 
 
-
+    CaeserFragment caeserFragment;
     public CryptographerFragment() {
 
     }
@@ -37,14 +38,20 @@ public class CryptographerFragment extends Fragment {
         View v= inflater.inflate(R.layout.fragment_cryptographer, container, false);
 
 
-        CaeserFragment caeserFragment=new CaeserFragment();
+        FragmentManager fm=getChildFragmentManager();
+        FragmentTransaction ft=fm.beginTransaction();
+
+        if(savedInstanceState==null) {
+            caeserFragment = new CaeserFragment();
+            ft.replace(R.id.caeserFragmentContainer,caeserFragment,"c");
+        }
+        else
+           getChildFragmentManager().findFragmentByTag("c");
         AffineFragment affineFragment=new AffineFragment();
         VigenereFragment vigenereFragment=new VigenereFragment();
         PlayfairFragment playfairFragment=new PlayfairFragment();
         TranspositionalFragment transpositionalFragment=new TranspositionalFragment();
-        FragmentManager fm=getChildFragmentManager();
-        FragmentTransaction ft=fm.beginTransaction();
-        ft.replace(R.id.caeserFragmentContainer,caeserFragment);
+
         ft.replace(R.id.affineFragmentContainer,affineFragment);
         ft.replace(R.id.vigenereFragmentContainer,vigenereFragment);
         ft.replace(R.id.playfairFragmentContainer,playfairFragment);
@@ -117,5 +124,11 @@ public class CryptographerFragment extends Fragment {
         keyA.clearFocus();
         keyB.clearFocus();
     }
+
+   /* @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+       // getChildFragmentManager().putFragment(outState, "c", caeserFragment);
+    }*/
 
 }

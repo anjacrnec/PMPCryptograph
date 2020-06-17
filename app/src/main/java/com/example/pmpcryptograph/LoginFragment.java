@@ -141,14 +141,16 @@ public class LoginFragment extends Fragment {
 
                     if(!isEmailValid(s))
                     {
-                        layoutEmail.setErrorEnabled(true);
-                        layoutEmail.setError(getResources().getString(R.string.invalid_email_format));
-                        etEmail.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.error_orange, 0);
+
+                        layoutEmail.setHelperTextEnabled(true);
+                        layoutEmail.setHelperText(getResources().getString(R.string.invalid_email_format));
+                        etEmail.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.error_icon, 0);
 
                     }
                     else
                     {
-                        layoutEmail.setErrorEnabled(false);
+
+                        layoutEmail.setHelperTextEnabled(false);
                         etEmail.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                     }
 
