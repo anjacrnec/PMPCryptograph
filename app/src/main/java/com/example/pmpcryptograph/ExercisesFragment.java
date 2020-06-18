@@ -43,6 +43,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
+import com.google.protobuf.Timestamp;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
@@ -88,6 +89,19 @@ public class ExercisesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(savedInstanceState!=null)
+        {
+            /*currentSavedExercise.setTitle(savedInstanceState.getString("title"));
+            currentSavedExercise.setAnswer(savedInstanceState.getString("answer"));
+            currentSavedExercise.setBody(savedInstanceState.getString("body"));
+            currentSavedExercise.setExpanded(savedInstanceState.getBoolean("expanded"));
+            currentSavedExercise.setVisible(savedInstanceState.getBoolean("visible"));
+            currentSavedExercise.setTime(Timestamp.(savedInstanceState.getString("time")));
+            savedInstanceState.getString("body");*/
+            currentSavedExercise=savedInstanceState.getParcelable("current");
+
+
+        }
 
     }
 
@@ -532,5 +546,20 @@ public class ExercisesFragment extends Fragment {
 
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if(currentSavedExercise!=null)
+        {
 
+            outState.putParcelable("current",currentSavedExercise);
+         /*   outState.putString("title",currentExercise.getTitle());
+            outState.putString("answer",currentSavedExercise.getAnswer());
+            outState.putString("body",currentSavedExercise.getBody());
+            outState.putBoolean("expanded",currentSavedExercise.getExpanded());
+            outState.putBoolean("visible",currentSavedExercise.getVisible());
+            outState.putString("time", currentSavedExercise.getTime().toString());*/
+        }
+
+    }
 }

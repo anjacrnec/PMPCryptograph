@@ -58,6 +58,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etEmail"
                     android:textColorHint="@color/white"
+                    android:textColor="@color/white"
                     android:layout_width="match_parent"
                     android:imeOptions="flagNoExtractUi"
                     android:layout_height="wrap_content"

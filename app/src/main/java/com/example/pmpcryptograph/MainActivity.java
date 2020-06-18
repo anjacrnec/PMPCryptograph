@@ -83,7 +83,6 @@ Fragment fragment3;
         editor=prefs.edit();
         editor.putString("FILTER","all");
         editor.apply();
-       // fragment3=new SavedFragment();
 
         Tovuti.from(this).monitor(new Monitor.ConnectivityListener(){
             @Override

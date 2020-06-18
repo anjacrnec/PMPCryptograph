@@ -30,8 +30,9 @@ import com.google.firebase.auth.GoogleAuthProvider;
 public class LoginActivity extends AppCompatActivity {
 
 
+    public static final String TAG_LOGIN="login fr";
     FragmentManager fm;
-
+    Fragment fragmentLogin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +40,15 @@ public class LoginActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
         fm=getSupportFragmentManager();
-        Fragment fragmentLogin = new LoginFragment();
-        fm.beginTransaction().add(R.id.loginFragmentContainer,fragmentLogin).commit();
+        if(savedInstanceState==null)
+        {
+            fragmentLogin = new LoginFragment();
+            fm.beginTransaction().add(R.id.loginFragmentContainer,fragmentLogin,TAG_LOGIN).commit();
+        }
+        else
+            fm.findFragmentByTag(TAG_LOGIN);
+
+
 
 
     }

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.os.Message;
 import android.util.Log;
@@ -39,6 +40,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -53,9 +55,11 @@ import java.util.List;
 
 public class SavedFragment extends Fragment {
 
+    RecyclerView recycler;
     private FirebaseAuth fbAuth;
     private FirebaseFirestore db;
     String id;
+    int posScroll;
     private CollectionReference savedRef;
     private SavedExerciseAdapter adapter;
     private SavedExercise currentDeletedexercise;
@@ -71,9 +75,6 @@ public class SavedFragment extends Fragment {
         @Override
         public void onCreate (Bundle savedInstanceState){
             super.onCreate(savedInstanceState);
-            if (getArguments() != null) {
-
-            }
             setRetainInstance(true);
         }
 
@@ -97,19 +98,19 @@ public class SavedFragment extends Fragment {
                     .setQuery(query,SavedExercise.class)
                     .build();
             adapter=new SavedExerciseAdapter(options);
-            RecyclerView recycler=v.findViewById(R.id.rviewExercises);
-          // recycler.setHasFixedSize(true);
+            recycler=v.findViewById(R.id.rviewExercises);
+           recycler.setHasFixedSize(true);
 
 
             int orientation = getResources().getConfiguration().orientation;
             if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                recycler.setLayoutManager(new GridLayoutManager((getActivity().getApplicationContext()),2));
+                recycler.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
             } else {
                 recycler.setLayoutManager(new LinearLayoutManager((getActivity().getApplicationContext())));
             }
 
             recycler.setAdapter(adapter);
-
+            recycler.setSaveEnabled(true);
 
             adapter.setOnItemClickListener(new SavedExerciseAdapter.onItemClickListener() {
                 @Override
@@ -127,7 +128,8 @@ public class SavedFragment extends Fragment {
                 @Override
                 public void onViewClick(DocumentSnapshot documentSnapshot, int position,View view) {
 
-                    deleteExercise(documentSnapshot);
+                    SavedExercise deletedExercise=documentSnapshot.toObject(SavedExercise.class);
+                    deleteExercise(deletedExercise);
 
 
 
@@ -247,17 +249,26 @@ public class SavedFragment extends Fragment {
                 });
     }
 
-    public void deleteExercise(DocumentSnapshot doc)
+    public void deleteExercise(SavedExercise del)
     {
 
-        SavedExercise deletedExercise=doc.toObject(SavedExercise.class);
-        currentDeletedexercise=deletedExercise;
-        doc.getReference().delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+        currentDeletedexercise=del;
+        Query query =  db.collection("users").document(id).collection("savedExercises")
+                .whereEqualTo("title", currentDeletedexercise.getTitle())
+                .whereEqualTo("body", currentDeletedexercise.getBody())
+                .whereEqualTo("answer",currentDeletedexercise.getAnswer());
+
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<Void> task) {
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                for (DocumentSnapshot document : task.getResult()) {
+                    db.collection("users").document(id).collection("savedExercises")
+                            .document(document.getId()).delete();
 
 
+                }
             }
+
         });
 
         String message;
@@ -269,21 +280,23 @@ public class SavedFragment extends Fragment {
                 .setAction(R.string.undo, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        restorExercise(doc);
+                        restorExercise(currentDeletedexercise);
                     }
                 }).show();
 
     }
 
-    public void restorExercise(DocumentSnapshot doc)
+    public void restorExercise(SavedExercise del)
     {
-        db.collection("users").document(id).collection("savedExercises").document().set(currentDeletedexercise).
-                addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
+        currentDeletedexercise=del;
+       db.collection("users").document(id).collection("savedExercises").add(currentDeletedexercise)
+               .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                   @Override
+                   public void onComplete(@NonNull Task<DocumentReference> task) {
 
-                    }
-                });
+                   }
+               });
+
         String message;
         if(prefs.getBoolean(MainActivity.TAG_CURRENT_CONNECTION,true))
             message=getResources().getString(R.string.restore_exercise);
@@ -294,8 +307,8 @@ public class SavedFragment extends Fragment {
                 .setAction(R.string.undo, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        currentDeletedexercise=null;
-                        deleteExercise(doc);
+                        //currentDeletedexercise=null;
+                        deleteExercise(currentDeletedexercise);
                     }
                 }).show();
     }
@@ -322,6 +335,10 @@ public class SavedFragment extends Fragment {
 
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
 }
 
 

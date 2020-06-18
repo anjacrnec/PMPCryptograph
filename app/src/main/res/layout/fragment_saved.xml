@@ -47,10 +47,11 @@
             android:spinnerMode="dropdown" />
     </net.cachapa.expandablelayout.ExpandableLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rviewExercises"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rviewExercises"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="10dp" />
 
 
 </LinearLayout>

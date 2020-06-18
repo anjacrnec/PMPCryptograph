@@ -1,5 +1,7 @@
 package com.example.pmpcryptograph;
 
+import android.content.Context;
+import android.content.res.Configuration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +25,10 @@ public class SavedExerciseAdapter extends FirestoreRecyclerAdapter<SavedExercise
 
     private onItemClickListener listener;
 
+
     public SavedExerciseAdapter(@NonNull FirestoreRecyclerOptions<SavedExercise> options) {
         super(options);
+
     }
 
     @Override
@@ -33,10 +37,16 @@ public class SavedExerciseAdapter extends FirestoreRecyclerAdapter<SavedExercise
         holder.txtTitle.setText(model.getTitle());
         holder.txtBody.setText(model.getBody());
         holder.txtAnswer.setText(model.getAnswer());
-        if(model.getExpanded())
-            holder.expandableAnswer.expand();
-        else
-            holder.expandableAnswer.collapse();
+
+
+            if(model.getExpanded())
+            {
+                holder.expandableAnswer.expand();
+            }
+            else
+                holder.expandableAnswer.collapse();
+
+
 
         if(model.getVisible())
         {
@@ -100,16 +110,6 @@ public class SavedExerciseAdapter extends FirestoreRecyclerAdapter<SavedExercise
             expandableExercise=itemView.findViewById(R.id.layoutAnswerExpandible2);
 
 
-         /* txtBody.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position =getAdapterPosition();
-                    boolean isExpanded=expandableAnswer.isExpanded();
-                    if(position!=RecyclerView.NO_POSITION && listener!=null)
-                        listener.onItemClick(getSnapshots().getSnapshot(position),position,isExpanded);
-                }
-            });*/
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -132,26 +132,9 @@ public class SavedExerciseAdapter extends FirestoreRecyclerAdapter<SavedExercise
             });
 
 
-          /*  txtTitle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(expandableAnswer.isExpanded())
-                        getSnapshots().getSnapshot(getAdapterPosition()).getReference().update("expanded",false);
-                    else
-                        getSnapshots().getSnapshot(getAdapterPosition()).getReference().update("expanded",true);
-                }
-            });
-
-          itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    deleteItem(getAdapterPosition());
-                    return  false;
-                }
-            });*/
-
         }
     }
+
 
     public interface onItemClickListener
     {

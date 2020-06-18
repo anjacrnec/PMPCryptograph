@@ -65,11 +65,12 @@ public class LoginFragment extends Fragment {
     private GoogleSignInClient googleSignInClient;
     private AccessTokenTracker tokenTracker;
     CallbackManager callbackManager;
-
+    Button btnRegularSignIn;
+    boolean enabledBtns=false;
 
     int RC_IN = 322;
     int RC_FB = 333;
-
+    Button btnRegister;
     public LoginFragment() {
 
     }
@@ -130,6 +131,35 @@ public class LoginFragment extends Fragment {
         });
 
 
+        etPass.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(!s.toString().isEmpty() && !etEmail.getText().toString().isEmpty() && isEmailValid(etEmail.getText().toString()))
+                {
+                    btnRegularSignIn.setEnabled(true);
+                    btnRegister.setEnabled(true);
+                }
+                else
+                {
+                    btnRegularSignIn.setEnabled(false);
+                    btnRegister.setEnabled(false);
+
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
         etEmail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -145,6 +175,8 @@ public class LoginFragment extends Fragment {
                         layoutEmail.setHelperTextEnabled(true);
                         layoutEmail.setHelperText(getResources().getString(R.string.invalid_email_format));
                         etEmail.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.error_icon, 0);
+                        btnRegularSignIn.setEnabled(false);
+                        btnRegister.setEnabled(false);
 
                     }
                     else
@@ -152,6 +184,10 @@ public class LoginFragment extends Fragment {
 
                         layoutEmail.setHelperTextEnabled(false);
                         etEmail.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                        if(!etPass.getText().toString().isEmpty()) {
+                            btnRegularSignIn.setEnabled(true);
+                            btnRegister.setEnabled(true);
+                        }
                     }
 
 
@@ -164,7 +200,7 @@ public class LoginFragment extends Fragment {
         });
 
 
-       Button btnRegister=v.findViewById(R.id.btnRegister);
+       btnRegister=v.findViewById(R.id.btnRegister);
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -181,18 +217,9 @@ public class LoginFragment extends Fragment {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
-                            if (task.isSuccessful()) {
-
-                                Snackbar.make(btnRegister, R.string.register_success, Snackbar.LENGTH_LONG)
-                                        .setAction(R.string.signin_question, new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                signIn();
-                                            }
-                                        }).show();
-
-                            } else {
-
+                            if (!task.isSuccessful()) {
+                                Toast.makeText(getActivity().getApplicationContext(), "no", Toast.LENGTH_SHORT).show();
+                                Snackbar.make(btnRegister, R.string.register_fail, Snackbar.LENGTH_LONG).show();
                             }
 
                         }
@@ -202,7 +229,7 @@ public class LoginFragment extends Fragment {
         });
 
 
-        Button btnRegularSignIn = v.findViewById(R.id.btnEmailPassSignin);
+     btnRegularSignIn = v.findViewById(R.id.btnEmailPassSignin);
         btnRegularSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -214,10 +241,10 @@ public class LoginFragment extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             signIn();
-                            createUser();
+
                         }
                         else{
-                                Toast.makeText(getActivity().getApplicationContext(),"No",Toast.LENGTH_SHORT).show();
+                            Snackbar.make(btnRegularSignIn, R.string.login_fail, Snackbar.LENGTH_LONG).show();
                         }
 
                     }
@@ -225,21 +252,24 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        btnRegularSignIn.setEnabled(false);
+        btnRegister.setEnabled(false);
 
         ImageButton btnAnonSignIn = v.findViewById(R.id.btnAnonSignIn);
         btnAnonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addLoadingFragment();
                 fbAuth.signInAnonymously().addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                           signIn();
+                            addLoadingFragment();
                            createUser();
+                            signIn();
                         }
                         else{
 
+                            Snackbar.make(btnRegularSignIn,"fail", Snackbar.LENGTH_LONG).show();
                         }
 
                     }
@@ -355,19 +385,19 @@ public class LoginFragment extends Fragment {
     }
 
     private void firebaseGoogleAuth(GoogleSignInAccount acc) {
-        addLoadingFragment();
         AuthCredential cred = GoogleAuthProvider.getCredential(acc.getIdToken(), null);
         fbAuth.signInWithCredential(cred).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (!task.isSuccessful()) {
 
-                    Toast.makeText(getActivity().getApplicationContext(), "no", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getActivity().getApplicationContext(), "no", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
-                    signIn();
+                    addLoadingFragment();
                     createUser();
+                    signIn();
                 }
 
             }
@@ -395,6 +425,12 @@ public class LoginFragment extends Fragment {
             }
         });
     }
+    public void removeLoadingFragment()
+    {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.remove(fragmentManager.findFragmentByTag("load")).show(this).commit();
+    }
 
     public void addLoadingFragment()
     {
@@ -402,7 +438,7 @@ public class LoginFragment extends Fragment {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         LoadingFragment loadingFragment=new LoadingFragment();
         fragmentTransaction.hide(this);
-        fragmentTransaction.add(R.id.loginFragmentContainer, loadingFragment);
+        fragmentTransaction.add(R.id.loginFragmentContainer, loadingFragment,"load");
         fragmentTransaction.commit();
     }
 

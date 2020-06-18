@@ -1,11 +1,14 @@
 package com.example.pmpcryptograph.exercise;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.android.gms.common.api.internal.DataHolderNotifier;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.ServerTimestamp;
 import com.google.type.Date;
 
-public class SavedExercise {
+public class SavedExercise implements Parcelable {
 
     private String title;
     private String body;
@@ -79,6 +82,34 @@ public class SavedExercise {
 
     public void setVisible(boolean visible) {
         this.visible = visible;
+    }
+
+
+    private int mData;
+
+    public int describeContents() {
+        return 0;
+    }
+
+    /** save object in parcel */
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeInt(mData);
+    }
+
+    public static final Parcelable.Creator<SavedExercise> CREATOR
+            = new Parcelable.Creator<SavedExercise>() {
+        public SavedExercise createFromParcel(Parcel in) {
+            return new SavedExercise(in);
+        }
+
+        public SavedExercise[] newArray(int size) {
+            return new SavedExercise[size];
+        }
+    };
+
+    /** recreate object from parcel */
+    private SavedExercise(Parcel in) {
+        mData = in.readInt();
     }
 
 }

@@ -1,0 +1,146 @@
+<resources>
+
+    <string name="app_name">PMPCryptograph</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!--fb-->
+    <string name="facebook_app_id">1578307229017952</string>
+    <string name="fb_login_protocol_scheme">fb1578307229017952</string>
+
+
+    <!--Login-->
+    <string name="email">Мејл</string>
+    <string name="password">Лозинка</string>
+    <string name="signIn">Најавување</string>
+    <string name="gmailSignIn">gmail најава</string>
+    <string name="anonSignIn">анонимна најава</string>
+    <string name="facebookSignIn">facebook најава</string>
+    <string name="register">Регистрација</string>
+    <string name="register_success">Успешна регистрација! </string>
+    <string name="signin_question">Сакаш да се логираш?</string>
+    <string name="invalid_email_format">Невалиден формат на мејл</string>
+    <string name="wait_loading">Припремање на податоци...</string>
+    <string name="altLogins">Или пак можи да се логираш со...</string>
+    <string name="register_fail">Овај корисник веќе постој</string>
+    <string name="login_fail">Неточна комбинација на мејл и лозинка</string>
+    <string name="anon_fail">Неуспешна е анонимната најава</string>
+    <!-- Bottom Navigationa -->
+    <string name="nav_cryptography">Криптограф</string>
+    <string name="nav_exercises">Задачи</string>
+    <string name="nav_saved">Складиште</string>
+
+    <!-- Cryptographer Fragment Strings -->
+    <string name="encrypt"> Енкрипција </string>
+    <string name="decrypt"> Декрипција </string>
+    <string name="clear"> Избриши </string>
+    <string name="plain_text"> Отворен текст</string>
+    <string name="cipher_text"> Затворен текст </string>
+    <string name="key"> Клуч </string>
+    <string name="input">Влез</string>
+    <string name="output">излез</string>
+
+    <string name="caeser_encryption">цезарова шифра</string>
+    <string name="caeser_helper_key">Клучот мора да биди меѓу вредност 1 и 25</string>
+
+
+    <string name="affine_cipher">афина шифра</string>
+    <string name="keyA"> Клуч А </string>
+    <string name="keyB"> Клуч Б</string>
+    <string name="affine_helper_key">Клучот мора да биди инверзен во однос на 26</string>
+
+    <string name="vignere_cipher">вижнерова шифра</string>
+    <string name="playfair_cipher">плејфер шифра</string>
+
+
+    <string name="transpositional_cipher">транспозициска</string>
+    <string name="transpositional_orthogonal">Ортогално</string>
+    <string name="transpositional_orthogonal_boustrophedon">Бустрафедон ортогонално </string>
+    <string name="transpositional_orthogonal_boustrophedon2">Бустрафедон \n ортогонално </string>
+    <string name="transpositional_diagonal">Диагонално</string>
+    <string name="transpositional_helper_key">Клучот мора да се состој од барем 2 броја.\n Кога се сортира клучот мора да се состој од серија на инкрементални вредности.</string>
+    <string name="transpositional_helper_key2">Клучот мора да се состој од барем 2 броја.\n Кога се сортира клучот мора да се состој од серија на инкрементални вредности.</string>
+    <string name="transpositional_diagonal_key">Kлучот мора да е пократок од внесот. </string>
+    <string name="trans_ortho_boustrophedon_cipher"></string>
+    <string name="trans_ortho_cipher">трнаспозисика ортогонална шиифра</string>
+    <string name="trans_diagonal_cipher">транспозициска дијагонална шифра</string>
+
+    <!--Exercises fragment-->
+    <string name="exercise">Задача</string>
+    <string name="cipher_colon">Шифрат : </string>
+    <string name="plain_text_colon"> Отворен текст : </string>
+    <string name="cipher_text_colon"> Затворен текст:</string>
+    <string name="key_colon"> Клуч :</string>
+    <string name="new_exercise">Следна </string>
+    <string name="pt">отворениот текст</string>
+    <string name="ct">затворениот текст</string>
+    <string name="ek">енкриптираш</string>
+    <string name="dk">декриптираш</string>
+    <string name="answer">Одговор:</string>
+    <string name="body_pt1">искористи  %1$s за до го %2$s  %3$s %4$s со клучот %5$s</string>
+    <string name="caesar_body_key_pt2">со клучот</string>
+    <string name="generate_answer">Види го одговорот</string>
+    <string name="saved_exercise">Задачата е зачувана</string>
+    <string name="unsave_exercise">Задачата е избришана</string>
+    <string name="restore_exercise">Задачата е повратена</string>
+    <string name="undo">Назад</string>
+    <string name="configure_exercise">Конфигурирај опции за генерирање задачи</string>
+    <string name="ciphers_disabled">барем еден шифрат треба д абиди активен за да се генерира задача</string>
+    <string name="offline_mode"> [ОФЛАЈН МОД] </string>
+    <string name="no_internet_body">Интернет конекцијата е изгубена. Апликацијата ќе работи офлајн. Задачите можат приврмено да се зачувуваат и офлајн. Но доколку не се поврзиш на интернет во следните 2-4 недели постој можност дека зачувабните/избришените задачи ќе бидат изгубени.</string>
+    <string name="no_internet">Нема интернет врска</string>
+    <string name="no_message_again">Не ми ја покажвај оваа порака пак</string>
+
+    <string name="lang">Јазик</string>
+    <string name="logout">Одјави се</string>
+
+    <string-array name="spinner_filter">
+        <item>Сите задачи</item>
+        <item>Цезар задачи</item>
+        <item>Афина задачи</item>
+        <item>Плејфер задачи</item>
+        <item>Вижннерови задачи</item>
+        <item>Ортогонални задачи</item>
+        <item>Бустрафедо ортогонални задачи</item>
+        <item>Дијагонални задачи</item>
+    </string-array>
+
+    <string name="filter">Филтрирај задачи</string>
+
+
+
+
+
+
+
+
+
+
+
+</resources>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -19,6 +19,12 @@ import com.google.firebase.auth.FirebaseAuth;
 public class CryptographerFragment extends Fragment {
 
 
+    public static final String TAG_CAESER_FRAGMENT="caeser fr";
+    public static final String TAG_AFFINE_FRAGMENT="affine fr";
+    public static final String TAG_VIGENERE_FRAGMENT="vigenere fr";
+    public static final String TAG_PLAYFAIR_FRAGMENT="playfair fr";
+    public static final String TAG_TRANSPOSITIONAL_FRAGMENT="trans fr";
+
     CaeserFragment caeserFragment;
     public CryptographerFragment() {
 
@@ -43,20 +49,34 @@ public class CryptographerFragment extends Fragment {
 
         if(savedInstanceState==null) {
             caeserFragment = new CaeserFragment();
-            ft.replace(R.id.caeserFragmentContainer,caeserFragment,"c");
-        }
-        else
-           getChildFragmentManager().findFragmentByTag("c");
-        AffineFragment affineFragment=new AffineFragment();
-        VigenereFragment vigenereFragment=new VigenereFragment();
-        PlayfairFragment playfairFragment=new PlayfairFragment();
-        TranspositionalFragment transpositionalFragment=new TranspositionalFragment();
+            ft.replace(R.id.caeserFragmentContainer,caeserFragment,TAG_CAESER_FRAGMENT);
 
-        ft.replace(R.id.affineFragmentContainer,affineFragment);
-        ft.replace(R.id.vigenereFragmentContainer,vigenereFragment);
-        ft.replace(R.id.playfairFragmentContainer,playfairFragment);
-        ft.replace(R.id.orthogonalFragmentContainer,transpositionalFragment);
-        ft.commit();
+            AffineFragment affineFragment=new AffineFragment();
+            ft.replace(R.id.affineFragmentContainer,affineFragment,TAG_AFFINE_FRAGMENT);
+
+            VigenereFragment vigenereFragment=new VigenereFragment();
+            ft.replace(R.id.vigenereFragmentContainer,vigenereFragment,TAG_VIGENERE_FRAGMENT);
+
+            PlayfairFragment playfairFragment=new PlayfairFragment();
+            ft.replace(R.id.playfairFragmentContainer,playfairFragment,TAG_PLAYFAIR_FRAGMENT);
+
+            TranspositionalFragment transpositionalFragment=new TranspositionalFragment();
+            ft.replace(R.id.orthogonalFragmentContainer,transpositionalFragment,TAG_TRANSPOSITIONAL_FRAGMENT);
+
+            ft.commit();
+        }
+        else {
+
+            getChildFragmentManager().findFragmentByTag(TAG_CAESER_FRAGMENT);
+            getChildFragmentManager().findFragmentByTag(TAG_AFFINE_FRAGMENT);
+            getChildFragmentManager().findFragmentByTag(TAG_VIGENERE_FRAGMENT);
+            getChildFragmentManager().findFragmentByTag(TAG_PLAYFAIR_FRAGMENT);
+            getChildFragmentManager().findFragmentByTag(TAG_TRANSPOSITIONAL_FRAGMENT);
+        }
+
+
+
+
 
 
 
@@ -125,10 +145,6 @@ public class CryptographerFragment extends Fragment {
         keyB.clearFocus();
     }
 
-   /* @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-       // getChildFragmentManager().putFragment(outState, "c", caeserFragment);
-    }*/
+
 
 }
