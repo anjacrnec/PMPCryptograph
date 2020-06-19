@@ -8,6 +8,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,10 +28,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.util.Locale;
+
 
 public class LoginActivity extends AppCompatActivity {
 
-
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
     public static final String TAG_LOGIN="login fr";
     FragmentManager fm;
     Fragment fragmentLogin;
@@ -37,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+
 
         getSupportActionBar().hide();
         fm=getSupportFragmentManager();

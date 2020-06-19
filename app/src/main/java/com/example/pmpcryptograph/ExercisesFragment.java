@@ -2,6 +2,7 @@ package com.example.pmpcryptograph;
 
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -198,7 +199,7 @@ public class ExercisesFragment extends Fragment {
         }
 
         try {
-            currentExercise=Exercise.generateRandomExercise(getActivity().getApplicationContext(),pcViewModel,
+            currentExercise=Exercise.generateRandomExercise(getActivity().getBaseContext(),pcViewModel,
                     caesarEnabled,
                     affineEnabled,
                     vigenereEnabled,
@@ -206,6 +207,7 @@ public class ExercisesFragment extends Fragment {
                     orthoEnabled,
                     reverseOrthoeEnabled,
                     diagonalEnabled);
+            String body;
           exerciseToUI(currentExercise,txtCipher,txtPlainText,txtKey,txtCipherText,txtBody);
 
         } catch (ExecutionException e) {
@@ -241,14 +243,14 @@ public class ExercisesFragment extends Fragment {
                 if(s.toString().equalsIgnoreCase(currentExercise.getAnswer()))
                 {
                     layoutAnswer.setErrorEnabled(true);
-                    layoutAnswer.setError("Correct answer");
+                    layoutAnswer.setError(getResources().getString(R.string.correct_answer));
                     etAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                 }
                 else
                 {
                    if(!s.toString().isEmpty()) {
                        layoutAnswer.setErrorEnabled(true);
-                       layoutAnswer.setError("Wrong answer");
+                       layoutAnswer.setError(getResources().getString(R.string.wrong_answer));
                        etAnswer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.error_orange, 0);
                    }
                 }
@@ -266,7 +268,7 @@ public class ExercisesFragment extends Fragment {
                 try {
                     if(((MainActivity)getActivity()).getKeyboardState())
                         Keyboard.hideKeyboardFrom(getActivity().getApplicationContext(),getActivity().getCurrentFocus());
-                    currentExercise= Exercise.generateRandomExercise(getActivity().getApplicationContext(),pcViewModel,
+                    currentExercise= Exercise.generateRandomExercise(getActivity().getBaseContext(),pcViewModel,
                             caesarEnabled,
                             affineEnabled,
                             vigenereEnabled,
@@ -413,7 +415,35 @@ public class ExercisesFragment extends Fragment {
 
     public void exerciseToUI(Exercise exercise,TextView txtCipher, TextView txtPlainText, TextView txtKey, TextView txtCipherText, TextView txtBody)
     {
-        txtCipher.setText(exercise.getTitle());
+        Resources res=getResources();
+        String title=exercise.getTitle();
+        switch (title)
+        {
+            case "Caeser":
+                txtCipher.setText(res.getString(R.string.caeser));
+                break;
+            case "Affine":
+                txtCipher.setText(res.getString(R.string.affine));
+                break;
+            case "Vigenere":
+                txtCipher.setText(res.getString(R.string.vigenere));
+                break;
+            case "Playfair":
+                txtCipher.setText(res.getString(R.string.playfair));
+                break;
+            case "Orthogonal":
+                txtCipher.setText(res.getString(R.string.ortho));
+                break;
+            case "ReverseOrthogonal":
+                txtCipher.setText(res.getString(R.string.reverse));
+                break;
+            case "Diagonal":
+                txtCipher.setText(res.getString(R.string.diagonal));
+                break;
+        }
+
+
+
         if(exercise.getType()=="Encrypt")
         {
             txtPlainText.setText(exercise.getCipher().getPlainText());
@@ -426,6 +456,7 @@ public class ExercisesFragment extends Fragment {
         }
         txtKey.setText(exercise.getKeyStr());
         txtBody.setText(exercise.getBody());
+
 
     }
 
@@ -441,7 +472,7 @@ public class ExercisesFragment extends Fragment {
             visible=true;
         else
             visible=false;
-        currentSavedExercise=new SavedExercise(currentExercise.getTitle(),currentExercise.getBody(),currentExercise.getAnswer(),false,visible);
+        currentSavedExercise=new SavedExercise(currentExercise,false,visible);
         db.collection("users").document(id).collection("savedExercises").document().set(currentSavedExercise).
                 addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

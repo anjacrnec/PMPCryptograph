@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -13,9 +14,11 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -23,6 +26,7 @@ import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -35,8 +39,10 @@ import com.facebook.login.LoginManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.rw.keyboardlistener.KeyboardUtils;
 
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity implements ConnectionLossDialog.ConnectionLossDialogListener{
@@ -73,18 +79,30 @@ Fragment fragment1;
 Fragment fragment2;
 Fragment fragment3;
 
+Tovuti t;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
+        Log.d("Instance ID", FirebaseInstanceId.getInstance().getId());
         prefs = this.getPreferences(this.MODE_PRIVATE);
+        SharedPreferences prefs2= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         editor=prefs.edit();
         editor.putString("FILTER","all");
         editor.apply();
 
-        Tovuti.from(this).monitor(new Monitor.ConnectivityListener(){
+      Locale locale;
+        locale=new Locale(prefs2.getString("lang","en"),prefs2.getString("country","US"));
+        Log.d("pocetok drzava",prefs2.getString("lang","en")+" "+prefs2.getString("country","US"));
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        this.getResources().updateConfiguration(config,getResources().getDisplayMetrics());
+
+        t= Tovuti.from(this);
+                t.monitor(new Monitor.ConnectivityListener(){
             @Override
             public void onConnectivityChanged(int connectionType, boolean isConnected, boolean isFast){
                 if(isConnected)
@@ -108,6 +126,7 @@ Fragment fragment3;
         fbAuth = FirebaseAuth.getInstance();
 
         BottomNavigationView navigationView=(BottomNavigationView) findViewById(R.id.navigationView);
+
 
         fm=getSupportFragmentManager();
         if(savedInstanceState==null) {
@@ -136,11 +155,7 @@ Fragment fragment3;
                 int item=menuItem.getItemId();
                 if(item==R.id.navCryptography)
                 {
-                   /* fragment=fm.findFragmentByTag(TAG_CRYPTOGRAPHER_FRAGMENT);
-                    if(fragment==null)
-                        changeBaseFragment(new CryptographerFragment(),TAG_CRYPTOGRAPHER_FRAGMENT);
-                    else
-                        changeBaseFragment(fragment,TAG_CRYPTOGRAPHER_FRAGMENT);*/
+
 
                     fm.beginTransaction().hide(fragment2).hide(fragment3).show(fragment1).commit();
 
@@ -148,11 +163,7 @@ Fragment fragment3;
                 }
                 else if (item==R.id.navExercises)
                 {
-                    /*fragment=fm.findFragmentByTag(TAG_EXERCISES_FRAGMENT);
-                    if(fragment==null)
-                        changeBaseFragment(new ExercisesFragment(),TAG_EXERCISES_FRAGMENT);
-                    else
-                        changeBaseFragment(fragment,TAG_EXERCISES_FRAGMENT);*/
+
                     fm.beginTransaction().hide(fragment1).hide(fragment3).show(fragment2).commit();
 
                     return true;
@@ -162,10 +173,6 @@ Fragment fragment3;
 
                     fm.beginTransaction().hide(fragment1).hide(fragment2).show(fragment3).commit();
 
-                   //fbAuth.getInstance().signOut();
-                  // LoginManager.getInstance().logOut();
-                    //startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                   // finish();
                     return true;
                 }
 
@@ -208,12 +215,14 @@ Fragment fragment3;
         switch (id)
         {
             case R.id.languageStn:
+                Intent intent = new Intent(this, LanguageActivity.class);
+                startActivity(intent);
                 break;
             case R.id.logOutStn:
                 fbAuth.getInstance().signOut();
                 LoginManager.getInstance().logOut();
                 startActivity(new Intent(this, LoginActivity.class));
-                this.finish();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -238,10 +247,9 @@ Fragment fragment3;
         getSupportFragmentManager().putFragment(outState, TAG_CRYPTOGRAPHER_FRAGMENT, fragment1);
     }*/
 
-    @Override
-    protected void onStop(){
-        super.onStop();
-    }
+
+
+
 
 
     @Override

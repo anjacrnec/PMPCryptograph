@@ -75,7 +75,7 @@
                             android:layout_margin="2dp"
                             android:layout_weight="1"
                             android:checked="true"
-                            android:text="caesar"
+                            android:text="@string/caeser"
                             app:checkedIcon="@drawable/check_black"
                             app:closeIconVisible="false" />
 
@@ -86,7 +86,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="1dp"
                             android:checked="true"
-                            android:text="vigenere" />
+                            android:text="@string/vigenere" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/chipAffine"
@@ -95,7 +95,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="1dp"
                             android:checked="true"
-                            android:text="affine" />
+                            android:text="@string/affine" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/chipPlayfair"
@@ -104,7 +104,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="1dp"
                             android:checked="true"
-                            android:text="playfair" />
+                            android:text="@string/playfair" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/chipOrtho"
@@ -114,7 +114,7 @@
                             android:layout_margin="1dp"
                             android:layout_weight="1"
                             android:checked="true"
-                            android:text="@string/transpositional_orthogonal" />
+                            android:text="@string/ortho" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/chipDiagonal"
@@ -124,7 +124,7 @@
                             android:layout_margin="5dp"
                             android:layout_weight="1"
                             android:checked="true"
-                            android:text="diagonal " />
+                            android:text="@string/diagonal" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/chipOrthoReverse"
@@ -134,7 +134,7 @@
                             android:layout_margin="1dp"
                             android:layout_weight="1"
                             android:checked="true"
-                            android:text="reverse orthogonal" />
+                            android:text="@string/reverse" />
 
                         <View
                             android:id="@+id/divider8"
@@ -159,7 +159,7 @@
                 android:background="#FFFFFF"
                 android:padding="10sp"
                 android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                android:textSize="18sp" />
+                android:textSize="15sp" />
 
             <View
                 android:id="@+id/divider5"
@@ -314,7 +314,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:hint="Answer"
+                android:hint="@string/answer"
                 app:errorTextAppearance="@style/TextInputLayoutError"
                 app:helperTextEnabled="true"
                 app:hintTextAppearance="@style/Hint2">

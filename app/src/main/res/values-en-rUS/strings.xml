@@ -5,7 +5,14 @@
 
     <!--fb-->
     <string name="facebook_app_id">1578307229017952</string>
-    <string name="fb_login_protocol_scheme">fb1578307229017952</string>
+
+    <string name="caeser">Caeser</string>
+    <string name="affine">Affine</string>
+    <string name="vigenere">Vigenere</string>
+    <string name="playfair">Playfair</string>
+    <string name="ortho">Orthogonal</string>
+    <string name="reverse">Reverse orthogonal</string>
+    <string name="diagonal">Diagonal</string>
 
 
     <!--Login-->
@@ -75,17 +82,23 @@
     <string name="ct">cipher text</string>
     <string name="ek">encrypt</string>
     <string name="dk">decrypt</string>
-    <string name="answer">Answer:</string>
-    <string name="body_pt1">Use the %1$s to %2$s the %3$s %4$s with the key %5$s</string>
+    <string name="answer">Answer</string>
+    <string name="body_pt">Use the %1$s to %2$s the %3$s %4$s with the key %5$s</string>
     <string name="caesar_body_key_pt2">with the key</string>
     <string name="generate_answer">See answer</string>
     <string name="saved_exercise">Exercise is saved</string>
     <string name="unsave_exercise">Exercise is deleted</string>
     <string name="restore_exercise">Exercise is restored</string>
     <string name="undo">UNDO</string>
+    <string name="correct_answer">Correct answer</string>
+    <string name="wrong_answer">Wrong answer</string>
     <string name="configure_exercise">Configure exercise generation settings</string>
     <string name="ciphers_disabled">Atleast one cipher needs to be enabled to generate an exercise</string>
     <string name="offline_mode"> [Offline mode] </string>
+    <string name="change_language_title">Change language</string>
+    <string name="change_language_body">Changing the language requires an application restart. Are you sure you want to change the language?</string>
+    <string name="change_language_yes">Yes</string>
+    <string name="change_language_no">No</string>
 
 
     <string name="no_internet">No internet connection</string>

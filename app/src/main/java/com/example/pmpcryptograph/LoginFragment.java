@@ -235,11 +235,12 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 String mail=etEmail.getText().toString();
                 String pass=etPass.getText().toString();
-                addLoadingFragment();
                 fbAuth.signInWithEmailAndPassword(mail,pass).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
+                            addLoadingFragment();
+                            createUser();
                             signIn();
 
                         }
@@ -413,6 +414,7 @@ public class LoginFragment extends Fragment {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
 
+                    addLoadingFragment();
                     createUser();
                     signIn();
 
@@ -425,12 +427,7 @@ public class LoginFragment extends Fragment {
             }
         });
     }
-    public void removeLoadingFragment()
-    {
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.remove(fragmentManager.findFragmentByTag("load")).show(this).commit();
-    }
+
 
     public void addLoadingFragment()
     {

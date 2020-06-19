@@ -40,6 +40,12 @@
                 android:textSize="18dp" />
 
             <TextView
+                android:id="@+id/txtTitleCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"></TextView>
+
+            <TextView
                 android:id="@+id/button2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -58,8 +64,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:textSize="18sp"
+            android:textSize="15sp"
             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." />
+
+        <TextView
+            android:id="@+id/txtBodyCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"></TextView>
 
         <net.cachapa.expandablelayout.ExpandableLayout
             android:id="@+id/layoutAnswerExpandible"

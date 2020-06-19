@@ -2,6 +2,7 @@ package com.example.pmpcryptograph.exercise;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextPaint;
 
 import com.google.android.gms.common.api.internal.DataHolderNotifier;
 import com.google.firebase.Timestamp;
@@ -11,10 +12,46 @@ import com.google.type.Date;
 public class SavedExercise implements Parcelable {
 
     private String title;
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getPt() {
+        return pt;
+    }
+
+    public void setPt(String pt) {
+        this.pt = pt;
+    }
+
+    public String getCt() {
+        return ct;
+    }
+
+    public void setCt(String ct) {
+        this.ct = ct;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    private String pt;
+    private String ct;
+    private String key;
     private String body;
     private String answer;
     private boolean expanded;
-
     private boolean visible;
 
 
@@ -26,6 +63,19 @@ public class SavedExercise implements Parcelable {
     public SavedExercise()
     {
 
+    }
+
+    public SavedExercise(Exercise exercise, boolean expanded, boolean visible)
+    {
+        this.title=exercise.getTitle();
+        this.type=exercise.getType();
+        this.pt=exercise.getCipher().getPlainText();
+        this.ct=exercise.getCipher().getCipherText();
+        this.key=exercise.getKeyStr();
+        this.body=exercise.getBody();
+        this.answer= exercise.getAnswer();
+        this.expanded=expanded;
+        this.visible=visible;
     }
 
     public SavedExercise(String title, String body, String answer,boolean expanded,boolean visible)

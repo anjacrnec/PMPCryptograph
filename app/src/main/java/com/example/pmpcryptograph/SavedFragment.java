@@ -97,7 +97,7 @@ public class SavedFragment extends Fragment {
            options=new FirestoreRecyclerOptions.Builder<SavedExercise>()
                     .setQuery(query,SavedExercise.class)
                     .build();
-            adapter=new SavedExerciseAdapter(options);
+            adapter=new SavedExerciseAdapter(options,getActivity().getBaseContext());
             recycler=v.findViewById(R.id.rviewExercises);
            recycler.setHasFixedSize(true);
 
@@ -204,6 +204,8 @@ public class SavedFragment extends Fragment {
 
             }
         });
+
+
 
 
 

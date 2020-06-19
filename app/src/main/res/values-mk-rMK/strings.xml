@@ -6,7 +6,15 @@
 
     <!--fb-->
     <string name="facebook_app_id">1578307229017952</string>
-    <string name="fb_login_protocol_scheme">fb1578307229017952</string>
+
+
+    <string name="caeser">Цезар</string>
+    <string name="affine">Афина</string>
+    <string name="vigenere">Вижнерова</string>
+    <string name="playfair">Плејфер</string>
+    <string name="ortho">Ортогонална</string>
+    <string name="reverse">Бустрафедон ортогонална</string>
+    <string name="diagonal">Дијагонална</string>
 
 
     <!--Login-->
@@ -31,8 +39,8 @@
     <string name="nav_saved">Складиште</string>
 
     <!-- Cryptographer Fragment Strings -->
-    <string name="encrypt"> Енкрипција </string>
-    <string name="decrypt"> Декрипција </string>
+    <string name="encrypt"> [Е] </string>
+    <string name="decrypt"> [Д] </string>
     <string name="clear"> Избриши </string>
     <string name="plain_text"> Отворен текст</string>
     <string name="cipher_text"> Затворен текст </string>
@@ -76,20 +84,30 @@
     <string name="ct">затворениот текст</string>
     <string name="ek">енкриптираш</string>
     <string name="dk">декриптираш</string>
-    <string name="answer">Одговор:</string>
-    <string name="body_pt1">искористи  %1$s за до го %2$s  %3$s %4$s со клучот %5$s</string>
+    <string name="answer">Одговор</string>
+    <string name="body_pt">Искористи  %1$s за до го %2$s  %3$s %4$s со клучот %5$s</string>
     <string name="caesar_body_key_pt2">со клучот</string>
-    <string name="generate_answer">Види го одговорот</string>
+    <string name="generate_answer">Решение</string>
     <string name="saved_exercise">Задачата е зачувана</string>
     <string name="unsave_exercise">Задачата е избришана</string>
     <string name="restore_exercise">Задачата е повратена</string>
     <string name="undo">Назад</string>
+
+    <string name="correct_answer">Точен одговор</string>
+    <string name="wrong_answer">Грешен одговор</string>
+
     <string name="configure_exercise">Конфигурирај опции за генерирање задачи</string>
     <string name="ciphers_disabled">барем еден шифрат треба д абиди активен за да се генерира задача</string>
     <string name="offline_mode"> [ОФЛАЈН МОД] </string>
     <string name="no_internet_body">Интернет конекцијата е изгубена. Апликацијата ќе работи офлајн. Задачите можат приврмено да се зачувуваат и офлајн. Но доколку не се поврзиш на интернет во следните 2-4 недели постој можност дека зачувабните/избришените задачи ќе бидат изгубени.</string>
     <string name="no_internet">Нема интернет врска</string>
     <string name="no_message_again">Не ми ја покажвај оваа порака пак</string>
+    <string name="change_language_title">Измени јазик</string>
+    <string name="change_language_body">За да се смени јазикот апликацијата треба да се рестартира. Дали сигурно сакате да го измените јазикот?</string>
+    <string name="change_language_yes">Да</string>
+    <string name="change_language_no">Не</string>
+
+
 
     <string name="lang">Јазик</string>
     <string name="logout">Одјави се</string>

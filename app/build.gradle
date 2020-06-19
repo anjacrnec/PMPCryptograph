@@ -55,6 +55,9 @@ dependencies {
     //firestore ui
     implementation 'com.firebaseui:firebase-ui-firestore:6.2.1'
 
+    //firebase in ap messaging
+    implementation 'com.google.firebase:firebase-inappmessaging-display:19.0.7'
+
     //connectivity checker
     implementation 'com.github.jumadeveloper:networkmanager:0.0.2'
 

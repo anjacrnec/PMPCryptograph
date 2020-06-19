@@ -2,6 +2,7 @@ package com.example.pmpcryptograph.exercise;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.Log;
 
 import com.example.pmpcryptograph.R;
 import com.example.pmpcryptograph.Randoms;
@@ -13,6 +14,7 @@ import com.example.pmpcryptograph.cryptography.VigenereCiphere;
 import com.example.pmpcryptograph.roomdb.Word;
 import com.example.pmpcryptograph.roomdb.WordViewModel;
 
+import java.nio.file.ClosedFileSystemException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -32,8 +34,8 @@ public abstract class Exercise {
     public static final String ORTHOGONAL_CIPHER="Orthogonal";
     public static final String REVERSE_ORTHOGONAL_CIPHER="ReverseOrthogonal";
     public static final String DIAGONAL_CPIHER="Diagonal";
-    protected static final String ENCRYPT="Encrypt";
-    protected static final String DECRYPT="Decrypt";
+    public static final String ENCRYPT="Encrypt";
+    public static final String DECRYPT="Decrypt";
     protected static final String [] TYPE_CIPHER={ENCRYPT,DECRYPT};
 
 
@@ -98,7 +100,7 @@ public abstract class Exercise {
         Resources res = con.getResources();
         if (type == ENCRYPT) {
 
-            body = res.getString(R.string.body_pt1,
+            body = res.getString(R.string.body_pt,
                     cipher,
                     res.getString(R.string.ek),
                     res.getString(R.string.pt),
@@ -106,7 +108,7 @@ public abstract class Exercise {
                     key);
 
         } else {
-            body = res.getString(R.string.body_pt1,
+            body = res.getString(R.string.body_pt,
                     cipher,
                     res.getString(R.string.dk),
                     res.getString(R.string.ct),
@@ -114,6 +116,7 @@ public abstract class Exercise {
                     key);
 
         }
+        Log.d("str pr",res.getString(R.string.unsave_exercise));
         return body;
     }
 

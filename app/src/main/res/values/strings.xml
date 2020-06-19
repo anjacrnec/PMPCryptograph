@@ -8,6 +8,13 @@
     <string name="fb_login_protocol_scheme">fb1578307229017952</string>
 
 
+    <string name="caeser">Caeser</string>
+    <string name="affine">Affine</string>
+    <string name="vigenere">Vigenere</string>
+    <string name="playfair">Playfair</string>
+    <string name="ortho">Orthogonal</string>
+    <string name="reverse">Reverse orthogonal</string>
+    <string name="diagonal">Diagonal</string>
     <!--Login-->
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -64,6 +71,9 @@
     <string name="trans_ortho_cipher">transpositional orthogonal cipher</string>
     <string name="trans_diagonal_cipher">transpositional diagonal cipher</string>
 
+
+    <string name="correct_answer">Correct answer</string>
+    <string name="wrong_answer">Wrong answer</string>
     <!--Exercises fragment-->
     <string name="exercise">Exercise</string>
     <string name="cipher_colon">Cipher : </string>
@@ -75,8 +85,8 @@
     <string name="ct">cipher text</string>
     <string name="ek">encrypt</string>
     <string name="dk">decrypt</string>
-    <string name="answer">Answer:</string>
-    <string name="body_pt1">Use the %1$s to %2$s the %3$s %4$s with the key %5$s</string>
+    <string name="answer">Answer</string>
+    <string name="body_pt">Use the %1$s to %2$s the %3$s %4$s with the key %5$s</string>
     <string name="caesar_body_key_pt2">with the key</string>
     <string name="generate_answer">See answer</string>
     <string name="saved_exercise">Exercise is saved</string>
@@ -87,6 +97,11 @@
     <string name="ciphers_disabled">Atleast one cipher needs to be enabled to generate an exercise</string>
     <string name="offline_mode"> [Offline mode] </string>
 
+
+    <string name="change_language_title">Change language</string>
+    <string name="change_language_body">Changing the language requires an application restart. Are you sure you want to change the language?</string>
+    <string name="change_language_yes">Yes</string>
+    <string name="change_language_no">No</string>
 
     <string name="no_internet">No internet connection</string>
     <string name="no_internet_body">Internet connection has ben lost. The application will run in offline mode. Data can be temporarily saved even in offline mode. However if you do not reconnect to the internet in the next two to four weeks its possible that the data saved and/or edited during this will be lost.</string>
