@@ -1,4 +1,4 @@
-package com.example.pmpcryptograph;
+package com.example.pmpcryptograph.language;
 
 import java.util.List;
 

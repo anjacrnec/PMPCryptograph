@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".PlayfairFragment">
+    tools:context=".main.PlayfairFragment">
 
     <TextView
         android:id="@+id/btnPlayfairExpand"
@@ -29,7 +29,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="2"
                 android:orientation="vertical">
 
@@ -47,6 +48,7 @@
                         android:layout_height="wrap_content"
                         android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                         android:imeOptions="flagNoExtractUi"
+                        android:textSize="15sp"
                         android:singleLine="true" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -67,6 +69,7 @@
                         android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                         android:imeOptions="flagNoExtractUi"
                         android:inputType="textPhonetic"
+                        android:textSize="15sp"
                         android:singleLine="true" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>

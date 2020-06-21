@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".VigenereFragment">
+    tools:context=".main.VigenereFragment">
 
     <TextView
         android:id="@+id/btnVigenereExpand"
@@ -49,6 +49,7 @@
                         android:layout_height="wrap_content"
                         android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                         android:imeOptions="flagNoExtractUi"
+                        android:textSize="15sp"
                         android:singleLine="true" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -69,6 +70,7 @@
                         android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                         android:imeOptions="flagNoExtractUi"
                         android:inputType="textPhonetic"
+                        android:textSize="15sp"
                         android:singleLine="true" />
                 </com.google.android.material.textfield.TextInputLayout>
 

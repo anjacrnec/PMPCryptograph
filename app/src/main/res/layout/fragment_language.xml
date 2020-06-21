@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:descendantFocusability="beforeDescendants"
-    tools:context=".LanguageFragment">
+    tools:context=".language.LanguageFragment">
 
     <ListView
         android:id="@+id/lvLang"

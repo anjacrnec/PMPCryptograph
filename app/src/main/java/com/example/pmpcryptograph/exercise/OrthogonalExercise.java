@@ -4,26 +4,21 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import com.example.pmpcryptograph.R;
-import com.example.pmpcryptograph.Randoms;
-import com.example.pmpcryptograph.cryptography.Cipher;
 import com.example.pmpcryptograph.cryptography.OrthogonalCipher;
-import com.example.pmpcryptograph.cryptography.VigenereCiphere;
 import com.example.pmpcryptograph.roomdb.WordViewModel;
 
 import java.util.concurrent.ExecutionException;
-
-import rita.RiTa;
 
 public class OrthogonalExercise extends Exercise {
 
     private OrthogonalCipher orthogonalCipher;
 
     @Override
-    public void generateExercise(Context con,WordViewModel vm) throws ExecutionException, InterruptedException {
+    public void generateExercise(Context con,WordViewModel vm,boolean sentanceEnabled) throws ExecutionException, InterruptedException {
         this.con=con;
         Resources res=con.getResources();
         this.title=ORTHOGONAL_CIPHER;
-        this.orthogonalCipher=generateCipher(vm);
+        this.orthogonalCipher=generateCipher(vm,sentanceEnabled);
         this.cipher=this.orthogonalCipher;
         this.type=generateType();
         this.answer=generateAnswer(this.orthogonalCipher);
@@ -58,9 +53,9 @@ public class OrthogonalExercise extends Exercise {
     }
 
     @Override
-    public OrthogonalCipher generateCipher(WordViewModel vm) throws ExecutionException, InterruptedException {
+    public OrthogonalCipher generateCipher(WordViewModel vm,boolean sentanceEnabled) throws ExecutionException, InterruptedException {
 
-        String plainText= generateText(vm);
+        String plainText= generateText(vm,sentanceEnabled);
         int num=Randoms.generateRandomNumber(2,5);
         Integer [] array=Randoms.generateArray(num);
         String key=Randoms.shuffleArray(array);

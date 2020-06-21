@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="#DCDCDC"
     android:orientation="vertical"
-    tools:context=".CryptographerFragment">
+    tools:context=".main.CryptographerFragment">
 
 
     <ScrollView

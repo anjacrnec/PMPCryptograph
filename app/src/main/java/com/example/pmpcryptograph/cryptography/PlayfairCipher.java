@@ -121,7 +121,13 @@ public class PlayfairCipher extends SubstitiutionCipher {
         //playfair encryption method
         public static String encrypt(String plainText, String key)
         {
+            Log.e("PLAYFAIR_PT",plainText);
+            Log.e("PLAYFAIR_KEY",key);
             List <String> ptPairs=textToPairs(plainText);
+            String s="";
+            for(int i=0;i<ptPairs.size();i++)
+                s=s+ptPairs.get(i)+" ";
+            Log.e("PLAYFAIR_PAIRS",s);
             char [][] matrix= generateMatrix(key);
             String cipherText="";
 

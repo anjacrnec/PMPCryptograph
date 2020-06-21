@@ -1,4 +1,4 @@
-package com.example.pmpcryptograph;
+package com.example.pmpcryptograph.main;
 
 import android.os.Bundle;
 
@@ -13,21 +13,17 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.pmpcryptograph.misc.Keyboard;
+import com.example.pmpcryptograph.R;
 import com.example.pmpcryptograph.cryptography.DiagonalCipher;
 import com.example.pmpcryptograph.cryptography.OrthogonalCipher;
 import com.example.pmpcryptograph.cryptography.ReverseOrthogonalCipher;
 import com.example.pmpcryptograph.cryptography.TranspositionalCipher;
-import com.example.pmpcryptograph.cryptography.VigenereCiphere;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
-
-import rita.RiLexicon;
-import rita.RiTa;
-import rita.RiWordNet;
 
 
 public class TranspositionalFragment extends Fragment {

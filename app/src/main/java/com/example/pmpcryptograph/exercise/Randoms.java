@@ -1,24 +1,13 @@
-package com.example.pmpcryptograph;
+package com.example.pmpcryptograph.exercise;
 
-import android.content.Context;
-import android.sax.TextElementListener;
-
-import com.example.pmpcryptograph.roomdb.VolleyCallback;
 import com.example.pmpcryptograph.roomdb.Word;
-import com.example.pmpcryptograph.roomdb.WordRequest;
 import com.example.pmpcryptograph.roomdb.WordViewModel;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
-
-import rita.RiTa;
 
 public class Randoms {
 
@@ -28,10 +17,6 @@ public class Randoms {
         return r.nextInt((max - min) + 1) + min;
     }
 
-    public static int generateRandomNumber() {
-        Random r = new Random();
-        return r.nextInt();
-    }
 
     public static Integer [] generateArray(int num)
     {

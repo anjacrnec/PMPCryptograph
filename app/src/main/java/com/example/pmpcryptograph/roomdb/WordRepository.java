@@ -110,36 +110,27 @@ public class WordRepository {
         }
     }
 
+    public void update(Word word)
+    {
+        new UpdateWordAsyncTask(wordDao).execute(word);
+    }
 
-  /*  private static class UpdateProduktAsyncTask extends AsyncTask<Produkt,Void,Void>{
+    private static class UpdateWordAsyncTask extends AsyncTask<Word,Void,Void>{
 
-        private ProduktDao produktDao;
+        private WordDao wordDao;
 
-        private UpdateProduktAsyncTask(ProduktDao produktDao)
+        private UpdateWordAsyncTask(WordDao wordDao)
         {
-            this.produktDao=produktDao;
+            this.wordDao=wordDao;
         }
         @Override
-        protected Void doInBackground(Produkt... produkts) {
-            produktDao.update(produkts[0]);
+        protected Void doInBackground(Word... words) {
+            wordDao.update(words[0]);
             return null;
         }
     }
 
-    private static class DeleteProduktAsyncTask extends AsyncTask<Produkt,Void,Void>{
 
-        private ProduktDao produktDao;
-
-        private DeleteProduktAsyncTask(ProduktDao produktDao)
-        {
-            this.produktDao=produktDao;
-        }
-        @Override
-        protected Void doInBackground(Produkt... produkts) {
-            produktDao.delete(produkts[0]);
-            return null;
-        }
-    }*/
 
 
 }

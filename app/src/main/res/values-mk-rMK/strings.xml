@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">PMPCryptograph</string>
+    <string name="app_name">Криптографија</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
@@ -61,7 +61,7 @@
     <string name="playfair_cipher">плејфер шифра</string>
 
 
-    <string name="transpositional_cipher">транспозициска</string>
+    <string name="transpositional_cipher">транспозициска шифра</string>
     <string name="transpositional_orthogonal">Ортогално</string>
     <string name="transpositional_orthogonal_boustrophedon">Бустрафедон ортогонално </string>
     <string name="transpositional_orthogonal_boustrophedon2">Бустрафедон \n ортогонално </string>
@@ -106,9 +106,17 @@
     <string name="change_language_body">За да се смени јазикот апликацијата треба да се рестартира. Дали сигурно сакате да го измените јазикот?</string>
     <string name="change_language_yes">Да</string>
     <string name="change_language_no">Не</string>
+    <string name="include_sentences">Sentences</string>
 
-
-
+    <string name="alert_sentence_Fconnection_tite">Нема интернет врска</string>
+    <string name="alert_sentence_Fconnection_body">За употреба на оваа функционалност потребно е еднократно спуштање на дополнителни податоци.</string>
+    <string name="alert_sentence_Tconnection_tite">Дозвола за спуштање податоци</string>
+    <string name="alert_sentence_Tconnection_body">За употреба на оваа функционалност потребно е еднократно спуштање на дополнителни податоци. Дали сакате да ги спуштите нив сега?</string>
+    <string name="OK">Ok</string>
+    <string name="YES">YES</string>
+    <string name="NO">NO</string>
+    <string name="downloading">Спуштање податоци</string>
+    <string name="wait">Почекајте...</string>
     <string name="lang">Јазик</string>
     <string name="logout">Одјави се</string>
 

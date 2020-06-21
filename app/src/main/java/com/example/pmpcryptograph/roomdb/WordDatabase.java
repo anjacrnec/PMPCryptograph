@@ -1,22 +1,13 @@
 package com.example.pmpcryptograph.roomdb;
 
-import android.app.DownloadManager;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
-
-import com.example.pmpcryptograph.Randoms;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.util.List;
 
 import rita.RiTa;
 
@@ -52,7 +43,7 @@ public abstract class WordDatabase extends RoomDatabase {
             WordRequest w=new WordRequest(con);
             for(int i = 0; i< 150; i++) {
 
-                String word=RiTa.randomWord();
+                /*String word=RiTa.randomWord();
                 Log.e("Word",word);
                 String url = "https://api.dictionaryapi.dev/api/v2/entries/en/" + word;
                 w.getWord(url, new VolleyCallback() {
@@ -66,8 +57,8 @@ public abstract class WordDatabase extends RoomDatabase {
                        new initializeWordDBASyncTask(instance).execute(w);
                         //new initializeWordDBASyncTask(instance).execute(new Word(RiTa.randomWord(),"obj"));//
                     }
-                });
-               new initializeWordDBASyncTask(instance).execute(new Word(RiTa.randomWord(),"obj"));
+                });*/
+               new initializeWordDBASyncTask(instance).execute(new Word(RiTa.randomWord(),""));
 
             }
 

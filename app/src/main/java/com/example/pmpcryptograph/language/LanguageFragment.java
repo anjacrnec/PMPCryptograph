@@ -1,4 +1,4 @@
-package com.example.pmpcryptograph;
+package com.example.pmpcryptograph.language;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -18,6 +18,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.example.pmpcryptograph.main.MainActivity;
+import com.example.pmpcryptograph.R;
 
 import java.util.ArrayList;
 import java.util.List;

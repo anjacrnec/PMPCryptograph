@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="#E3E2E2"
     android:orientation="vertical"
-    tools:context=".ExercisesFragment">
+    tools:context=".main.ExercisesFragment">
 
 
     <ScrollView
@@ -136,15 +136,26 @@
                             android:checked="true"
                             android:text="@string/reverse" />
 
-                        <View
-                            android:id="@+id/divider8"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="10dp"
-                            android:background="@android:color/darker_gray" />
 
                     </com.google.android.material.chip.ChipGroup>
 
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipSentences"
+                        style="@style/ChipStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="1dp"
+                        android:layout_weight="1"
+                        android:checked="false"
+                        android:text="@string/include_sentences" />
+
+                    <View
+                        android:id="@+id/divider9"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@android:color/darker_gray" />
 
                 </LinearLayout>
 
@@ -335,7 +346,8 @@
                     android:layout_height="wrap_content"
                     android:drawableEnd="@drawable/error_orange"
                     android:imeOptions="flagNoExtractUi"
-                    android:inputType="textNoSuggestions" />
+                    android:inputType="textNoSuggestions"
+                    android:textSize="15sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -356,7 +368,9 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingBottom="15dp"
+                    >
 
                     <Button
                         android:id="@+id/btnGenerateAnswer"
@@ -374,6 +388,11 @@
                 </LinearLayout>
             </FrameLayout>
 
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#E3E2E2" />
         </LinearLayout>
     </ScrollView>
 

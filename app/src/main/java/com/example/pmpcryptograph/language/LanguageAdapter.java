@@ -1,4 +1,4 @@
-package com.example.pmpcryptograph;
+package com.example.pmpcryptograph.language;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.pmpcryptograph.R;
 
 import java.util.List;
 

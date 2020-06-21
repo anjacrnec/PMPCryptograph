@@ -4,14 +4,10 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import com.example.pmpcryptograph.R;
-import com.example.pmpcryptograph.Randoms;
 import com.example.pmpcryptograph.cryptography.AffineCipher;
-import com.example.pmpcryptograph.exercise.Exercise;
 import com.example.pmpcryptograph.roomdb.WordViewModel;
 
 import java.util.concurrent.ExecutionException;
-
-import rita.RiTa;
 
 public class AffineExercise extends Exercise {
 
@@ -19,11 +15,11 @@ public class AffineExercise extends Exercise {
 
 
     @Override
-    public void generateExercise(Context con,WordViewModel vm) throws ExecutionException, InterruptedException {
+    public void generateExercise(Context con,WordViewModel vm,boolean sentanceEnabled) throws ExecutionException, InterruptedException {
         this.con=con;
         Resources res=con.getResources();
         this.title=AFFINE_CIPHER;
-        this.affineCipher=generateCipher(vm);
+        this.affineCipher=generateCipher(vm,sentanceEnabled);
         this.cipher=this.affineCipher;
         this.type=generateType();
         this.answer=generateAnswer(this.affineCipher);
@@ -63,8 +59,8 @@ public class AffineExercise extends Exercise {
     }
 
     @Override
-    public AffineCipher generateCipher(WordViewModel vm) throws ExecutionException, InterruptedException {
-        String plainText= generateText(vm);
+    public AffineCipher generateCipher(WordViewModel vm,boolean sentanceEnabled) throws ExecutionException, InterruptedException {
+        String plainText= generateText(vm,sentanceEnabled);
         int keyA=4;
         while(!AffineCipher.isKeyAValid(keyA))
         {

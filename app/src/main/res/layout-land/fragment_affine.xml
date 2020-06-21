@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".AffineFragment">
+    tools:context=".main.AffineFragment">
 
     <TextView
         android:id="@+id/btnAffineExpand"
@@ -46,6 +46,7 @@
                         android:layout_height="wrap_content"
                         android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                         android:imeOptions="flagNoExtractUi"
+                        android:textSize="15sp"
                         android:singleLine="true" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -71,6 +72,7 @@
                             android:hint="@string/keyA"
                             android:imeOptions="flagNoExtractUi"
                             android:inputType="number"
+                            android:textSize="15sp"
                             app:hintTextAppearance="@style/TextInputLayoutHelper" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -86,6 +88,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/keyB"
+                            android:textSize="15sp"
                             android:imeOptions="flagNoExtractUi"
                             android:inputType="number" />
                     </com.google.android.material.textfield.TextInputLayout>

@@ -1,8 +1,7 @@
-package com.example.pmpcryptograph;
+package com.example.pmpcryptograph.main;
 
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
@@ -14,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.pmpcryptograph.misc.Keyboard;
+import com.example.pmpcryptograph.R;
 import com.example.pmpcryptograph.cryptography.CaeserCipher;
 import com.google.android.material.textfield.TextInputEditText;
 

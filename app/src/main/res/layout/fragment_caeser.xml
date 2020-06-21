@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".CaeserFragment">
+    tools:context=".main.CaeserFragment">
 
     <TextView
         android:id="@+id/btnCaeserExpand"
@@ -38,6 +38,7 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="flagNoExtractUi"
                     android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    android:textSize="15sp"
                     android:singleLine="true" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -57,6 +58,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="flagNoExtractUi"
+                    android:textSize="15sp"
                     android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -100,6 +102,7 @@
                     style="@style/CryptographerOutputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="15sp"
                     android:inputType="textNoSuggestions" />
             </com.google.android.material.textfield.TextInputLayout>
 

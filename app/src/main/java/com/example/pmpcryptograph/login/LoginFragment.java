@@ -1,4 +1,4 @@
-package com.example.pmpcryptograph;
+package com.example.pmpcryptograph.login;
 
 
 import android.content.Intent;
@@ -9,20 +9,19 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.pmpcryptograph.roomdb.WordViewModel;
+import com.example.pmpcryptograph.main.MainActivity;
+import com.example.pmpcryptograph.R;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -218,7 +217,6 @@ public class LoginFragment extends Fragment {
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
                             if (!task.isSuccessful()) {
-                                Toast.makeText(getActivity().getApplicationContext(), "no", Toast.LENGTH_SHORT).show();
                                 Snackbar.make(btnRegister, R.string.register_fail, Snackbar.LENGTH_LONG).show();
                             }
 

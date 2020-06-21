@@ -4,24 +4,21 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import com.example.pmpcryptograph.R;
-import com.example.pmpcryptograph.Randoms;
 import com.example.pmpcryptograph.cryptography.ReverseOrthogonalCipher;
 import com.example.pmpcryptograph.roomdb.WordViewModel;
 
 import java.util.concurrent.ExecutionException;
-
-import rita.RiTa;
 
 public class ReverseOrthogonalExcercise extends Exercise {
 
     private ReverseOrthogonalCipher reverseOrthogonalCipher;
 
     @Override
-    public void generateExercise(Context con,WordViewModel vm) throws ExecutionException, InterruptedException {
+    public void generateExercise(Context con,WordViewModel vm,boolean sentanceEnabled) throws ExecutionException, InterruptedException {
         this.con=con;
         Resources res=con.getResources();
         this.title=REVERSE_ORTHOGONAL_CIPHER;
-        this.reverseOrthogonalCipher=generateCipher(vm);
+        this.reverseOrthogonalCipher=generateCipher(vm,sentanceEnabled);
         this.cipher=this.reverseOrthogonalCipher;
         this.type=generateType();
         this.answer=generateAnswer(this.reverseOrthogonalCipher);
@@ -57,9 +54,9 @@ public class ReverseOrthogonalExcercise extends Exercise {
     }
 
     @Override
-    public ReverseOrthogonalCipher generateCipher(WordViewModel vm) throws ExecutionException, InterruptedException {
+    public ReverseOrthogonalCipher generateCipher(WordViewModel vm,boolean sentanceEnabled) throws ExecutionException, InterruptedException {
 
-        String plainText= generateText(vm);
+        String plainText= generateText(vm,sentanceEnabled);
         int num= Randoms.generateRandomNumber(2,5);
         Integer [] array=Randoms.generateArray(num);
         String key=Randoms.shuffleArray(array);

@@ -1,4 +1,4 @@
-package com.example.pmpcryptograph;
+package com.example.pmpcryptograph.misc;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -15,6 +15,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.example.pmpcryptograph.R;
 
 public class ConnectionLossDialog extends AppCompatDialogFragment {
 

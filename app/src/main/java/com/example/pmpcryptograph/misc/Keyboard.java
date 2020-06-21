@@ -1,4 +1,4 @@
-package com.example.pmpcryptograph;
+package com.example.pmpcryptograph.misc;
 
 import android.app.Activity;
 import android.content.Context;

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PMPCryptograph</string>
+    <string name="app_name">Cryptography</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
@@ -99,6 +99,16 @@
     <string name="change_language_body">Changing the language requires an application restart. Are you sure you want to change the language?</string>
     <string name="change_language_yes">Yes</string>
     <string name="change_language_no">No</string>
+    <string name="include_sentences">Sentences</string>
+    <string name="alert_sentence_Fconnection_tite">No internet connection</string>
+    <string name="alert_sentence_Fconnection_body">This feature requires a one of download of some aditional files for which you need an internet connection</string>
+    <string name="alert_sentence_Tconnection_tite">Download permission</string>
+    <string name="alert_sentence_Tconnection_body">This feature requires a one of download of some aditional files. Do you want to download these files?</string>
+    <string name="OK">Ok</string>
+    <string name="YES">YES</string>
+    <string name="NO">NO</string>
+    <string name="downloading">Downloading data</string>
+    <string name="wait">Please wait...</string>
 
 
     <string name="no_internet">No internet connection</string>

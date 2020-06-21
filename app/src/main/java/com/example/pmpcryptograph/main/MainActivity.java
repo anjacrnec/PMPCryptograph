@@ -1,43 +1,30 @@
-package com.example.pmpcryptograph;
+package com.example.pmpcryptograph.main;
 
 import androidx.annotation.NonNull;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.NestedScrollView;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
-import android.text.Html;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.androidstudy.networkmanager.Monitor;
 import com.androidstudy.networkmanager.Tovuti;
+import com.example.pmpcryptograph.misc.ConnectionLossDialog;
+import com.example.pmpcryptograph.R;
+import com.example.pmpcryptograph.language.LanguageActivity;
+import com.example.pmpcryptograph.login.LoginActivity;
 import com.facebook.login.LoginManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.rw.keyboardlistener.KeyboardUtils;
@@ -45,7 +32,8 @@ import com.rw.keyboardlistener.KeyboardUtils;
 import java.util.Locale;
 
 
-public class MainActivity extends AppCompatActivity implements ConnectionLossDialog.ConnectionLossDialogListener{
+public class MainActivity extends AppCompatActivity implements ConnectionLossDialog.ConnectionLossDialogListener, NavigationView.OnNavigationItemSelectedListener{
+
 
 
     private FirebaseAuth fbAuth;
@@ -59,14 +47,6 @@ public class MainActivity extends AppCompatActivity implements ConnectionLossDia
 
 
     public SavedExerciseAdapter adapter;
-    public static final String  CAESER_FILER="caeser filter";
-    public static final String  PLAYFAIR_FILTER="playfair filter";
-    public static final String AFFINE_FILTER="affine filter";
-    public static final String VIGENERE_FILTER="vigenere filter";
-    public static final String ORTHOGONAL_FILTER="orthogonal filter";
-    public static final String REVERSE_ORTHOGONAL_FILTER="reverse orthogonal filter";
-    public static final String DIAGONAL_FILTER="diagonal filter";
-
     public static final String TAG_CURRENT_CONNECTION="curent con";
     public static final String TAG_CONNECTION_LOSS="show connection dialog";
     public static final String TAG_CRYPTOGRAPHER_FRAGMENT="cryptographer";
@@ -74,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements ConnectionLossDia
     public static final String TAG_SAVED_FRAGMENT="saved";
 
     private FragmentManager fm;
-    private Fragment currentFragment;
 Fragment fragment1;
 Fragment fragment2;
 Fragment fragment3;
@@ -125,7 +104,11 @@ Tovuti t;
         });
         fbAuth = FirebaseAuth.getInstance();
 
-        BottomNavigationView navigationView=(BottomNavigationView) findViewById(R.id.navigationView);
+
+
+
+
+
 
 
         fm=getSupportFragmentManager();
@@ -145,42 +128,59 @@ Tovuti t;
         }
 
         getSupportActionBar().show();
+        getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
+
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            BottomNavigationView navigationView = (BottomNavigationView) findViewById(R.id.navigationView);
+            navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+                    Fragment fragment = null;
+                    int item = menuItem.getItemId();
+                    if (item == R.id.navCryptography) {
 
 
-        navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                        fm.beginTransaction().hide(fragment2).hide(fragment3).show(fragment1).commit();
 
-                Fragment fragment=null;
-                int item=menuItem.getItemId();
-                if(item==R.id.navCryptography)
-                {
+                        return true;
+                    } else if (item == R.id.navExercises) {
 
+                        fm.beginTransaction().hide(fragment1).hide(fragment3).show(fragment2).commit();
 
-                    fm.beginTransaction().hide(fragment2).hide(fragment3).show(fragment1).commit();
+                        return true;
+                    } else if (item == R.id.naviSaved) {
 
-                    return true;
+                        fm.beginTransaction().hide(fragment1).hide(fragment2).show(fragment3).commit();
+
+                        return true;
+                    }
+
+                    return false;
                 }
-                else if (item==R.id.navExercises)
-                {
+            });
 
-                    fm.beginTransaction().hide(fragment1).hide(fragment3).show(fragment2).commit();
+            if(!fragment1.isHidden())
+                navigationView.getMenu().getItem(0).setChecked(true);
+            else if(!fragment2.isHidden())
+                navigationView.getMenu().getItem(1).setChecked(true);
+            else
+                navigationView.getMenu().getItem(2).setChecked(true);
 
-                    return true;
-                }
-                else if(item==R.id.naviSaved)
-                {
+        }
+        else
+        {
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nv);
+            navigationView.setNavigationItemSelectedListener(this);
 
-                    fm.beginTransaction().hide(fragment1).hide(fragment2).show(fragment3).commit();
-
-                    return true;
-                }
-
-                return false;
-            }
-        });
-
-
+            if(!fragment1.isHidden())
+                navigationView.getMenu().getItem(0).setChecked(true);
+            else if(!fragment2.isHidden())
+                navigationView.getMenu().getItem(1).setChecked(true);
+            else
+                navigationView.getMenu().getItem(2).setChecked(true);
+        }
 
         KeyboardUtils.addKeyboardToggleListener(this, new KeyboardUtils.SoftKeyboardToggleListener()
         {
@@ -198,9 +198,14 @@ Tovuti t;
 
 
 
+
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finishAffinity();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -256,6 +261,41 @@ Tovuti t;
     public void getCheckboxStatus(boolean status) {
         editor.putBoolean(TAG_CONNECTION_LOSS,!status);
         editor.apply();
+    }
+
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+        NavigationView nv=findViewById(R.id.nv);
+        Fragment fragment = null;
+        int item = menuItem.getItemId();
+
+        if (item == R.id.navCryptography) {
+            fm.beginTransaction().hide(fragment2).hide(fragment3).show(fragment1).commit();
+            menuItem.setChecked(true);
+            nv.getMenu().getItem(1).setChecked(false);
+            nv.getMenu().getItem(2).setChecked(false);
+            return true;
+        } else if (item == R.id.navExercises) {
+
+            fm.beginTransaction().hide(fragment1).hide(fragment3).show(fragment2).commit();
+            menuItem.setChecked(true);
+            nv.getMenu().getItem(0).setChecked(false);
+            nv.getMenu().getItem(2).setChecked(false);
+            return true;
+        } else if (item == R.id.naviSaved) {
+
+            fm.beginTransaction().hide(fragment1).hide(fragment2).show(fragment3).commit();
+            menuItem.setChecked(true);
+            nv.getMenu().getItem(0).setChecked(false);
+            nv.getMenu().getItem(1).setChecked(false);
+
+
+            return true;
+        }
+
+        return false;
     }
 }
 

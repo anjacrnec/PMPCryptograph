@@ -6,18 +6,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".main.MainActivity">
 
 
     <FrameLayout
         android:id="@+id/baseFragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
         android:layout_above="@id/navigationView"
-        ></FrameLayout>
+        >
+    </FrameLayout>
 
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
+
+
+
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/navigationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

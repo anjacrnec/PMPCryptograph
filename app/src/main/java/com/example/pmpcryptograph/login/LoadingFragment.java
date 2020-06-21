@@ -1,4 +1,4 @@
-package com.example.pmpcryptograph;
+package com.example.pmpcryptograph.login;
 
 import android.os.Bundle;
 
@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.pmpcryptograph.R;
 
 
 public class LoadingFragment extends Fragment {
@@ -18,12 +19,6 @@ public class LoadingFragment extends Fragment {
     }
 
 
-    // TODO: Rename and change types and number of parameters
-    public static LoadingFragment newInstance(String param1, String param2) {
-        LoadingFragment fragment = new LoadingFragment();
-
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,6 +32,7 @@ public class LoadingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v= inflater.inflate(R.layout.fragment_loading, container, false);
+
 
         return v;
     }

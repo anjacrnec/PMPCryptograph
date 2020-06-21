@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#E3E2E2"
     android:orientation="vertical"
-    tools:context=".SavedFragment">
+    tools:context=".main.SavedFragment">
 
     <Button
         android:id="@+id/btnFilter"

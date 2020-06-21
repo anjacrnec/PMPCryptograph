@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class WordRequest {
 
@@ -40,7 +41,7 @@ public class WordRequest {
                         response = jresponse;
                         try {
                             callback.getResponse(response);
-                        } catch (JSONException e) {
+                        } catch (JSONException | ExecutionException | InterruptedException e) {
                             e.printStackTrace();
                         }
 

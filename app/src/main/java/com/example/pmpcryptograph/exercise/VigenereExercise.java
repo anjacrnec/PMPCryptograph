@@ -18,11 +18,11 @@ public class VigenereExercise extends Exercise {
 
 
     @Override
-    public void generateExercise(Context con,WordViewModel vm) throws ExecutionException, InterruptedException {
+    public void generateExercise(Context con,WordViewModel vm,boolean sentanceEnabled) throws ExecutionException, InterruptedException {
         this.con=con;
         Resources res=con.getResources();
         this.title=VIGNERE_CIPHER;
-       this.vigenereCiphere=generateCipher(vm);
+       this.vigenereCiphere=generateCipher(vm,sentanceEnabled);
        this.cipher=this.vigenereCiphere;
        this.type=generateType();
        this.answer=generateAnswer(this.vigenereCiphere);
@@ -59,9 +59,9 @@ public class VigenereExercise extends Exercise {
     }
 
     @Override
-    public VigenereCiphere generateCipher(WordViewModel vm) throws ExecutionException, InterruptedException {
-        String plainText= generateText(vm);
-        String key=generateText(vm);
+    public VigenereCiphere generateCipher(WordViewModel vm,boolean sentanceEnabled) throws ExecutionException, InterruptedException {
+        String plainText= generateText(vm,sentanceEnabled);
+        String key=generateWord(vm);
         VigenereCiphere vigenereCiphere=new VigenereCiphere(plainText,key);
         return vigenereCiphere;
     }

@@ -1,4 +1,4 @@
-package com.example.pmpcryptograph;
+package com.example.pmpcryptograph.main;
 
 import android.os.Bundle;
 
@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.pmpcryptograph.misc.Keyboard;
+import com.example.pmpcryptograph.R;
 import com.example.pmpcryptograph.cryptography.AffineCipher;
 import com.google.android.material.textfield.TextInputEditText;
 

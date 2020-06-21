@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".VigenereFragment">
+    tools:context=".main.VigenereFragment">
 
     <TextView
         android:id="@+id/btnVigenereExpand"
@@ -38,6 +38,7 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="flagNoExtractUi"
                     android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    android:textSize="15sp"
                     android:singleLine="true" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -59,6 +60,7 @@
                     android:imeOptions="flagNoExtractUi"
                     android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                     android:singleLine="true"
+                    android:textSize="15sp"
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -102,6 +104,7 @@
                     style="@style/CryptographerOutputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="15sp"
                     android:inputType="textNoSuggestions" />
             </com.google.android.material.textfield.TextInputLayout>
 

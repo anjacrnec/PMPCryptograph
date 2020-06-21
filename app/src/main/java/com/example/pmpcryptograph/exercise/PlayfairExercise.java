@@ -18,11 +18,11 @@ public class PlayfairExercise  extends Exercise{
     private PlayfairCipher playfairCipher;
 
     @Override
-    public void generateExercise(Context con,WordViewModel vm) throws ExecutionException, InterruptedException {
+    public void generateExercise(Context con,WordViewModel vm,boolean sentanceEnabled) throws ExecutionException, InterruptedException {
         this.con=con;
         Resources res=con.getResources();
         this.title=PLAYFAIR_CIPHER;
-        this.playfairCipher=generateCipher(vm);
+        this.playfairCipher=generateCipher(vm,sentanceEnabled);
         this.cipher=this.playfairCipher;
         this.type=generateType();
         this.answer=generateAnswer(this.playfairCipher);
@@ -59,9 +59,9 @@ public class PlayfairExercise  extends Exercise{
     }
 
     @Override
-    public PlayfairCipher generateCipher(WordViewModel vm) throws ExecutionException, InterruptedException {
-        String plainText= generateText(vm);
-        String key=generateText(vm);
+    public PlayfairCipher generateCipher(WordViewModel vm,boolean sentanceEnabled) throws ExecutionException, InterruptedException {
+        String plainText= generateText(vm,sentanceEnabled);
+        String key=generateWord(vm);
         PlayfairCipher playfairCipher=new PlayfairCipher(plainText,key);
         return playfairCipher;
     }

@@ -1,30 +1,23 @@
-package com.example.pmpcryptograph;
+package com.example.pmpcryptograph.main;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pmpcryptograph.R;
 import com.example.pmpcryptograph.exercise.Exercise;
 import com.example.pmpcryptograph.exercise.SavedExercise;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
-
-import org.w3c.dom.Text;
 
 public class SavedExerciseAdapter extends FirestoreRecyclerAdapter<SavedExercise, SavedExerciseAdapter.SavedExerciseHolder> {
 

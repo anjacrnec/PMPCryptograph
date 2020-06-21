@@ -12,7 +12,7 @@
         android:roundIcon="@drawable/kew_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LanguageActivity"   android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".language.LanguageActivity"   android:parentActivityName=".main.MainActivity"></activity>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -37,7 +37,7 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity">
+        <activity android:name=".login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,7 +45,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".main.MainActivity"
             android:windowSoftInputMode="adjustPan" />
     </application>
 

@@ -1,36 +1,39 @@
-package com.example.pmpcryptograph;
+package com.example.pmpcryptograph.main;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-
+import android.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.pmpcryptograph.misc.Keyboard;
+import com.example.pmpcryptograph.R;
 import com.example.pmpcryptograph.exercise.Exercise;
 import com.example.pmpcryptograph.exercise.SavedExercise;
+import com.example.pmpcryptograph.roomdb.VolleyCallback;
+import com.example.pmpcryptograph.roomdb.Word;
+import com.example.pmpcryptograph.roomdb.WordRequest;
 import com.example.pmpcryptograph.roomdb.WordViewModel;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -43,11 +46,13 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.SetOptions;
-import com.google.protobuf.Timestamp;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 
@@ -92,15 +97,8 @@ public class ExercisesFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if(savedInstanceState!=null)
         {
-            /*currentSavedExercise.setTitle(savedInstanceState.getString("title"));
-            currentSavedExercise.setAnswer(savedInstanceState.getString("answer"));
-            currentSavedExercise.setBody(savedInstanceState.getString("body"));
-            currentSavedExercise.setExpanded(savedInstanceState.getBoolean("expanded"));
-            currentSavedExercise.setVisible(savedInstanceState.getBoolean("visible"));
-            currentSavedExercise.setTime(Timestamp.(savedInstanceState.getString("time")));
-            savedInstanceState.getString("body");*/
             currentSavedExercise=savedInstanceState.getParcelable("current");
-
+            currentExercise=savedInstanceState.getParcelable("current2");
 
         }
 
@@ -139,6 +137,7 @@ public class ExercisesFragment extends Fragment {
          Chip chipOrtho=v.findViewById(R.id.chipOrtho);
          Chip chipReverseOrtho=v.findViewById(R.id.chipOrthoReverse);
          Chip chipDiagonal=v.findViewById(R.id.chipDiagonal);
+        Chip chipSentence=v.findViewById(R.id.chipSentences);
          ExercisesFragment exercisesFragment = ((ExercisesFragment) getActivity().getSupportFragmentManager().findFragmentByTag(MainActivity.TAG_EXERCISES_FRAGMENT));
 
 
@@ -151,69 +150,39 @@ public class ExercisesFragment extends Fragment {
         diagonalEnabled=true;
 
 
-        //prefs = getActivity().getPreferences(getActivity().MODE_PRIVATE);
-       // editor=prefs.edit();
+        if(savedInstanceState==null) {
 
-            //editor.putBoolean(CAESER_ENABLED, true);
-          //  editor.putBoolean(AFFINE_ENABLED, true);
-           // editor.putBoolean(VIGENERE_ENABLED, true);
-           // editor.putBoolean(PLAYFAIR_ENABLED, true);
-           // editor.putBoolean(ORTHO_ENABLED, true);
-           // editor.putBoolean(REVERSE_ORTHO_ENABLED, true);
-           // editor.putBoolean(DIAGONAL_ENABLED, true);
-           // editor.apply();
+            try {
+                int s = pcViewModel.size();
+                Log.e("size", String.valueOf(s));
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
-       /* else
-        {*/
-           /* caesarEnabled=prefs.getBoolean(CAESER_ENABLED,true);
-            chipCaeser.setChecked(caesarEnabled);
+            try {
+                currentExercise = Exercise.generateRandomExercise(getActivity().getBaseContext(), pcViewModel,
+                        caesarEnabled,
+                        affineEnabled,
+                        vigenereEnabled,
+                        playfairEnabled,
+                        orthoEnabled,
+                        reverseOrthoeEnabled,
+                        diagonalEnabled,
+                        chipSentence.isChecked());
+                String body;
+                exerciseToUI(currentExercise, txtCipher, txtPlainText, txtKey, txtCipherText, txtBody);
 
-            affineEnabled=prefs.getBoolean(AFFINE_ENABLED,true);
-            chipAffine.setChecked(affineEnabled);
-
-            vigenereEnabled= prefs.getBoolean(VIGENERE_ENABLED,true);
-            chipVigenere.setChecked(vigenereEnabled);
-
-            playfairEnabled=prefs.getBoolean(PLAYFAIR_ENABLED,true);
-            chipPlayfair.setChecked(playfairEnabled);
-
-            orthoEnabled=prefs.getBoolean(ORTHO_ENABLED,true);
-            chipOrtho.setChecked(orthoEnabled);
-
-            reverseOrthoeEnabled=prefs.getBoolean(REVERSE_ORTHO_ENABLED,true);
-            chipReverseOrtho.setChecked(reverseOrthoeEnabled);
-
-            diagonalEnabled=prefs.getBoolean(DIAGONAL_ENABLED,true);
-            chipDiagonal.setChecked(diagonalEnabled);*/
-
-        //}
-
-
-        try {
-            int s = pcViewModel.size();
-            Log.e("size", String.valueOf(s));
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-
-        try {
-            currentExercise=Exercise.generateRandomExercise(getActivity().getBaseContext(),pcViewModel,
-                    caesarEnabled,
-                    affineEnabled,
-                    vigenereEnabled,
-                    playfairEnabled,
-                    orthoEnabled,
-                    reverseOrthoeEnabled,
-                    diagonalEnabled);
-            String body;
-          exerciseToUI(currentExercise,txtCipher,txtPlainText,txtKey,txtCipherText,txtBody);
-
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        else
+        {
+            exerciseToUI(currentExercise, txtCipher, txtPlainText, txtKey, txtCipherText, txtBody);
         }
 
 
@@ -275,7 +244,8 @@ public class ExercisesFragment extends Fragment {
                             playfairEnabled,
                             orthoEnabled,
                             reverseOrthoeEnabled,
-                            diagonalEnabled);
+                            diagonalEnabled
+                    ,chipSentence.isChecked());
                     exerciseToUI(currentExercise,txtCipher,txtPlainText,txtKey,txtCipherText,txtBody);
                     etAnswer.setText("");
                     layoutAnswer.setError(null);
@@ -326,9 +296,6 @@ public class ExercisesFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 caesarEnabled=isChecked;
-              //  Log.e("dali",String.valueOf(isChecked));
-              //  editor.putBoolean(CAESER_ENABLED,caesarEnabled);
-              //  editor.apply();
                 allCiphersDisabled(chipCaeser);
             }
         });
@@ -337,8 +304,6 @@ public class ExercisesFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 affineEnabled=isChecked;
-              //  editor.putBoolean(AFFINE_ENABLED,affineEnabled);
-               // editor.apply();
                 allCiphersDisabled(chipAffine);
             }
         });
@@ -347,8 +312,6 @@ public class ExercisesFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 vigenereEnabled=isChecked;
-               // editor.putBoolean(VIGENERE_ENABLED,vigenereEnabled);
-               // editor.apply();
                 allCiphersDisabled(chipVigenere);
             }
         });
@@ -357,8 +320,6 @@ public class ExercisesFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 playfairEnabled=isChecked;
-               // editor.putBoolean(PLAYFAIR_ENABLED,playfairEnabled);
-             //   editor.apply();
                 allCiphersDisabled(chipPlayfair);
             }
         });
@@ -367,8 +328,6 @@ public class ExercisesFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 orthoEnabled=isChecked;
-               // editor.putBoolean(ORTHO_ENABLED,orthoEnabled);
-               // editor.apply();
                 allCiphersDisabled(chipOrtho);
             }
         });
@@ -377,8 +336,6 @@ public class ExercisesFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 reverseOrthoeEnabled=isChecked;
-               // editor.putBoolean(REVERSE_ORTHO_ENABLED,reverseOrthoeEnabled);
-               // editor.apply();
                 allCiphersDisabled(chipReverseOrtho);
             }
         });
@@ -387,8 +344,6 @@ public class ExercisesFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 diagonalEnabled=isChecked;
-                //editor.putBoolean(DIAGONAL_ENABLED,diagonalEnabled);
-               // editor.apply();
                 allCiphersDisabled(chipDiagonal);
             }
         });
@@ -408,8 +363,145 @@ public class ExercisesFragment extends Fragment {
         });
 
 
+        chipSentence.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (chipSentence.isChecked())
+                {
+                boolean enabledSentences=prefs.getBoolean("SENTENCE",false);
+                if(!enabledSentences)
+                {
+                    boolean connection=prefs.getBoolean(MainActivity.TAG_CURRENT_CONNECTION,false);
+                    if(connection)
+                    {
+                        AlertDialog dialog=new AlertDialog.Builder(v.getContext())
+                                .setTitle(getResources().getString(R.string.alert_sentence_Tconnection_tite))
+                                .setMessage(getResources().getString(R.string.alert_sentence_Tconnection_body))
+                                .setPositiveButton(getResources().getString(R.string.YES), new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        try {
+
+                                            List<Word> allWords=pcViewModel.getListWords();
+                                            updateExamples(allWords,getActivity().getApplicationContext(),getActivity());
+
+                                        } catch (ExecutionException e) {
+                                            e.printStackTrace();
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                    }
+                                })
+                                .setNegativeButton(getResources().getString(R.string.NO), new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        chipSentence.setChecked(false);
+                                    }
+                                })
+                                .create();
+                        dialog.show();
+
+                    }
+                    else
+                    {
+                        AlertDialog dialog=new AlertDialog.Builder(v.getContext())
+                                .setTitle(getResources().getString(R.string.alert_sentence_Fconnection_tite))
+                                .setMessage(getResources().getString(R.string.alert_sentence_Fconnection_body))
+                                .setNeutralButton(getResources().getString(R.string.OK), new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        chipSentence.setChecked(false);
+                                    }
+                                }).create();
+                        dialog.show();
+                    }
+                }
+
+                else
+                {
+
+                }
+            }
+            }
+        });
+
+
+
 
         return v;
+    }
+
+
+    public void updateExamples(List<Word> lista, Context con,Activity act)
+    {
+        new UpdateExamplesAsyncTask(con,pcViewModel,act).execute(lista);
+    }
+
+    private static class UpdateExamplesAsyncTask extends AsyncTask<List<Word>,Void,Boolean> {
+
+        Boolean finished=false;
+        ProgressDialog dialog;
+        Context con;
+        WordViewModel vm;
+        Activity act;
+
+        private UpdateExamplesAsyncTask(Context con, WordViewModel vm,Activity act) {
+            this.con = con;
+            this.vm = vm;
+            this.act=act;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            dialog = new ProgressDialog(act);
+            dialog.setTitle(con.getResources().getString(R.string.downloading));
+            dialog.setMessage(con.getResources().getString(R.string.wait));
+            dialog.setIndeterminate(true);
+            dialog.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(List... lists) {
+            List<Word> words = lists[0];
+            for (int i = 0; i < words.size(); i++) {
+                Word w = words.get(i);
+                WordRequest r = new WordRequest(con);
+                String url = "https://api.dictionaryapi.dev/api/v2/entries/en/" + w.getWord();
+                r.getWord(url, new VolleyCallback() {
+                    @Override
+                    public void getResponse(JSONArray response) throws JSONException, ExecutionException, InterruptedException {
+                        Log.e("ovde", "volley");
+                        String example = "";
+                        example = String.valueOf(response.getJSONObject(0).getJSONArray("meanings").getJSONObject(0).getJSONArray("definitions").getJSONObject(0).get("example"));
+                        Log.e("example", example);
+                        w.setExample(example);
+                        vm.update(w);
+                        //Toast.makeText(getActivity().getApplicationContext(), example, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                finished=true;
+            }
+            return finished;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean finished) {
+
+            if(finished)
+            {
+
+               SharedPreferences prefs=act.getPreferences(con.MODE_PRIVATE);
+               SharedPreferences.Editor editor=prefs.edit();
+               editor.putBoolean("SENTENCE",true);
+               editor.apply();
+            }
+            dialog.dismiss();
+
+
+        }
     }
 
 
@@ -584,13 +676,8 @@ public class ExercisesFragment extends Fragment {
         {
 
             outState.putParcelable("current",currentSavedExercise);
-         /*   outState.putString("title",currentExercise.getTitle());
-            outState.putString("answer",currentSavedExercise.getAnswer());
-            outState.putString("body",currentSavedExercise.getBody());
-            outState.putBoolean("expanded",currentSavedExercise.getExpanded());
-            outState.putBoolean("visible",currentSavedExercise.getVisible());
-            outState.putString("time", currentSavedExercise.getTime().toString());*/
         }
+        outState.putParcelable("current2",currentExercise);
 
     }
 }
