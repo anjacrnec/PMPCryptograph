@@ -9,7 +9,7 @@ This is an application that:
 
 2) randomly generates cryptography problems/exercises
 
-3)allows user to save those problems 
+3) allows user to save those problems 
 
 ----------------------------
 
