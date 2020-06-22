@@ -6,9 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -26,6 +29,7 @@ import com.facebook.login.LoginManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.rw.keyboardlistener.KeyboardUtils;
 
@@ -188,9 +192,16 @@ Tovuti t;
             public void onToggleSoftKeyboard(boolean isVisible)
             {
                 if(isVisible)
+                {
+                    editor.putBoolean("STATE",true);
                     keyboardState=true;
+                }
+
                 else
+                {
+                    editor.putBoolean("STATE",false);
                     keyboardState=false;
+                }
             }
         });
 
@@ -224,9 +235,37 @@ Tovuti t;
                 startActivity(intent);
                 break;
             case R.id.logOutStn:
-                fbAuth.getInstance().signOut();
-                LoginManager.getInstance().logOut();
-                startActivity(new Intent(this, LoginActivity.class));
+                if(fbAuth.getCurrentUser().isAnonymous())
+                {
+                    Resources res=getResources();
+                    AlertDialog dialog=new AlertDialog.Builder(this)
+                            .setTitle(res.getString(R.string.logout))
+                            .setMessage(res.getString(R.string.logut_body))
+                            .setPositiveButton(res.getString(R.string.YES), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    FirebaseFirestore db=FirebaseFirestore.getInstance();
+                                    String id=fbAuth.getCurrentUser().getUid();
+                                    db.collection("users").document(id).delete();
+                                    fbAuth.getInstance().signOut();
+                                    LoginManager.getInstance().logOut();
+                                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                }
+                            })
+                            .setNegativeButton(res.getString(R.string.NO), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            }).create();
+                    dialog.show();
+                }
+                else
+                    {
+                    fbAuth.getInstance().signOut();
+                    LoginManager.getInstance().logOut();
+                    startActivity(new Intent(this, LoginActivity.class));
+                }
                 break;
         }
 

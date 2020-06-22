@@ -1,5 +1,6 @@
 package com.example.pmpcryptograph.main;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -22,7 +23,7 @@ import net.cachapa.expandablelayout.ExpandableLayout;
 
 
 public class CaeserFragment extends Fragment {
-
+    SharedPreferences prefs;
     ExpandableLayout expandableCaeser;
     TextInputEditText etCaeserPt;
     TextInputEditText etCaeserKey;
@@ -65,7 +66,7 @@ public class CaeserFragment extends Fragment {
         btnCaeserDecrypt.setEnabled(false);
         btnCaeserEncrypt.setEnabled(false);
         CryptographerFragment cryptographerFragment = ((CryptographerFragment) getActivity().getSupportFragmentManager().findFragmentByTag(MainActivity.TAG_CRYPTOGRAPHER_FRAGMENT));
-
+       prefs=getActivity().getPreferences(getActivity().MODE_PRIVATE);
 
 
         etCaeserPt.addTextChangedListener(new TextWatcher() {
@@ -115,7 +116,8 @@ public class CaeserFragment extends Fragment {
         btnCaeserEncrypt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Keyboard.hideKeyboardFrom(getActivity().getApplicationContext(),getActivity().getCurrentFocus());
+                if(prefs.getBoolean("STATE",false))
+                    Keyboard.hideKeyboardFrom(getActivity().getApplicationContext(),getActivity().getCurrentFocus());
                 input=etCaeserPt.getText().toString();
                 key=Integer.parseInt(etCaeserKey.getText().toString());
                 output = CaeserCipher.encrypt(input,key);
@@ -135,6 +137,8 @@ public class CaeserFragment extends Fragment {
         btnCaeserDecrypt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(prefs.getBoolean("STATE",false))
+                    Keyboard.hideKeyboardFrom(getActivity().getApplicationContext(),getActivity().getCurrentFocus());
                 input=etCaeserPt.getText().toString();
                 key=Integer.parseInt(etCaeserKey.getText().toString());
                 output = CaeserCipher.decrypt(input,key);

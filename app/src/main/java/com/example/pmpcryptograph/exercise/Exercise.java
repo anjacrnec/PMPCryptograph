@@ -205,7 +205,9 @@ public class Exercise  implements Parcelable {
 
     public String generateWord(WordViewModel vm) throws ExecutionException, InterruptedException {
         Word word=Randoms.generateRandomWord(vm);
-        return word.getWord();
+        String w=word.getWord();
+        w=w.replace("[^A-Za-z ]", "");
+        return w;
     }
 
 

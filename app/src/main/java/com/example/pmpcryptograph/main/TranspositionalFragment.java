@@ -1,5 +1,6 @@
 package com.example.pmpcryptograph.main;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -30,6 +31,7 @@ public class TranspositionalFragment extends Fragment {
 
     String input,output,key;
     boolean enableButtons;
+    SharedPreferences prefs;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +59,7 @@ public class TranspositionalFragment extends Fragment {
         RadioButton rbDiagonal=(RadioButton) v.findViewById(R.id.rbDiagonal);
 
         btnTranspositionalEncrypt.setEnabled(false);
-
+prefs=getActivity().getPreferences(getActivity().MODE_PRIVATE);
         CryptographerFragment cryptographerFragment = ((CryptographerFragment) getActivity().getSupportFragmentManager().findFragmentByTag(MainActivity.TAG_CRYPTOGRAPHER_FRAGMENT));
         btnTranspositional.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,7 +153,8 @@ public class TranspositionalFragment extends Fragment {
         btnTranspositionalEncrypt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Keyboard.hideKeyboardFrom(getActivity().getApplicationContext(),getActivity().getCurrentFocus());
+                if(prefs.getBoolean("STATE",false))
+                    Keyboard.hideKeyboardFrom(getActivity().getApplicationContext(),getActivity().getCurrentFocus());
                 input=etTranspositionalInput.getText().toString();
                 key=etTranspositionalKey.getText().toString();
 

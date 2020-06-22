@@ -171,8 +171,12 @@ public class LoginFragment extends Fragment {
                     if(!isEmailValid(s))
                     {
 
-                        layoutEmail.setHelperTextEnabled(true);
-                        layoutEmail.setHelperText(getResources().getString(R.string.invalid_email_format));
+                        if(!s.toString().isEmpty())
+                        {
+                            layoutEmail.setHelperTextEnabled(true);
+                            layoutEmail.setHelperText(getResources().getString(R.string.invalid_email_format));
+                        }
+
                         etEmail.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.error_icon, 0);
                         btnRegularSignIn.setEnabled(false);
                         btnRegister.setEnabled(false);
@@ -217,6 +221,7 @@ public class LoginFragment extends Fragment {
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
                             if (!task.isSuccessful()) {
+
                                 Snackbar.make(btnRegister, R.string.register_fail, Snackbar.LENGTH_LONG).show();
                             }
 
@@ -445,6 +450,11 @@ public class LoginFragment extends Fragment {
     {
         startActivity(new Intent(getActivity().getApplicationContext(), MainActivity.class));
         getActivity().finish();
+    }
+
+    public void checkUserExists()
+    {
+
     }
 
     public void createUser()

@@ -1,5 +1,6 @@
 package com.example.pmpcryptograph.main;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.example.pmpcryptograph.misc.Keyboard;
 import com.example.pmpcryptograph.R;
 import com.example.pmpcryptograph.cryptography.AffineCipher;
+import com.facebook.share.Share;
 import com.google.android.material.textfield.TextInputEditText;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
@@ -23,7 +25,7 @@ import net.cachapa.expandablelayout.ExpandableLayout;
 
 public class AffineFragment extends Fragment {
 
-
+    SharedPreferences prefs;
     String input,output;
     int keyA, keyB;
     public AffineFragment() {
@@ -56,6 +58,7 @@ public class AffineFragment extends Fragment {
         btnAffineEncrypt.setEnabled(false);
         CryptographerFragment cryptographerFragment = ((CryptographerFragment) getActivity().getSupportFragmentManager().findFragmentByTag(MainActivity.TAG_CRYPTOGRAPHER_FRAGMENT));
 
+        prefs = getActivity().getPreferences(getActivity().MODE_PRIVATE);
         expandableAffine.setOnExpansionUpdateListener(new ExpandableLayout.OnExpansionUpdateListener() {
             @Override
             public void onExpansionUpdate(float expansionFraction, int state) {
@@ -145,7 +148,8 @@ public class AffineFragment extends Fragment {
         btnAffineEncrypt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Keyboard.hideKeyboardFrom(getActivity().getApplicationContext(),getActivity().getCurrentFocus());
+                if(prefs.getBoolean("STATE",false))
+                    Keyboard.hideKeyboardFrom(getActivity().getApplicationContext(),getActivity().getCurrentFocus());
                 input=etAffineInput.getText().toString();
                 keyA=Integer.parseInt(etAffineKeyA.getText().toString());
                 keyB=Integer.parseInt(etAffineKeyB.getText().toString());
@@ -158,7 +162,8 @@ public class AffineFragment extends Fragment {
         btnAffineDecrypt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Keyboard.hideKeyboardFrom(getActivity().getApplicationContext(),getActivity().getCurrentFocus());
+                if(prefs.getBoolean("STATE",false))
+                    Keyboard.hideKeyboardFrom(getActivity().getApplicationContext(),getActivity().getCurrentFocus());
                 input=etAffineInput.getText().toString();
                 keyA=Integer.parseInt(etAffineKeyA.getText().toString());
                 keyB=Integer.parseInt(etAffineKeyB.getText().toString());
@@ -171,7 +176,7 @@ public class AffineFragment extends Fragment {
         btnAffineClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cryptographerFragment.clearFields(etAffineInput,etAffineKeyA,etAffineKeyB);
+                cryptographerFragment.clearFields(etAffineInput,etAffineKeyA,etAffineKeyB,txtAffineOutput);
                 cryptographerFragment.clearFocus(etAffineInput,etAffineKeyA,etAffineKeyB);
             }
         });

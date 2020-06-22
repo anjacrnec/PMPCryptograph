@@ -106,19 +106,20 @@
     <string name="change_language_body">За да се смени јазикот апликацијата треба да се рестартира. Дали сигурно сакате да го измените јазикот?</string>
     <string name="change_language_yes">Да</string>
     <string name="change_language_no">Не</string>
-    <string name="include_sentences">Sentences</string>
+    <string name="include_sentences">Реченици</string>
 
     <string name="alert_sentence_Fconnection_tite">Нема интернет врска</string>
     <string name="alert_sentence_Fconnection_body">За употреба на оваа функционалност потребно е еднократно спуштање на дополнителни податоци.</string>
     <string name="alert_sentence_Tconnection_tite">Дозвола за спуштање податоци</string>
     <string name="alert_sentence_Tconnection_body">За употреба на оваа функционалност потребно е еднократно спуштање на дополнителни податоци. Дали сакате да ги спуштите нив сега?</string>
     <string name="OK">Ok</string>
-    <string name="YES">YES</string>
-    <string name="NO">NO</string>
+    <string name="YES">ДА</string>
+    <string name="NO">НЕ</string>
     <string name="downloading">Спуштање податоци</string>
     <string name="wait">Почекајте...</string>
     <string name="lang">Јазик</string>
     <string name="logout">Одјави се</string>
+    <string name="logut_body">Моментално сте најавени со анонимен проифл. Доколку се одјавите, вашите зачувани податоци ќе бидат изгубени. Дали сигурно сакате да се одјавите?</string>
 
     <string-array name="spinner_filter">
         <item>Сите задачи</item>

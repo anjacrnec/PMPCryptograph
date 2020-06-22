@@ -1,5 +1,6 @@
 package com.example.pmpcryptograph.main;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -24,7 +25,7 @@ import net.cachapa.expandablelayout.ExpandableLayout;
 public class VigenereFragment extends Fragment {
 
     String input,output,key;
-
+SharedPreferences prefs;
     public VigenereFragment() {
 
     }
@@ -51,7 +52,7 @@ public class VigenereFragment extends Fragment {
         Button btnVigenereClear=(Button) v.findViewById(R.id.btnVigenereClear);
         btnVigenereDecrypt.setEnabled(false);
         btnVigenereEncrypt.setEnabled(false);
-
+prefs=getActivity().getPreferences(getActivity().MODE_PRIVATE);
         CryptographerFragment cryptographerFragment = ((CryptographerFragment) getActivity().getSupportFragmentManager().findFragmentByTag(MainActivity.TAG_CRYPTOGRAPHER_FRAGMENT));
 
         btnVigenere.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +109,8 @@ public class VigenereFragment extends Fragment {
         btnVigenereEncrypt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Keyboard.hideKeyboardFrom(getActivity().getApplicationContext(),getActivity().getCurrentFocus());
+                if(prefs.getBoolean("STATE",false))
+                    Keyboard.hideKeyboardFrom(getActivity().getApplicationContext(),getActivity().getCurrentFocus());
                 input=etVigenereInput.getText().toString();
                 key=etVigenereKey.getText().toString();
                 output = VigenereCiphere.encrypt(input,key);
@@ -127,7 +129,8 @@ public class VigenereFragment extends Fragment {
         btnVigenereDecrypt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Keyboard.hideKeyboardFrom(getActivity().getApplicationContext(),getActivity().getCurrentFocus());
+                if(prefs.getBoolean("STATE",false))
+                    Keyboard.hideKeyboardFrom(getActivity().getApplicationContext(),getActivity().getCurrentFocus());
                 input=etVigenereInput.getText().toString();
                 key=etVigenereKey.getText().toString();
                 output = VigenereCiphere.decrypt(input,key);

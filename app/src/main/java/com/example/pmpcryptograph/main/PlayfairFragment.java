@@ -1,5 +1,6 @@
 package com.example.pmpcryptograph.main;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -24,7 +25,7 @@ import net.cachapa.expandablelayout.ExpandableLayout;
 public class PlayfairFragment extends Fragment {
 
     String input, output, key;
-
+SharedPreferences prefs;
     public PlayfairFragment() {
 
     }
@@ -54,6 +55,8 @@ public class PlayfairFragment extends Fragment {
         btnPlayfairDecrypt.setEnabled(false);
         btnPlayfairEncrypt.setEnabled(false);
         CryptographerFragment cryptographerFragment = ((CryptographerFragment) getActivity().getSupportFragmentManager().findFragmentByTag(MainActivity.TAG_CRYPTOGRAPHER_FRAGMENT));
+        prefs=getActivity().getPreferences(getActivity().MODE_PRIVATE);
+
 
         btnPlayfair.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,7 +112,9 @@ public class PlayfairFragment extends Fragment {
         btnPlayfairEncrypt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Keyboard.hideKeyboardFrom(getActivity().getApplicationContext(),getActivity().getCurrentFocus());
+                if(prefs.getBoolean("STATE",false))
+                    Keyboard.hideKeyboardFrom(getActivity().getApplicationContext(),getActivity().getCurrentFocus());
+
                 input=etPlayfairInput.getText().toString();
                 key=etPlayfairKey.getText().toString();
                 output = PlayfairCipher.encrypt(input,key);
@@ -121,7 +126,8 @@ public class PlayfairFragment extends Fragment {
         btnPlayfairDecrypt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Keyboard.hideKeyboardFrom(getActivity().getApplicationContext(),getActivity().getCurrentFocus());
+                if(prefs.getBoolean("STATE",false))
+                    Keyboard.hideKeyboardFrom(getActivity().getApplicationContext(),getActivity().getCurrentFocus());
                 input=etPlayfairInput.getText().toString();
                 key=etPlayfairKey.getText().toString();
                 output = PlayfairCipher.decrypt(input,key);

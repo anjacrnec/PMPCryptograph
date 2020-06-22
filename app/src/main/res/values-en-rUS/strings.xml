@@ -117,6 +117,7 @@
 
     <string name="lang">Language</string>
     <string name="logout">Log out</string>
+    <string name="logut_body">You are currently logged in with an anonymous account. If you sign out you will not be able to recover your saved data. Are you sure you want to log out?</string>
 
     <string-array name="spinner_filter">
         <item>All exercises</item>
