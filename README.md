@@ -1,6 +1,5 @@
 # PMPCryptograph
-app for cryptography
-# PMPCryptograph
+
 
 
 Project for my class 'Programming for Mobile Platforms'
