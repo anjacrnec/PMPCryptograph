@@ -224,6 +224,10 @@ public class LoginFragment extends Fragment {
 
                                 Snackbar.make(btnRegister, R.string.register_fail, Snackbar.LENGTH_LONG).show();
                             }
+                            else
+                            {
+                                addLoadingFragment();
+                            }
 
                         }
                     });

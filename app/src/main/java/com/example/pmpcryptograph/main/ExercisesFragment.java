@@ -59,7 +59,7 @@ import java.util.concurrent.ExecutionException;
 
 public class ExercisesFragment extends Fragment {
 
-
+    AsyncTask<List<Word>,Void,Boolean> task;
     private static WordViewModel pcViewModel;
     private FirebaseAuth fbAuth;
     private FirebaseFirestore db;
@@ -148,6 +148,7 @@ public class ExercisesFragment extends Fragment {
        orthoEnabled=true;
         reverseOrthoeEnabled=true;
         diagonalEnabled=true;
+
 
 
         if(savedInstanceState==null) {
@@ -428,6 +429,31 @@ public class ExercisesFragment extends Fragment {
         });
 
 
+        try {
+            List <Word> all=pcViewModel.getListWords();
+            int k=0;
+            for(int i=0;i<all.size();i++)
+            {
+                if(all.get(i).getExample().isEmpty())
+                    k++;
+
+            }
+
+            if(k>=130)
+            {
+                SharedPreferences prefs=getActivity().getPreferences(getActivity().MODE_PRIVATE);
+                SharedPreferences.Editor editor=prefs.edit();
+                editor.putBoolean("SENTENCE",false);
+                editor.apply();
+            }
+
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
 
 
         return v;
@@ -436,7 +462,8 @@ public class ExercisesFragment extends Fragment {
 
     public void updateExamples(List<Word> lista, Context con,Activity act)
     {
-        new UpdateExamplesAsyncTask(con,pcViewModel,act).execute(lista);
+        task= new UpdateExamplesAsyncTask(con,pcViewModel,act);
+        task.execute(lista);
     }
 
     private static class UpdateExamplesAsyncTask extends AsyncTask<List<Word>,Void,Boolean> {
@@ -490,7 +517,7 @@ public class ExercisesFragment extends Fragment {
         @Override
         protected void onPostExecute(Boolean finished) {
 
-            if(finished)
+            if(finished!=null)
             {
 
                SharedPreferences prefs=act.getPreferences(con.MODE_PRIVATE);
@@ -667,6 +694,13 @@ public class ExercisesFragment extends Fragment {
         else
             btnNextExercise.setEnabled(true);
 
+    }
+
+
+    @Override
+    public void onDestroy() {
+        task.cancel(true);
+        super.onDestroy();
     }
 
     @Override
