@@ -699,6 +699,7 @@ public class ExercisesFragment extends Fragment {
 
     @Override
     public void onDestroy() {
+        if(task!=null)
         task.cancel(true);
         super.onDestroy();
     }

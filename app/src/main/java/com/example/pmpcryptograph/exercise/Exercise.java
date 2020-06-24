@@ -47,6 +47,11 @@ public class Exercise  implements Parcelable {
 
     protected Cipher cipher;
 
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     protected String title;
 
     protected String type;
